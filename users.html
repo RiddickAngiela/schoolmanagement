@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Users — School Management System</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+<header class="navbar">
+  <div class="logo"><i class="fas fa-school"></i> EduSystem</div>
+  <div class="nav-links">
+    <a href="index.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+    <a href="#"><i class="far fa-user-circle"></i> Profile</a>
+    <a href="login.html"><i class="fas fa-sign-out-alt"></i> Logout</a>
+  </div>
+</header>
+
+<div class="app-wrapper">
+  <aside class="sidebar">
+    <div class="sidebar-nav">
+      <ul>
+        <li class="nav-item" data-page="dashboard"><a href="index.html"><i class="fas fa-chalkboard-user"></i> Dashboard</a></li>
+        <li class="nav-item active" data-page="users"><a href="users.html"><i class="fas fa-users"></i> Users</a></li>
+        <li class="nav-item" data-page="alumni"><a href="#"><i class="fas fa-graduation-cap"></i> Alumni</a></li>
+        <li class="nav-item" data-page="academic"><a href="#"><i class="fas fa-book-open"></i> Academic</a></li>
+        <li class="nav-item" data-page="liveclass"><a href="#"><i class="fas fa-video"></i> Live class</a></li>
+        <li class="nav-item" data-page="examination"><a href="#"><i class="fas fa-pen-alt"></i> Examination</a></li>
+        <li class="nav-item" data-page="accounting"><a href="#"><i class="fas fa-calculator"></i> Accounting</a></li>
+        <li class="nav-item" data-page="backoffice"><a href="#"><i class="fas fa-archive"></i> Back office</a></li>
+        <li class="nav-item" data-page="onlinecourses"><a href="#"><i class="fas fa-laptop-code"></i> Online courses</a></li>
+        <li class="nav-item" data-page="settings"><a href="#"><i class="fas fa-sliders-h"></i> Settings</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <div class="page-wrapper">
+
+      <!-- Page header -->
+      <div class="page-header">
+        <div class="page-header__title">
+          <h1>Users</h1>
+          <p class="page-header__subtitle" id="total-count">Loading...</p>
+        </div>
+        <div class="page-header__actions">
+          <input type="text" id="search-input" class="input-search" placeholder="Search users..." oninput="filterUsers()" />
+          <select id="role-filter" class="input-select" onchange="filterUsers()">
+            <option value="">All roles</option>
+            <option value="Student">Student</option>
+            <option value="Teacher">Teacher</option>
+            <option value="Admin">Admin</option>
+            <option value="Parent">Parent</option>
+          </select>
+          <button class="btn btn--primary" onclick="alert('Add user form coming soon!')">
+            <i class="fas fa-plus"></i> Add user
+          </button>
+        </div>
+      </div>
+
+      <!-- Summary cards -->
+      <div class="stats-grid" id="user-stats"></div>
+
+      <!-- Users table -->
+      <div class="card">
+        <div class="table-wrapper">
+          <table class="table" id="users-table">
+            <thead>
+              <tr>
+                <th class="col-user">User</th>
+                <th class="col-role">Role</th>
+                <th class="col-group">Class / Dept</th>
+                <th class="col-status">Status</th>
+                <th class="col-actions">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="users-table-body"></tbody>
+          </table>
+          <p id="no-results" class="empty-state" style="display:none;">No users match your search.</p>
+        </div>
+      </div>
+
+      <p class="results-count" id="results-count"></p>
+    </div>
+  </main>
+</div>
+
+<!-- Shared data -->
+<script src="mock-data.js"></script>
+<script>
+  function initials(name) {
+    return name.replace(/^(Mr\.|Ms\.|Dr\.)\s*/i, '').split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase();
+  }
+
+  function buildStats() {
+    const s = MOCK_STATS;
+    document.getElementById('total-count').textContent = `${MOCK_USERS.length} total members`;
+    document.getElementById('user-stats').innerHTML = `
+      <div class="stat-card"><span class="stat-card__label">Students</span><span class="stat-card__value">${s.students}</span></div>
+      <div class="stat-card"><span class="stat-card__label">Teachers</span><span class="stat-card__value">${s.teachers}</span></div>
+      <div class="stat-card"><span class="stat-card__label">Parents</span><span class="stat-card__value">${s.parents}</span></div>
+      <div class="stat-card"><span class="stat-card__label">Admins</span><span class="stat-card__value">${s.admins}</span></div>
+    `;
+  }
+
+  function filterUsers() {
+    const search = document.getElementById('search-input').value.toLowerCase();
+    const role   = document.getElementById('role-filter').value;
+    const tbody  = document.getElementById('users-table-body');
+    let html = '';
+    let visible = 0;
+
+    MOCK_USERS.forEach(u => {
+      const matchSearch = !search || u.name.toLowerCase().includes(search) || u.email.toLowerCase().includes(search);
+      const matchRole   = !role   || u.role === role;
+      if (!matchSearch || !matchRole) return;
+      visible++;
+      html += `
+        <tr>
+          <td class="cell-user">
+            <div class="avatar avatar--${u.role.toLowerCase()}">${initials(u.name)}</div>
+            <div class="user-info">
+              <span class="user-info__name">${u.name}</span>
+              <span class="user-info__email">${u.email}</span>
+            </div>
+          </td>
+          <td><span class="badge badge--${u.role.toLowerCase()}">${u.role}</span></td>
+          <td class="cell-muted">${u.group}</td>
+          <td><span class="badge badge--status-${u.status.toLowerCase()}">${u.status}</span></td>
+          <td>
+            <div class="action-btns">
+              <button class="btn btn--icon" title="View profile" onclick="alert('Profile: ${u.name}')"><i class="fas fa-eye"></i></button>
+              <button class="btn btn--icon" title="Edit"         onclick="alert('Edit: ${u.name}')"><i class="fas fa-pen"></i></button>
+              <button class="btn btn--icon" title="Delete"       onclick="alert('Delete: ${u.name}')"><i class="fas fa-trash"></i></button>
+            </div>
+          </td>
+        </tr>`;
+    });
+
+    tbody.innerHTML = html;
+    document.getElementById('no-results').style.display = visible === 0 ? 'block' : 'none';
+    document.getElementById('results-count').textContent = `Showing ${visible} of ${MOCK_USERS.length} users`;
+  }
+
+  buildStats();
+  filterUsers();
+</script>
+
+</body>
+</html>

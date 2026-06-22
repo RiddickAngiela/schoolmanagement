@@ -23,7 +23,7 @@
         <div class="sidebar-nav">
             <ul>
                 <li class="nav-item active" data-page="dashboard"><a href="#"><i class="fas fa-chalkboard-user"></i> Dashboard</a></li>
-                <li class="nav-item" data-page="users"><a href="#"><i class="fas fa-users"></i> Users</a></li>
+                <li class="nav-item" data-page="users"><a href="users.html"><i class="fas fa-users"></i> Users</a></li>
                 <li class="nav-item" data-page="alumni"><a href="#"><i class="fas fa-graduation-cap"></i> Alumni</a></li>
                 <li class="nav-item" data-page="academic"><a href="#"><i class="fas fa-book-open"></i> Academic</a></li>
                 <li class="nav-item" data-page="liveclass"><a href="#"><i class="fas fa-video"></i> Live class</a></li>
@@ -43,6 +43,9 @@
         <div id="dashboardContent"></div>
     </main>
 </div>
+
+<!-- Shared mock data -->
+<script src="mock-data.js"></script>
 
 <script>
 // ==================== AUTHENTICATION ====================
@@ -81,7 +84,7 @@ function hideLoading() {
 function showBlankPage(pageName) {
     showLoading();
     const displayName = pageName.charAt(0).toUpperCase() + pageName.slice(1);
-    
+
     document.getElementById('dashboardContent').innerHTML = `
         <div class="blank-page">
             <div class="blank-page-icon"><i class="fas fa-file-alt"></i></div>
@@ -96,12 +99,12 @@ function showBlankPage(pageName) {
             </a>
         </div>
     `;
-    
+
     document.getElementById('backToDashboardBtn').addEventListener('click', function(e) {
         e.preventDefault();
         showDashboard();
     });
-    
+
     updateActiveNav(pageName);
     hideLoading();
 }
@@ -110,7 +113,25 @@ function showDashboard() {
     showLoading();
     const role = getUserRole();
     const roleDisplay = role.charAt(0).toUpperCase() + role.slice(1);
-    
+
+    // Build invoice rows from mock data
+    const invoiceRows = MOCK_INVOICES.map(inv => {
+        const balance = inv.total - inv.paid;
+        const statusClass = balance === 0 ? 'badge--status-active' : 'badge--status-inactive';
+        const statusLabel = balance === 0 ? 'Paid' : 'Pending';
+        return `
+            <tr>
+                <td>${inv.student}</td>
+                <td>${inv.class}</td>
+                <td>${inv.title}</td>
+                <td>KES ${inv.total.toLocaleString()}</td>
+                <td>
+                    KES ${inv.paid.toLocaleString()}
+                    <span class="badge ${statusClass}" style="margin-left:6px;font-size:11px;">${statusLabel}</span>
+                </td>
+            </tr>`;
+    }).join('');
+
     document.getElementById('dashboardContent').innerHTML = `
         <div class="dashboard-header">
             <h1>Dashboard</h1>
@@ -125,28 +146,28 @@ function showDashboard() {
                 <div class="stat-icon-wrapper">
                     <i class="fas fa-user-graduate stat-icon-large" style="color:#3b82f6;"></i>
                 </div>
-                <div class="stat-number">12</div>
+                <div class="stat-number">${MOCK_STATS.students}</div>
                 <div class="stat-label">Total Students</div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon-wrapper">
                     <i class="fas fa-chalkboard-user stat-icon-large" style="color:#10b981;"></i>
                 </div>
-                <div class="stat-number">5</div>
+                <div class="stat-number">${MOCK_STATS.teachers}</div>
                 <div class="stat-label">Total Teachers</div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon-wrapper">
                     <i class="fas fa-user-tie stat-icon-large" style="color:#f59e0b;"></i>
                 </div>
-                <div class="stat-number">6</div>
+                <div class="stat-number">${MOCK_STATS.totalStaff}</div>
                 <div class="stat-label">Total Staff</div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon-wrapper">
                     <i class="fas fa-heart stat-icon-large" style="color:#ec489a;"></i>
                 </div>
-                <div class="stat-number">7</div>
+                <div class="stat-number">${MOCK_STATS.parents}</div>
                 <div class="stat-label">Total Parents</div>
             </div>
         </div>
@@ -165,6 +186,9 @@ function showDashboard() {
                     </select>
                     <span>entries</span>
                 </div>
+                <a href="users.html" class="btn btn--primary" style="margin-left:auto;">
+                    <i class="fas fa-users"></i> Manage Users
+                </a>
             </div>
 
             <table class="invoice-table">
@@ -178,11 +202,7 @@ function showDashboard() {
                     </tr>
                 </thead>
                 <tbody id="invoiceTableBody">
-                    <tr class="no-data-row">
-                        <td colspan="5" class="no-data">
-                            <i class="fas fa-folder-open"></i> No data available in table
-                        </td>
-                    </tr>
+                    ${invoiceRows}
                 </tbody>
             </table>
         </div>
@@ -193,28 +213,22 @@ function showDashboard() {
                 <div>
                     <div class="attendance-title">TODAY'S ATTENDANCE</div>
                     <div class="attendance-stats">
-                        <span class="attendance-big-number">0</span>
+                        <span class="attendance-big-number">${MOCK_ATTENDANCE.present}</span>
                         <span class="attendance-text">STUDENTS ATTENDING TODAY</span>
                     </div>
                 </div>
             </div>
             <a href="#" class="attendance-link" id="attendanceLink">
-                Go to attendance → <i class="fas fa-arrow-right"></i>
+                Go to attendance <i class="fas fa-arrow-right"></i>
             </a>
         </div>
     `;
-    
-    // Event listeners
-    document.getElementById('entriesSelect').addEventListener('change', function() {
-        document.getElementById('invoiceTableBody').innerHTML = 
-            '<tr class="no-data-row"><td colspan="5" class="no-data"><i class="fas fa-folder-open"></i> No data available in table</td></tr>';
-    });
-    
+
     document.getElementById('attendanceLink').addEventListener('click', function(e) {
         e.preventDefault();
         showBlankPage('attendance');
     });
-    
+
     updateActiveNav('dashboard');
     hideLoading();
 }
@@ -231,12 +245,13 @@ function updateActiveNav(pageName) {
 // ==================== INITIALIZATION ====================
 document.addEventListener('DOMContentLoaded', function() {
     if (!checkAuth()) return;
-    
-    // Setup navigation
+
+    // Sidebar navigation — Users goes to users.html, others render inline
     document.querySelectorAll('.nav-item').forEach(item => {
         item.addEventListener('click', function(e) {
-            e.preventDefault();
             const page = this.getAttribute('data-page');
+            if (page === 'users') return; // let the <a href> navigate naturally
+            e.preventDefault();
             if (page === 'dashboard') {
                 showDashboard();
             } else {
@@ -244,28 +259,26 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
-    
+
     // Top navigation
     document.getElementById('dashboardNavLink').addEventListener('click', function(e) {
         e.preventDefault();
         showDashboard();
     });
-    
+
     document.getElementById('profileNavLink').addEventListener('click', function(e) {
         e.preventDefault();
         showBlankPage('profile');
     });
-    
+
     document.getElementById('logoutBtnNav').addEventListener('click', function(e) {
         e.preventDefault();
         logout();
     });
-    
-    // Load dashboard
+
     showDashboard();
 });
 
-// Prevent back button issues
 window.addEventListener('pageshow', function(event) {
     if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
         checkAuth();
