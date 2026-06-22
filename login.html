@@ -3,392 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>School Management System | Dashboard</title>
+    <title>School Management System | Login</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Font Awesome 6 (free icons) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
-<body>
+<body class="login-body">
 
-<header class="navbar">
-    <div class="logo"><i class="fas fa-school"></i> EduSystem</div>
-    <div class="nav-links">
-        <a href="#" id="dashboardNavLink"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-        <a href="#" id="profileNavLink"><i class="far fa-user-circle"></i> Profile</a>
-        <a href="#" id="logoutBtnNav"><i class="fas fa-sign-out-alt"></i> Logout</a>
+<div class="login-container">
+    <div class="login-wrapper">
+        <!-- Left Side - Login Form -->
+        <div class="login-form-section">
+            <div class="login-header">
+                <div class="login-subtitle">
+                    <i class="fas fa-school"></i> EduSystem
+                </div>
+                <h1 class="login-title">Welcome Back</h1>
+                <p class="login-description">Sign in to access your school management dashboard</p>
+            </div>
+
+            <form class="login-form" id="loginForm">
+                <div class="form-group">
+                    <label for="email"><i class="fas fa-envelope"></i> Email Address</label>
+                    <input type="email" id="email" placeholder="admin@school.com" required value="admin@school.com">
+                </div>
+                <div class="form-group">
+                    <label for="password"><i class="fas fa-lock"></i> Password</label>
+                    <input type="password" id="password" placeholder="Enter your password" required value="password123">
+                </div>
+                <div class="forgot-password">
+                    <a href="#">Forgot Password?</a>
+                </div>
+                <button type="submit" class="login-btn">
+                    <i class="fas fa-sign-in-alt"></i> Sign In
+                </button>
+            </form>
+
+            <!-- Quick Login Roles -->
+            <div class="login-as-section">
+                <div class="login-as-title">
+                    <i class="fas fa-user-shield"></i> Quick Login As
+                </div>
+                <div class="role-buttons">
+                    <button class="role-btn" data-role="admin"><i class="fas fa-user-cog"></i> Admin</button>
+                    <button class="role-btn" data-role="teacher"><i class="fas fa-chalkboard-teacher"></i> Teacher</button>
+                    <button class="role-btn" data-role="student"><i class="fas fa-user-graduate"></i> Student</button>
+                    <button class="role-btn" data-role="parent"><i class="fas fa-user-friends"></i> Parent</button>
+                </div>
+            </div>
+
+            <div class="login-footer">
+                &copy; 2024 EduSystem. All rights reserved.
+            </div>
+        </div>
+
+        <!-- Right Side - Image -->
+        <div class="login-image-section">
+            <div class="image-overlay"></div>
+            <div class="image-content">
+                <div class="brand-icon"><i class="fas fa-graduation-cap"></i></div>
+                <h2>School Management Made Easy</h2>
+                <p>Streamline your institution's operations with our comprehensive platform</p>
+                <div class="buy-badge">
+                    <i class="fas fa-star"></i> Premium System
+                </div>
+            </div>
+        </div>
     </div>
-</header>
-
-<div class="app-wrapper">
-    <!-- SIDEBAR - fully navigable -->
-    <aside class="sidebar">
-        <div class="sidebar-nav">
-            <ul>
-                <li class="nav-item" data-page="dashboard"><a href="#"><i class="fas fa-chalkboard-user"></i> Dashboard</a></li>
-                <li class="nav-item" data-page="users"><a href="#"><i class="fas fa-users"></i> Users</a></li>
-                <li class="nav-item" data-page="alumni"><a href="#"><i class="fas fa-graduation-cap"></i> Alumni</a></li>
-                <li class="nav-item" data-page="academic"><a href="#"><i class="fas fa-book-open"></i> Academic</a></li>
-                <li class="nav-item" data-page="liveclass"><a href="#"><i class="fas fa-video"></i> Live class</a></li>
-                <li class="nav-item" data-page="examination"><a href="#"><i class="fas fa-pen-alt"></i> Examination</a></li>
-                <li class="nav-item" data-page="accounting"><a href="#"><i class="fas fa-calculator"></i> Accounting</a></li>
-                <li class="nav-item" data-page="backoffice"><a href="#"><i class="fas fa-archive"></i> Back office</a></li>
-                <li class="nav-item" data-page="onlinecourses"><a href="#"><i class="fas fa-laptop-code"></i> Online courses</a></li>
-                <li class="nav-item" data-page="settings"><a href="#"><i class="fas fa-sliders-h"></i> Settings</a></li>
-            </ul>
-        </div>
-    </aside>
-
-    <main class="main-content" id="mainContent">
-        <!-- Dynamic content will be loaded here -->
-        <div id="loadingSpinner" style="display: none; text-align: center; padding: 50px;">
-            <i class="fas fa-spinner fa-spin" style="font-size: 3rem; color: #3b82f6;"></i>
-        </div>
-        <div id="dashboardContent"></div>
-    </main>
 </div>
 
 <script>
-    // ==================== AUTHENTICATION SYSTEM ====================
-    
-    // Check if user is logged in
-    function isLoggedIn() {
-        const loggedIn = sessionStorage.getItem('loggedIn');
-        const loginTime = sessionStorage.getItem('loginTime');
-        
-        if (!loggedIn || loggedIn !== 'true') {
-            return false;
-        }
-        
-        // Optional: Session timeout after 8 hours (28800000 ms)
-        if (loginTime) {
-            const currentTime = new Date().getTime();
-            const timeElapsed = currentTime - parseInt(loginTime);
-            const sessionTimeout = 8 * 60 * 60 * 1000; // 8 hours
-            
-            if (timeElapsed > sessionTimeout) {
-                logout();
-                return false;
-            }
-        }
-        
-        return true;
+document.addEventListener('DOMContentLoaded', function() {
+    // Check if already logged in
+    if (sessionStorage.getItem('loggedIn') === 'true') {
+        window.location.href = 'index.html';
+        return;
     }
-    
-    // Redirect to login if not logged in
-    function checkAuth() {
-        if (!isLoggedIn()) {
-            window.location.href = 'login.html';
-            return false;
-        }
-        return true;
-    }
-    
-    // Get current user role
-    function getUserRole() {
-        return sessionStorage.getItem('userRole') || 'admin';
-    }
-    
-    // Get user email
-    function getUserEmail() {
-        return sessionStorage.getItem('userEmail') || 'user@school.com';
-    }
-    
-    // Logout function
-    function logout() {
-        // Clear all session storage
-        sessionStorage.clear();
-        // Redirect to login page
-        window.location.href = 'login.html';
-    }
-    
-    // Display user info in dashboard (optional)
-    function displayUserInfo() {
-        const role = getUserRole();
-        const email = getUserEmail();
-        const roleDisplay = role.charAt(0).toUpperCase() + role.slice(1);
-        
-        // You can add a user info section if desired
-        console.log(`Logged in as: ${roleDisplay} (${email})`);
-    }
-    
-    // ==================== PAGE RENDERING FUNCTIONS ====================
-    
-    // Show loading spinner
-    function showLoading() {
-        const spinner = document.getElementById('loadingSpinner');
-        const content = document.getElementById('dashboardContent');
-        if (spinner) spinner.style.display = 'block';
-        if (content) content.style.display = 'none';
-    }
-    
-    // Hide loading spinner
-    function hideLoading() {
-        const spinner = document.getElementById('loadingSpinner');
-        const content = document.getElementById('dashboardContent');
-        if (spinner) spinner.style.display = 'none';
-        if (content) content.style.display = 'block';
-    }
-    
-    // Function to show blank placeholder page
-    function showBlankPage(pageName) {
-        showLoading();
-        
-        // Capitalize page name for display
-        const displayName = pageName.charAt(0).toUpperCase() + pageName.slice(1);
-        
-        // Create blank page HTML
-        const blankPageHTML = `
-            <div class="blank-page">
-                <div class="blank-page-icon">
-                    <i class="fas fa-file-alt"></i>
-                </div>
-                <h1 class="blank-page-title">${displayName}</h1>
-                <p class="blank-page-subtitle">This page is under construction</p>
-                <div class="blank-page-message">
-                    <i class="fas fa-code-branch"></i>
-                    <span>Content will be added soon</span>
-                </div>
-                <a href="#" class="back-to-dashboard" id="backToDashboardBtn">
-                    <i class="fas fa-arrow-left"></i> Back to Dashboard
-                </a>
-            </div>
-        `;
-        
-        const dashboardContent = document.getElementById('dashboardContent');
-        if (dashboardContent) {
-            dashboardContent.innerHTML = blankPageHTML;
-            
-            // Add back to dashboard button event
-            const backBtn = document.getElementById('backToDashboardBtn');
-            if (backBtn) {
-                backBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    showDashboard();
-                });
-            }
-        }
-        
-        // Update active state in sidebar
-        const navItems = document.querySelectorAll('.nav-item');
-        navItems.forEach(item => {
-            item.classList.remove('active');
-            if (item.getAttribute('data-page') === pageName) {
-                item.classList.add('active');
-            }
-        });
-        
-        hideLoading();
-    }
-    
-    // Function to show dashboard (default view)
-    function showDashboard() {
-        showLoading();
-        
-        // Get user role for personalized greeting
-        const userRole = getUserRole();
-        const roleDisplay = userRole.charAt(0).toUpperCase() + userRole.slice(1);
-        
-        // Restore dashboard HTML with icons before numbers
-        const dashboardHTML = `
-            <div class="dashboard-header">
-                <h1>Dashboard</h1>
-                <div class="welcome-message">
-                    <i class="fas fa-user-circle"></i>
-                    <span>Welcome back, ${roleDisplay}!</span>
-                </div>
-            </div>
 
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-icon-wrapper">
-                        <i class="fas fa-user-graduate stat-icon-large" style="color:#3b82f6;"></i>
-                    </div>
-                    <div class="stat-number">12</div>
-                    <div class="stat-label">Total number of student</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon-wrapper">
-                        <i class="fas fa-chalkboard-user stat-icon-large" style="color:#10b981;"></i>
-                    </div>
-                    <div class="stat-number">5</div>
-                    <div class="stat-label">Total number of teacher</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon-wrapper">
-                        <i class="fas fa-user-tie stat-icon-large" style="color:#f59e0b;"></i>
-                    </div>
-                    <div class="stat-number">6</div>
-                    <div class="stat-label">Total number of staff</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon-wrapper">
-                        <i class="fas fa-heart stat-icon-large" style="color:#ec489a;"></i>
-                    </div>
-                    <div class="stat-number">7</div>
-                    <div class="stat-label">Total number of parent</div>
-                </div>
-            </div>
+    const loginForm = document.getElementById('loginForm');
+    const roleButtons = document.querySelectorAll('.role-btn');
 
-            <div class="accounts-section">
-                <div class="section-title">
-                    <i class="fas fa-file-invoice-dollar"></i> Accounts of June
-                </div>
-                <div class="table-controls">
-                    <div class="entries-selector">
-                        <span>Show</span>
-                        <select id="entriesSelect">
-                            <option value="10">10</option>
-                            <option value="25">25</option>
-                            <option value="50">50</option>
-                        </select>
-                        <span>entries</span>
-                    </div>
-                    <div></div>
-                </div>
+    // Role-based login
+    const roleCredentials = {
+        admin: { email: 'admin@school.com', password: 'password123', role: 'admin' },
+        teacher: { email: 'teacher@school.com', password: 'password123', role: 'teacher' },
+        student: { email: 'student@school.com', password: 'password123', role: 'student' },
+        parent: { email: 'parent@school.com', password: 'password123', role: 'parent' }
+    };
 
-                <table class="invoice-table">
-                    <thead>
-                        <tr>
-                            <th>Student</th>
-                            <th>Class</th>
-                            <th>Invoice title</th>
-                            <th>Total amount</th>
-                            <th>Paid amount</th>
-                        </tr>
-                    </thead>
-                    <tbody id="invoiceTableBody">
-                        <tr class="no-data-row">
-                            <td colspan="5" class="no-data">
-                                <i class="fas fa-folder-open"></i> No data available in table
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+    // Handle login form submission
+    loginForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value.trim();
 
-            <div class="attendance-card">
-                <div class="attendance-left">
-                    <i class="fas fa-calendar-check attendance-icon"></i>
-                    <div>
-                        <div class="attendance-title">TODAY'S ATTENDANCE</div>
-                        <div class="attendance-stats">
-                            <span class="attendance-big-number">0</span>
-                            <span class="attendance-text">STUDENTS ARE ATTENDING TODAY</span>
-                        </div>
-                    </div>
-                </div>
-                <a href="#" class="attendance-link" id="attendanceLink">
-                    Go to attendance → <i class="fas fa-arrow-right"></i>
-                </a>
-            </div>
-        `;
-        
-        const dashboardContent = document.getElementById('dashboardContent');
-        if (dashboardContent) {
-            dashboardContent.innerHTML = dashboardHTML;
-            
-            // Re-attach event listeners for dynamic elements
-            const newEntriesSelect = document.getElementById('entriesSelect');
-            if (newEntriesSelect) {
-                newEntriesSelect.addEventListener('change', function() {
-                    const tableBody = document.getElementById('invoiceTableBody');
-                    if (tableBody) {
-                        tableBody.innerHTML = '<tr class="no-data-row"><td colspan="5" class="no-data"><i class="fas fa-folder-open"></i> No data available in table</td></tr>';
-                    }
-                });
-            }
-            
-            const newAttendanceLink = document.getElementById('attendanceLink');
-            if (newAttendanceLink) {
-                newAttendanceLink.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    showBlankPage('attendance');
-                });
-            }
-        }
-        
-        // Update active state in sidebar
-        const navItems = document.querySelectorAll('.nav-item');
-        navItems.forEach(item => {
-            item.classList.remove('active');
-            if (item.getAttribute('data-page') === 'dashboard') {
-                item.classList.add('active');
-            }
-        });
-        
-        hideLoading();
-    }
-    
-    // ==================== EVENT LISTENERS ====================
-    
-    // Wait for DOM to be fully loaded
-    document.addEventListener('DOMContentLoaded', function() {
-        // First check authentication
-        if (!checkAuth()) {
+        if (!email || !password) {
+            alert('Please enter both email and password.');
             return;
         }
-        
-        // Display user info
-        displayUserInfo();
-        
-        // Get DOM elements
-        const navItems = document.querySelectorAll('.nav-item');
-        const profileNavLink = document.getElementById('profileNavLink');
-        const dashboardNavLink = document.getElementById('dashboardNavLink');
-        const logoutBtnNav = document.getElementById('logoutBtnNav');
-        
-        // Show dashboard by default
-        showDashboard();
-        
-        // Add click event listeners to all sidebar navigation items
-        navItems.forEach(item => {
-            const link = item.querySelector('a');
-            const pageName = item.getAttribute('data-page');
+
+        // Simple validation - accept any email with password
+        sessionStorage.setItem('loggedIn', 'true');
+        sessionStorage.setItem('userEmail', email);
+        sessionStorage.setItem('userRole', 'admin');
+        sessionStorage.setItem('loginTime', Date.now().toString());
+        window.location.href = 'index.html';
+    });
+
+    // Handle role button clicks
+    roleButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const role = this.getAttribute('data-role');
+            const creds = roleCredentials[role];
             
-            if (link) {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    
-                    if (pageName === 'dashboard') {
-                        showDashboard();
-                    } else {
-                        showBlankPage(pageName);
-                    }
-                });
+            if (creds) {
+                document.getElementById('email').value = creds.email;
+                document.getElementById('password').value = creds.password;
+                
+                // Auto-login
+                sessionStorage.setItem('loggedIn', 'true');
+                sessionStorage.setItem('userEmail', creds.email);
+                sessionStorage.setItem('userRole', creds.role);
+                sessionStorage.setItem('loginTime', Date.now().toString());
+                window.location.href = 'index.html';
             }
         });
-        
-        // Profile link handler (top navigation)
-        if (profileNavLink) {
-            profileNavLink.addEventListener('click', function(e) {
-                e.preventDefault();
-                showBlankPage('profile');
-            });
-        }
-        
-        // Dashboard link handler (top navigation)
-        if (dashboardNavLink) {
-            dashboardNavLink.addEventListener('click', function(e) {
-                e.preventDefault();
-                showDashboard();
-            });
-        }
-        
-        // Logout button handler (top navigation)
-        if (logoutBtnNav) {
-            logoutBtnNav.addEventListener('click', function(e) {
-                e.preventDefault();
-                logout();
-            });
-        }
     });
-    
-    // Prevent back button after logout (optional)
-    window.addEventListener('pageshow', function(event) {
-        if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
-            checkAuth();
-        }
+
+    // Enter key to submit
+    document.querySelectorAll('#password, #email').forEach(input => {
+        input.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                loginForm.dispatchEvent(new Event('submit'));
+            }
+        });
     });
+});
 </script>
 
 </body>
