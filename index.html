@@ -12,7 +12,7 @@
 <header class="navbar">
     <div class="logo"><i class="fas fa-school"></i> EduSystem</div>
     <div class="nav-links">
-        <a href="#" id="dashboardNavLink"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+        <a href="index.html" id="dashboardNavLink"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
         <a href="#" id="profileNavLink"><i class="far fa-user-circle"></i> Profile</a>
         <a href="#" id="logoutBtnNav"><i class="fas fa-sign-out-alt"></i> Logout</a>
     </div>
@@ -22,9 +22,9 @@
     <aside class="sidebar">
         <div class="sidebar-nav">
             <ul>
-                <li class="nav-item active" data-page="dashboard"><a href="#"><i class="fas fa-chalkboard-user"></i> Dashboard</a></li>
+                <li class="nav-item active" data-page="dashboard"><a href="index.html"><i class="fas fa-chalkboard-user"></i> Dashboard</a></li>
                 <li class="nav-item" data-page="users"><a href="users.html"><i class="fas fa-users"></i> Users</a></li>
-                <li class="nav-item" data-page="alumni"><a href="#"><i class="fas fa-graduation-cap"></i> Alumni</a></li>
+                <li class="nav-item" data-page="alumni"><a href="alumni.html"><i class="fas fa-graduation-cap"></i> Alumni</a></li>
                 <li class="nav-item" data-page="academic"><a href="#"><i class="fas fa-book-open"></i> Academic</a></li>
                 <li class="nav-item" data-page="liveclass"><a href="#"><i class="fas fa-video"></i> Live class</a></li>
                 <li class="nav-item" data-page="examination"><a href="#"><i class="fas fa-pen-alt"></i> Examination</a></li>
@@ -94,7 +94,7 @@ function showBlankPage(pageName) {
                 <i class="fas fa-code-branch"></i>
                 <span>Content will be added soon</span>
             </div>
-            <a href="#" class="back-to-dashboard" id="backToDashboardBtn">
+            <a href="index.html" class="back-to-dashboard" id="backToDashboardBtn">
                 <i class="fas fa-arrow-left"></i> Back to Dashboard
             </a>
         </div>
@@ -102,7 +102,7 @@ function showBlankPage(pageName) {
 
     document.getElementById('backToDashboardBtn').addEventListener('click', function(e) {
         e.preventDefault();
-        showDashboard();
+        window.location.href = 'index.html';
     });
 
     updateActiveNav(pageName);
@@ -246,24 +246,28 @@ function updateActiveNav(pageName) {
 document.addEventListener('DOMContentLoaded', function() {
     if (!checkAuth()) return;
 
-    // Sidebar navigation — Users goes to users.html, others render inline
+    // Sidebar navigation - handle page routing
     document.querySelectorAll('.nav-item').forEach(item => {
         item.addEventListener('click', function(e) {
             const page = this.getAttribute('data-page');
-            if (page === 'users') return; // let the <a href> navigate naturally
-            e.preventDefault();
-            if (page === 'dashboard') {
-                showDashboard();
-            } else {
-                showBlankPage(page);
+            const link = this.querySelector('a');
+            const href = link.getAttribute('href');
+            
+            // For pages that have actual HTML files, let the browser navigate normally
+            if (page === 'users' || page === 'alumni' || page === 'dashboard') {
+                // Just let the link work - do NOT prevent default
+                return;
             }
+            
+            // For other pages, prevent default and show blank page
+            e.preventDefault();
+            showBlankPage(page);
         });
     });
 
     // Top navigation
     document.getElementById('dashboardNavLink').addEventListener('click', function(e) {
-        e.preventDefault();
-        showDashboard();
+        // Already navigating to index.html via href
     });
 
     document.getElementById('profileNavLink').addEventListener('click', function(e) {
@@ -276,6 +280,7 @@ document.addEventListener('DOMContentLoaded', function() {
         logout();
     });
 
+    // Check if we're on the dashboard page
     showDashboard();
 });
 

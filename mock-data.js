@@ -1,3 +1,8 @@
+// ============================================================
+//  mock-data.js  —  Shared data for School Management System
+//  Include this file in any page that needs application data:
+//  <script src="mock-data.js"></script>
+// ============================================================
 
 const MOCK_USERS = [
   { id: 1,  name: 'Amara Osei',        email: 'amara.osei@school.edu',       role: 'Student', group: 'Grade 10A',      status: 'Active',    joined: 'Jan 2024', phone: '+254 700 111 001', dob: '2009-03-12' },
@@ -22,7 +27,7 @@ const MOCK_STATS = {
   teachers:   MOCK_USERS.filter(u => u.role === 'Teacher').length,
   admins:     MOCK_USERS.filter(u => u.role === 'Admin').length,
   parents:    MOCK_USERS.filter(u => u.role === 'Parent').length,
-  totalStaff: MOCK_USERS.filter(u => u.role === 'Admin').length,
+  totalStaff: MOCK_USERS.filter(u => u.role === 'Teacher' || u.role === 'Admin').length,
 };
 
 const MOCK_INVOICES = [
@@ -38,4 +43,33 @@ const MOCK_ATTENDANCE = {
   present: 9,
   absent: 2,
   total: 11,
+};
+
+const MOCK_ALUMNI = [
+  { id: 1,  name: 'Kevin Mwangi',      email: 'kevin.mwangi@gmail.com',      gradYear: 2020, program: 'Science',          status: 'Employed',    occupation: 'Software Engineer',      employer: 'Safaricom PLC',         phone: '+254 711 200 001', location: 'Nairobi' },
+  { id: 2,  name: 'Sharon Atieno',     email: 'sharon.atieno@gmail.com',     gradYear: 2021, program: 'Arts',             status: 'Studying',    occupation: 'BSc Computer Science',   employer: 'University of Nairobi', phone: '+254 711 200 002', location: 'Nairobi' },
+  { id: 3,  name: 'Felix Kariuki',     email: 'felix.kariuki@outlook.com',   gradYear: 2019, program: 'Commerce',         status: 'Employed',    occupation: 'Accountant',             employer: 'KCB Bank Kenya',        phone: '+254 711 200 003', location: 'Mombasa' },
+  { id: 4,  name: 'Brenda Onyango',    email: 'brenda.onyango@gmail.com',    gradYear: 2022, program: 'Science',          status: 'Studying',    occupation: 'MBChB Medicine',         employer: 'Kenyatta University',   phone: '+254 711 200 004', location: 'Nairobi' },
+  { id: 5,  name: 'Victor Kipchoge',   email: 'victor.kipchoge@gmail.com',   gradYear: 2018, program: 'Technical',        status: 'Self-employed', occupation: 'Electrician',          employer: 'VK Solutions',          phone: '+254 711 200 005', location: 'Eldoret' },
+  { id: 6,  name: 'Nancy Wambui',      email: 'nancy.wambui@yahoo.com',      gradYear: 2021, program: 'Arts',             status: 'Employed',    occupation: 'Journalist',             employer: 'Nation Media Group',    phone: '+254 711 200 006', location: 'Nairobi' },
+  { id: 7,  name: 'George Ochieng',    email: 'george.ochieng@gmail.com',    gradYear: 2020, program: 'Commerce',         status: 'Unemployed',  occupation: '—',                      employer: '—',                     phone: '+254 711 200 007', location: 'Kisumu' },
+  { id: 8,  name: 'Patricia Mutua',    email: 'patricia.mutua@gmail.com',    gradYear: 2019, program: 'Science',          status: 'Employed',    occupation: 'Civil Engineer',         employer: 'Kenya Roads Board',     phone: '+254 711 200 008', location: 'Nairobi' },
+  { id: 9,  name: 'Samuel Cheruiyot', email: 's.cheruiyot@outlook.com',     gradYear: 2022, program: 'Technical',        status: 'Studying',    occupation: 'Diploma IT',             employer: 'Strathmore University', phone: '+254 711 200 009', location: 'Nakuru' },
+  { id: 10, name: 'Diana Achieng',     email: 'diana.achieng@gmail.com',     gradYear: 2018, program: 'Arts',             status: 'Employed',    occupation: 'Graphic Designer',       employer: 'Ogilvy Africa',         phone: '+254 711 200 010', location: 'Nairobi' },
+  { id: 11, name: 'Moses Kamotho',     email: 'moses.kamotho@gmail.com',     gradYear: 2023, program: 'Science',          status: 'Studying',    occupation: 'BSc Nursing',            employer: 'Moi University',        phone: '+254 711 200 011', location: 'Eldoret' },
+  { id: 12, name: 'Irene Njoki',       email: 'irene.njoki@gmail.com',       gradYear: 2017, program: 'Commerce',         status: 'Employed',    occupation: 'Marketing Manager',      employer: 'Equity Bank',           phone: '+254 711 200 012', location: 'Nairobi' },
+  { id: 13, name: 'Alex Otieno',       email: 'alex.otieno@gmail.com',       gradYear: 2023, program: 'Arts',             status: 'Unemployed',  occupation: '—',                      employer: '—',                     phone: '+254 711 200 013', location: 'Kisumu' },
+  { id: 14, name: 'Caroline Njeru',    email: 'caroline.njeru@outlook.com',  gradYear: 2016, program: 'Science',          status: 'Employed',    occupation: 'Pharmacist',             employer: 'Aga Khan Hospital',     phone: '+254 711 200 014', location: 'Nairobi' },
+  { id: 15, name: 'Dennis Wekesa',     email: 'dennis.wekesa@gmail.com',     gradYear: 2021, program: 'Technical',        status: 'Self-employed', occupation: 'Plumber',              employer: 'DW Services',           phone: '+254 711 200 015', location: 'Kakamega' },
+  { id: 16, name: 'Lydia Chebet',      email: 'lydia.chebet@gmail.com',      gradYear: 2020, program: 'Science',          status: 'Employed',    occupation: 'Lab Technician',         employer: 'KEMRI',                 phone: '+254 711 200 016', location: 'Kisumu' },
+  { id: 17, name: 'Frank Njoroge',     email: 'frank.njoroge@gmail.com',     gradYear: 2019, program: 'Commerce',         status: 'Employed',    occupation: 'Banker',                 employer: 'Standard Chartered',    phone: '+254 711 200 017', location: 'Nairobi' },
+  { id: 18, name: 'Mercy Auma',        email: 'mercy.auma@yahoo.com',        gradYear: 2022, program: 'Arts',             status: 'Studying',    occupation: 'BA Education',           employer: 'Maseno University',     phone: '+254 711 200 018', location: 'Kisumu' },
+];
+
+const MOCK_ALUMNI_STATS = {
+  total:        MOCK_ALUMNI.length,
+  employed:     MOCK_ALUMNI.filter(a => a.status === 'Employed').length,
+  studying:     MOCK_ALUMNI.filter(a => a.status === 'Studying').length,
+  selfEmployed: MOCK_ALUMNI.filter(a => a.status === 'Self-employed').length,
+  unemployed:   MOCK_ALUMNI.filter(a => a.status === 'Unemployed').length,
 };

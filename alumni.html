@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alumni — School Management System</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* ---- Alumni-specific styles ---- */
+    .alumni-hero {
+      background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%);
+      border-radius: 14px;
+      padding: 2rem 2rem 1.75rem;
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .alumni-hero__left h1 {
+      font-size: 24px;
+      font-weight: 600;
+      color: #fff;
+      margin: 0 0 4px;
+    }
+    .alumni-hero__left p {
+      font-size: 14px;
+      color: #bfdbfe;
+      margin: 0;
+    }
+    .alumni-hero__icon {
+      font-size: 56px;
+      color: rgba(255,255,255,0.15);
+    }
+
+    .alumni-stat-card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      padding: 1rem 1.125rem;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .alumni-stat-card__icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+    .alumni-stat-card__icon--blue   { background: #dbeafe; color: #1d4ed8; }
+    .alumni-stat-card__icon--green  { background: #d1fae5; color: #065f46; }
+    .alumni-stat-card__icon--purple { background: #ede9fe; color: #5b21b6; }
+    .alumni-stat-card__icon--amber  { background: #fef3c7; color: #92400e; }
+    .alumni-stat-card__icon--red    { background: #fee2e2; color: #991b1b; }
+
+    .alumni-stat-card__info {}
+    .alumni-stat-card__value {
+      font-size: 22px;
+      font-weight: 600;
+      color: #1a1a1a;
+      line-height: 1;
+    }
+    .alumni-stat-card__label {
+      font-size: 12px;
+      color: #6b7280;
+      margin-top: 3px;
+    }
+
+    .filter-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+
+    .tab-strip {
+      display: flex;
+      gap: 4px;
+      background: #f3f4f6;
+      border-radius: 8px;
+      padding: 3px;
+      margin-bottom: 1.25rem;
+    }
+    .tab-strip__btn {
+      flex: 1;
+      padding: 7px 14px;
+      border: none;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      background: transparent;
+      color: #6b7280;
+      transition: background 0.15s, color 0.15s;
+    }
+    .tab-strip__btn.active {
+      background: #fff;
+      color: #1a1a1a;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+
+    /* Card grid view */
+    .alumni-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 12px;
+    }
+    .alumni-card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 1.125rem;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .alumni-card__header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .alumni-card__name {
+      font-weight: 600;
+      font-size: 14px;
+      color: #1a1a1a;
+    }
+    .alumni-card__meta {
+      font-size: 12px;
+      color: #6b7280;
+      margin-top: 2px;
+    }
+    .alumni-card__body {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 13px;
+      color: #374151;
+      border-top: 1px solid #f3f4f6;
+      padding-top: 10px;
+    }
+    .alumni-card__row {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    .alumni-card__row i {
+      color: #9ca3af;
+      width: 16px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .alumni-card__footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid #f3f4f6;
+      padding-top: 10px;
+    }
+
+    /* Avatar colours by index */
+    .av-blue   { background: #dbeafe; color: #1e40af; }
+    .av-green  { background: #d1fae5; color: #065f46; }
+    .av-purple { background: #ede9fe; color: #5b21b6; }
+    .av-amber  { background: #fef3c7; color: #92400e; }
+    .av-teal   { background: #ccfbf1; color: #0f766e; }
+    .av-pink   { background: #fce7f3; color: #9d174d; }
+
+    .badge--employed     { background: #d1fae5; color: #065f46; }
+    .badge--studying     { background: #dbeafe; color: #1e40af; }
+    .badge--self-employed{ background: #ede9fe; color: #5b21b6; }
+    .badge--unemployed   { background: #fee2e2; color: #991b1b; }
+
+    /* Table view */
+    #alumni-table-view { display: none; }
+  </style>
+</head>
+<body>
+
+<header class="navbar">
+  <div class="logo"><i class="fas fa-school"></i> EduSystem</div>
+  <div class="nav-links">
+    <a href="index.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+    <a href="#"><i class="far fa-user-circle"></i> Profile</a>
+    <a href="login.html"><i class="fas fa-sign-out-alt"></i> Logout</a>
+  </div>
+</header>
+
+<div class="app-wrapper">
+  <aside class="sidebar">
+    <div class="sidebar-nav">
+      <ul>
+        <li class="nav-item" data-page="dashboard"><a href="index.html"><i class="fas fa-chalkboard-user"></i> Dashboard</a></li>
+        <li class="nav-item" data-page="users"><a href="users.html"><i class="fas fa-users"></i> Users</a></li>
+        <li class="nav-item active" data-page="alumni"><a href="alumni.html"><i class="fas fa-graduation-cap"></i> Alumni</a></li>
+        <li class="nav-item" data-page="academic"><a href="#"><i class="fas fa-book-open"></i> Academic</a></li>
+        <li class="nav-item" data-page="liveclass"><a href="#"><i class="fas fa-video"></i> Live class</a></li>
+        <li class="nav-item" data-page="examination"><a href="#"><i class="fas fa-pen-alt"></i> Examination</a></li>
+        <li class="nav-item" data-page="accounting"><a href="#"><i class="fas fa-calculator"></i> Accounting</a></li>
+        <li class="nav-item" data-page="backoffice"><a href="#"><i class="fas fa-archive"></i> Back office</a></li>
+        <li class="nav-item" data-page="onlinecourses"><a href="#"><i class="fas fa-laptop-code"></i> Online courses</a></li>
+        <li class="nav-item" data-page="settings"><a href="#"><i class="fas fa-sliders-h"></i> Settings</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <div class="page-wrapper">
+
+      <!-- Hero banner -->
+      <div class="alumni-hero">
+        <div class="alumni-hero__left">
+          <h1><i class="fas fa-graduation-cap" style="margin-right:10px;"></i>Alumni Directory</h1>
+          <p>Tracking the journeys of our graduates since 2010</p>
+        </div>
+        <i class="fas fa-university alumni-hero__icon"></i>
+      </div>
+
+      <!-- Stat cards -->
+      <div class="stats-grid" style="margin-bottom:1.25rem;" id="alumni-stats"></div>
+
+      <!-- Controls -->
+      <div class="filter-bar">
+        <input type="text" id="search-input" class="input-search" placeholder="Search alumni..." oninput="renderAlumni()" />
+        <select id="status-filter" class="input-select" onchange="renderAlumni()">
+          <option value="">All statuses</option>
+          <option value="Employed">Employed</option>
+          <option value="Studying">Studying</option>
+          <option value="Self-employed">Self-employed</option>
+          <option value="Unemployed">Unemployed</option>
+        </select>
+        <select id="year-filter" class="input-select" onchange="renderAlumni()">
+          <option value="">All years</option>
+        </select>
+        <select id="program-filter" class="input-select" onchange="renderAlumni()">
+          <option value="">All programs</option>
+          <option value="Science">Science</option>
+          <option value="Arts">Arts</option>
+          <option value="Commerce">Commerce</option>
+          <option value="Technical">Technical</option>
+        </select>
+        <button class="btn btn--primary" onclick="alert('Add alumni form coming soon!')">
+          <i class="fas fa-plus"></i> Add alumni
+        </button>
+      </div>
+
+      <!-- View toggle -->
+      <div class="tab-strip" style="max-width:280px;">
+        <button class="tab-strip__btn active" id="btn-cards" onclick="switchView('cards')">
+          <i class="fas fa-th-large"></i> Cards
+        </button>
+        <button class="tab-strip__btn" id="btn-table" onclick="switchView('table')">
+          <i class="fas fa-list"></i> Table
+        </button>
+      </div>
+
+      <!-- Card grid -->
+      <div id="alumni-cards-view">
+        <div class="alumni-grid" id="alumni-grid"></div>
+        <p id="no-results-cards" class="empty-state" style="display:none;">No alumni match your search.</p>
+      </div>
+
+      <!-- Table view -->
+      <div id="alumni-table-view">
+        <div class="card">
+          <div class="table-wrapper">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Grad year</th>
+                  <th>Program</th>
+                  <th>Status</th>
+                  <th>Occupation</th>
+                  <th>Location</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="alumni-table-body"></tbody>
+            </table>
+            <p id="no-results-table" class="empty-state" style="display:none;">No alumni match your search.</p>
+          </div>
+        </div>
+      </div>
+
+      <p class="results-count" id="results-count"></p>
+
+    </div>
+  </main>
+</div>
+
+<script src="mock-data.js"></script>
+<script>
+  const AV_COLORS = ['av-blue','av-green','av-purple','av-amber','av-teal','av-pink'];
+  const STATUS_BADGE = {
+    'Employed':      'badge--employed',
+    'Studying':      'badge--studying',
+    'Self-employed': 'badge--self-employed',
+    'Unemployed':    'badge--unemployed',
+  };
+
+  let currentView = 'cards';
+
+  function initials(name) {
+    return name.split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase();
+  }
+
+  function avColor(idx) {
+    return AV_COLORS[idx % AV_COLORS.length];
+  }
+
+  // Populate year filter
+  function buildYearFilter() {
+    const years = [...new Set(MOCK_ALUMNI.map(a => a.gradYear))].sort((a,b) => b - a);
+    const sel = document.getElementById('year-filter');
+    years.forEach(y => {
+      const o = document.createElement('option');
+      o.value = y; o.textContent = y;
+      sel.appendChild(o);
+    });
+  }
+
+  // Build stat cards
+  function buildStats() {
+    const s = MOCK_ALUMNI_STATS;
+    document.getElementById('alumni-stats').innerHTML = `
+      <div class="alumni-stat-card">
+        <div class="alumni-stat-card__icon alumni-stat-card__icon--blue"><i class="fas fa-graduation-cap"></i></div>
+        <div class="alumni-stat-card__info">
+          <div class="alumni-stat-card__value">${s.total}</div>
+          <div class="alumni-stat-card__label">Total alumni</div>
+        </div>
+      </div>
+      <div class="alumni-stat-card">
+        <div class="alumni-stat-card__icon alumni-stat-card__icon--green"><i class="fas fa-briefcase"></i></div>
+        <div class="alumni-stat-card__info">
+          <div class="alumni-stat-card__value">${s.employed}</div>
+          <div class="alumni-stat-card__label">Employed</div>
+        </div>
+      </div>
+      <div class="alumni-stat-card">
+        <div class="alumni-stat-card__icon alumni-stat-card__icon--purple"><i class="fas fa-book-open"></i></div>
+        <div class="alumni-stat-card__info">
+          <div class="alumni-stat-card__value">${s.studying}</div>
+          <div class="alumni-stat-card__label">Further studies</div>
+        </div>
+      </div>
+      <div class="alumni-stat-card">
+        <div class="alumni-stat-card__icon alumni-stat-card__icon--amber"><i class="fas fa-store"></i></div>
+        <div class="alumni-stat-card__info">
+          <div class="alumni-stat-card__value">${s.selfEmployed}</div>
+          <div class="alumni-stat-card__label">Self-employed</div>
+        </div>
+      </div>
+    `;
+  }
+
+  function getFiltered() {
+    const search  = document.getElementById('search-input').value.toLowerCase();
+    const status  = document.getElementById('status-filter').value;
+    const year    = document.getElementById('year-filter').value;
+    const program = document.getElementById('program-filter').value;
+    return MOCK_ALUMNI.filter(a => {
+      const matchSearch  = !search  || a.name.toLowerCase().includes(search) || a.email.toLowerCase().includes(search) || a.occupation.toLowerCase().includes(search);
+      const matchStatus  = !status  || a.status === status;
+      const matchYear    = !year    || String(a.gradYear) === year;
+      const matchProgram = !program || a.program === program;
+      return matchSearch && matchStatus && matchYear && matchProgram;
+    });
+  }
+
+  function renderCards(filtered) {
+    const grid = document.getElementById('alumni-grid');
+    if (filtered.length === 0) {
+      grid.innerHTML = '';
+      document.getElementById('no-results-cards').style.display = 'block';
+      return;
+    }
+    document.getElementById('no-results-cards').style.display = 'none';
+    grid.innerHTML = filtered.map((a, i) => `
+      <div class="alumni-card">
+        <div class="alumni-card__header">
+          <div class="avatar ${avColor(i)}" style="width:42px;height:42px;font-size:14px;">${initials(a.name)}</div>
+          <div>
+            <div class="alumni-card__name">${a.name}</div>
+            <div class="alumni-card__meta">Class of ${a.gradYear} &nbsp;·&nbsp; ${a.program}</div>
+          </div>
+        </div>
+        <div class="alumni-card__body">
+          <div class="alumni-card__row">
+            <i class="fas fa-briefcase"></i>
+            <span>${a.occupation}</span>
+          </div>
+          <div class="alumni-card__row">
+            <i class="fas fa-building"></i>
+            <span>${a.employer}</span>
+          </div>
+          <div class="alumni-card__row">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>${a.location}</span>
+          </div>
+          <div class="alumni-card__row">
+            <i class="fas fa-envelope"></i>
+            <span style="color:#2563eb;">${a.email}</span>
+          </div>
+        </div>
+        <div class="alumni-card__footer">
+          <span class="badge ${STATUS_BADGE[a.status]}">${a.status}</span>
+          <div class="action-btns">
+            <button class="btn btn--icon" title="View" onclick="alert('Profile: ${a.name}')"><i class="fas fa-eye"></i></button>
+            <button class="btn btn--icon" title="Edit" onclick="alert('Edit: ${a.name}')"><i class="fas fa-pen"></i></button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function renderTable(filtered) {
+    const tbody = document.getElementById('alumni-table-body');
+    if (filtered.length === 0) {
+      tbody.innerHTML = '';
+      document.getElementById('no-results-table').style.display = 'block';
+      return;
+    }
+    document.getElementById('no-results-table').style.display = 'none';
+    tbody.innerHTML = filtered.map((a, i) => `
+      <tr>
+        <td class="cell-user">
+          <div class="avatar ${avColor(i)}" style="width:34px;height:34px;font-size:12px;">${initials(a.name)}</div>
+          <div class="user-info">
+            <span class="user-info__name">${a.name}</span>
+            <span class="user-info__email">${a.email}</span>
+          </div>
+        </td>
+        <td class="cell-muted">${a.gradYear}</td>
+        <td class="cell-muted">${a.program}</td>
+        <td><span class="badge ${STATUS_BADGE[a.status]}">${a.status}</span></td>
+        <td class="cell-muted">${a.occupation}</td>
+        <td class="cell-muted">${a.location}</td>
+        <td>
+          <div class="action-btns">
+            <button class="btn btn--icon" title="View" onclick="alert('Profile: ${a.name}')"><i class="fas fa-eye"></i></button>
+            <button class="btn btn--icon" title="Edit" onclick="alert('Edit: ${a.name}')"><i class="fas fa-pen"></i></button>
+            <button class="btn btn--icon" title="Delete" onclick="alert('Delete: ${a.name}')"><i class="fas fa-trash"></i></button>
+          </div>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  function renderAlumni() {
+    const filtered = getFiltered();
+    renderCards(filtered);
+    renderTable(filtered);
+    document.getElementById('results-count').textContent =
+      `Showing ${filtered.length} of ${MOCK_ALUMNI.length} alumni`;
+  }
+
+  function switchView(view) {
+    currentView = view;
+    document.getElementById('alumni-cards-view').style.display = view === 'cards' ? 'block' : 'none';
+    document.getElementById('alumni-table-view').style.display = view === 'table'  ? 'block' : 'none';
+    document.getElementById('btn-cards').classList.toggle('active', view === 'cards');
+    document.getElementById('btn-table').classList.toggle('active', view === 'table');
+  }
+
+  // Init
+  buildYearFilter();
+  buildStats();
+  renderAlumni();
+</script>
+
+</body>
+</html>
