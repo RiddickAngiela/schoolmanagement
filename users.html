@@ -22,16 +22,36 @@
   <aside class="sidebar">
     <div class="sidebar-nav">
       <ul>
-        <li class="nav-item" data-page="dashboard"><a href="index.html"><i class="fas fa-chalkboard-user"></i> Dashboard</a></li>
-        <li class="nav-item active" data-page="users"><a href="users.html"><i class="fas fa-users"></i> Users</a></li>
-        <li class="nav-item" data-page="alumni"><a href="#"><i class="fas fa-graduation-cap"></i> Alumni</a></li>
-        <li class="nav-item" data-page="academic"><a href="#"><i class="fas fa-book-open"></i> Academic</a></li>
-        <li class="nav-item" data-page="liveclass"><a href="#"><i class="fas fa-video"></i> Live class</a></li>
-        <li class="nav-item" data-page="examination"><a href="#"><i class="fas fa-pen-alt"></i> Examination</a></li>
-        <li class="nav-item" data-page="accounting"><a href="#"><i class="fas fa-calculator"></i> Accounting</a></li>
-        <li class="nav-item" data-page="backoffice"><a href="#"><i class="fas fa-archive"></i> Back office</a></li>
-        <li class="nav-item" data-page="onlinecourses"><a href="#"><i class="fas fa-laptop-code"></i> Online courses</a></li>
-        <li class="nav-item" data-page="settings"><a href="#"><i class="fas fa-sliders-h"></i> Settings</a></li>
+        <li class="nav-item" data-page="dashboard">
+          <a href="index.html"><i class="fas fa-chalkboard-user"></i> Dashboard</a>
+        </li>
+        <li class="nav-item active" data-page="users">
+          <a href="users.html"><i class="fas fa-users"></i> Users</a>
+        </li>
+        <li class="nav-item" data-page="alumni">
+          <a href="alumni.html"><i class="fas fa-graduation-cap"></i> Alumni</a>
+        </li>
+        <li class="nav-item" data-page="academic">
+          <a href="#"><i class="fas fa-book-open"></i> Academic</a>
+        </li>
+        <li class="nav-item" data-page="liveclass">
+          <a href="#"><i class="fas fa-video"></i> Live class</a>
+        </li>
+        <li class="nav-item" data-page="examination">
+          <a href="#"><i class="fas fa-pen-alt"></i> Examination</a>
+        </li>
+        <li class="nav-item" data-page="accounting">
+          <a href="#"><i class="fas fa-calculator"></i> Accounting</a>
+        </li>
+        <li class="nav-item" data-page="backoffice">
+          <a href="#"><i class="fas fa-archive"></i> Back office</a>
+        </li>
+        <li class="nav-item" data-page="onlinecourses">
+          <a href="#"><i class="fas fa-laptop-code"></i> Online courses</a>
+        </li>
+        <li class="nav-item" data-page="settings">
+          <a href="#"><i class="fas fa-sliders-h"></i> Settings</a>
+        </li>
       </ul>
     </div>
   </aside>
@@ -90,6 +110,16 @@
 <!-- Shared data -->
 <script src="mock-data.js"></script>
 <script>
+  // Handle placeholder links (href="#") - show blank page
+  document.querySelectorAll('.nav-item a[href="#"]').forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      const page = this.closest('.nav-item').getAttribute('data-page');
+      // Redirect to index with page parameter
+      window.location.href = `index.html?page=${page}`;
+    });
+  });
+
   function initials(name) {
     return name.replace(/^(Mr\.|Ms\.|Dr\.)\s*/i, '').split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase();
   }

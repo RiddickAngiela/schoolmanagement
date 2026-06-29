@@ -22,16 +22,36 @@
     <aside class="sidebar">
         <div class="sidebar-nav">
             <ul>
-                <li class="nav-item active" data-page="dashboard"><a href="index.html"><i class="fas fa-chalkboard-user"></i> Dashboard</a></li>
-                <li class="nav-item" data-page="users"><a href="users.html"><i class="fas fa-users"></i> Users</a></li>
-                <li class="nav-item" data-page="alumni"><a href="alumni.html"><i class="fas fa-graduation-cap"></i> Alumni</a></li>
-                <li class="nav-item" data-page="academic"><a href="#"><i class="fas fa-book-open"></i> Academic</a></li>
-                <li class="nav-item" data-page="liveclass"><a href="#"><i class="fas fa-video"></i> Live class</a></li>
-                <li class="nav-item" data-page="examination"><a href="#"><i class="fas fa-pen-alt"></i> Examination</a></li>
-                <li class="nav-item" data-page="accounting"><a href="#"><i class="fas fa-calculator"></i> Accounting</a></li>
-                <li class="nav-item" data-page="backoffice"><a href="#"><i class="fas fa-archive"></i> Back office</a></li>
-                <li class="nav-item" data-page="onlinecourses"><a href="#"><i class="fas fa-laptop-code"></i> Online courses</a></li>
-                <li class="nav-item" data-page="settings"><a href="#"><i class="fas fa-sliders-h"></i> Settings</a></li>
+                <li class="nav-item active" data-page="dashboard">
+                    <a href="index.html"><i class="fas fa-chalkboard-user"></i> Dashboard</a>
+                </li>
+                <li class="nav-item" data-page="users">
+                    <a href="users.html"><i class="fas fa-users"></i> Users</a>
+                </li>
+                <li class="nav-item" data-page="alumni">
+                    <a href="alumni.html"><i class="fas fa-graduation-cap"></i> Alumni</a>
+                </li>
+                <li class="nav-item" data-page="academic">
+                    <a href="#"><i class="fas fa-book-open"></i> Academic</a>
+                </li>
+                <li class="nav-item" data-page="liveclass">
+                    <a href="#"><i class="fas fa-video"></i> Live class</a>
+                </li>
+                <li class="nav-item" data-page="examination">
+                    <a href="#"><i class="fas fa-pen-alt"></i> Examination</a>
+                </li>
+                <li class="nav-item" data-page="accounting">
+                    <a href="#"><i class="fas fa-calculator"></i> Accounting</a>
+                </li>
+                <li class="nav-item" data-page="backoffice">
+                    <a href="#"><i class="fas fa-archive"></i> Back office</a>
+                </li>
+                <li class="nav-item" data-page="onlinecourses">
+                    <a href="#"><i class="fas fa-laptop-code"></i> Online courses</a>
+                </li>
+                <li class="nav-item" data-page="settings">
+                    <a href="#"><i class="fas fa-sliders-h"></i> Settings</a>
+                </li>
             </ul>
         </div>
     </aside>
@@ -246,30 +266,24 @@ function updateActiveNav(pageName) {
 document.addEventListener('DOMContentLoaded', function() {
     if (!checkAuth()) return;
 
-    // Sidebar navigation - handle page routing
+    // Handle sidebar navigation - only intercept non-existent pages
     document.querySelectorAll('.nav-item').forEach(item => {
-        item.addEventListener('click', function(e) {
-            const page = this.getAttribute('data-page');
-            const link = this.querySelector('a');
-            const href = link.getAttribute('href');
-            
-            // For pages that have actual HTML files, let the browser navigate normally
-            if (page === 'users' || page === 'alumni' || page === 'dashboard') {
-                // Just let the link work - do NOT prevent default
-                return;
-            }
-            
-            // For other pages, prevent default and show blank page
-            e.preventDefault();
-            showBlankPage(page);
-        });
+        const link = item.querySelector('a');
+        const href = link.getAttribute('href');
+        
+        // If href is '#', it's a placeholder - intercept and show blank page
+        if (href === '#') {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                const page = this.getAttribute('data-page');
+                showBlankPage(page);
+            });
+        }
+        // If href points to an actual HTML file, let it navigate normally
+        // No need to add event listener - default behavior works
     });
 
     // Top navigation
-    document.getElementById('dashboardNavLink').addEventListener('click', function(e) {
-        // Already navigating to index.html via href
-    });
-
     document.getElementById('profileNavLink').addEventListener('click', function(e) {
         e.preventDefault();
         showBlankPage('profile');
@@ -280,7 +294,7 @@ document.addEventListener('DOMContentLoaded', function() {
         logout();
     });
 
-    // Check if we're on the dashboard page
+    // Show the dashboard
     showDashboard();
 });
 
