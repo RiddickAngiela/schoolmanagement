@@ -1,0 +1,1570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings · EduSystem</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* ============================================================
+           Settings page styles
+           ============================================================ */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --primary-color: #3b82f6;
+            --primary-dark: #2563eb;
+            --primary-light: #60a5fa;
+            --secondary-color: #2c6e9e;
+            --secondary-dark: #1e4b6e;
+            --dark-bg: #1e293b;
+            --sidebar-bg: #ffffff;
+            --main-bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-primary: #0f172a;
+            --text-secondary: #334155;
+            --text-muted: #64748b;
+            --text-light: #94a3b8;
+            --border-light: #eef2f6;
+            --border-medium: #e2e8f0;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #3b82f6;
+            --purple: #8b5cf6;
+            --pink: #ec489a;
+            --orange: #f97316;
+            --teal: #14b8a6;
+            --indigo: #4f46e5;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+            --radius-xl: 24px;
+            --radius-full: 40px;
+            --transition-fast: 0.2s ease;
+            --transition-normal: 0.3s ease;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* ---------- navbar ---------- */
+        .navbar {
+            background-color: var(--dark-bg);
+            color: white;
+            padding: 0 28px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--shadow-sm);
+            z-index: 10;
+            position: sticky;
+            top: 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+            background: linear-gradient(135deg, #fff, var(--text-light));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .logo i {
+            background: none;
+            -webkit-background-clip: unset;
+            background-clip: unset;
+            color: var(--text-light);
+            margin-right: var(--spacing-sm);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: var(--spacing-md);
+        }
+
+        .nav-links a {
+            color: #e2e8f0;
+            text-decoration: none;
+            padding: var(--spacing-sm) var(--spacing-md);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: var(--transition-fast);
+            cursor: pointer;
+            border-radius: var(--radius-sm);
+        }
+
+        .nav-links a i {
+            margin-right: 6px;
+            font-size: 0.9rem;
+        }
+
+        .nav-links a:hover {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* ---------- app wrapper + sidebar ---------- */
+        .app-wrapper {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .sidebar {
+            width: 260px;
+            background-color: var(--sidebar-bg);
+            border-right: 1px solid var(--border-light);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            box-shadow: 1px 0 0 rgba(0, 0, 0, 0.02);
+        }
+
+        .sidebar-nav {
+            padding: var(--spacing-lg) 0 var(--spacing-xl) 0;
+        }
+
+        .sidebar-nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-nav li {
+            margin: 2px 0;
+            cursor: pointer;
+        }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            padding: 10px 24px;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: var(--transition-fast);
+            gap: var(--spacing-md);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .sidebar-nav a i {
+            width: 22px;
+            font-size: 1.1rem;
+            color: #5b6e8c;
+            transition: var(--transition-fast);
+        }
+
+        .sidebar-nav li.active a,
+        .sidebar-nav a:hover {
+            background-color: #f1f5f9;
+            color: var(--secondary-color);
+        }
+
+        .sidebar-nav li.active a {
+            border-left: 3px solid var(--secondary-color);
+            padding-left: 21px;
+        }
+
+        .sidebar-nav a:hover {
+            padding-left: 21px;
+        }
+
+        .sidebar-nav li.active a i,
+        .sidebar-nav a:hover i {
+            color: var(--secondary-color);
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .sidebar::-webkit-scrollbar-track {
+            background: var(--border-light);
+        }
+        .sidebar::-webkit-scrollbar-thumb {
+            background: var(--text-light);
+            border-radius: 3px;
+        }
+
+        /* ---------- main content ---------- */
+        .main-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 28px 32px;
+            background: var(--main-bg);
+        }
+
+        .main-content::-webkit-scrollbar {
+            width: 8px;
+        }
+        .main-content::-webkit-scrollbar-track {
+            background: var(--border-light);
+        }
+        .main-content::-webkit-scrollbar-thumb {
+            background: var(--text-light);
+            border-radius: 4px;
+        }
+
+        /* ---------- settings specific ---------- */
+        .settings-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .settings-header h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .settings-header .subtitle {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .settings-header .subtitle i {
+            color: var(--warning);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: var(--spacing-sm);
+            align-items: center;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            height: 36px;
+            padding: 0 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            color: #374151;
+            background: #fff;
+            transition: background 0.15s, border-color 0.15s;
+            white-space: nowrap;
+        }
+
+        .btn:hover {
+            background: #f9fafb;
+            border-color: #9ca3af;
+        }
+
+        .btn--primary {
+            background: var(--primary-color);
+            color: #fff;
+            border-color: var(--primary-color);
+        }
+        .btn--primary:hover {
+            background: var(--primary-dark);
+            border-color: var(--primary-dark);
+        }
+
+        .btn--success {
+            background: var(--success);
+            color: #fff;
+            border-color: var(--success);
+        }
+        .btn--success:hover {
+            background: #059669;
+            border-color: #059669;
+        }
+
+        .btn--danger {
+            background: var(--danger);
+            color: #fff;
+            border-color: var(--danger);
+        }
+        .btn--danger:hover {
+            background: #dc2626;
+            border-color: #dc2626;
+        }
+
+        .btn--purple {
+            background: var(--purple);
+            color: #fff;
+            border-color: var(--purple);
+        }
+        .btn--purple:hover {
+            background: #7c3aed;
+            border-color: #7c3aed;
+        }
+
+        /* ----- settings tabs ----- */
+        .settings-tabs {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-xl);
+            flex-wrap: wrap;
+            border-bottom: 2px solid var(--border-light);
+            padding-bottom: var(--spacing-sm);
+        }
+
+        .settings-tabs .tab-btn {
+            padding: 10px 20px;
+            border: none;
+            background: transparent;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-radius: var(--radius-sm);
+            transition: var(--transition-fast);
+            position: relative;
+        }
+
+        .settings-tabs .tab-btn:hover {
+            color: var(--text-primary);
+            background: var(--border-light);
+        }
+
+        .settings-tabs .tab-btn.active {
+            color: var(--primary-color);
+            background: #eef2ff;
+        }
+
+        .settings-tabs .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--primary-color);
+        }
+
+        .settings-tabs .tab-btn i {
+            margin-right: 6px;
+        }
+
+        /* ----- settings panels ----- */
+        .settings-panel {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .settings-panel.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ----- settings sections ----- */
+        .settings-section {
+            background: var(--card-bg);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-xl);
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-md);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .settings-section .section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-lg);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .settings-section .section-title i {
+            color: var(--primary-color);
+        }
+
+        .settings-section .section-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        /* ----- settings items ----- */
+        .setting-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--spacing-md) 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .setting-row:last-child {
+            border-bottom: none;
+        }
+
+        .setting-row .setting-info {
+            flex: 1;
+        }
+
+        .setting-row .setting-info .setting-label {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .setting-row .setting-info .setting-description {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .setting-row .setting-control {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        /* ----- toggle switch ----- */
+        .toggle-switch {
+            width: 48px;
+            height: 26px;
+            background: var(--border-medium);
+            border-radius: var(--radius-full);
+            cursor: pointer;
+            transition: var(--transition-fast);
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .toggle-switch.active {
+            background: var(--success);
+        }
+
+        .toggle-switch .toggle-dot {
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            transition: var(--transition-fast);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .toggle-switch.active .toggle-dot {
+            left: 25px;
+        }
+
+        /* ----- input fields ----- */
+        .setting-input {
+            padding: 8px 14px;
+            border: 1px solid var(--border-medium);
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+            font-family: inherit;
+            outline: none;
+            transition: var(--transition-fast);
+            width: 200px;
+        }
+
+        .setting-input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .setting-select {
+            padding: 8px 14px;
+            border: 1px solid var(--border-medium);
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+            font-family: inherit;
+            outline: none;
+            background: white;
+            cursor: pointer;
+        }
+
+        /* ----- color picker ----- */
+        .color-picker-wrapper {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .color-picker-wrapper input[type="color"] {
+            width: 36px;
+            height: 36px;
+            border: 2px solid var(--border-medium);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            padding: 2px;
+        }
+
+        .color-picker-wrapper input[type="color"]::-webkit-color-swatch-wrapper {
+            padding: 0;
+        }
+
+        .color-picker-wrapper input[type="color"]::-webkit-color-swatch {
+            border: none;
+            border-radius: 4px;
+        }
+
+        /* ----- page management grid ----- */
+        .page-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: var(--spacing-md);
+        }
+
+        .page-card {
+            background: var(--main-bg);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-md);
+            border: 1px solid var(--border-light);
+            transition: var(--transition-normal);
+        }
+
+        .page-card:hover {
+            border-color: var(--primary-color);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .page-card .page-header {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .page-card .page-header i {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
+
+        .page-card .page-header .page-name {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .page-card .page-status {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .page-card .page-status .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .page-card .page-status .status-dot.active {
+            background: var(--success);
+        }
+
+        .page-card .page-status .status-dot.inactive {
+            background: var(--danger);
+        }
+
+        .page-card .page-actions {
+            margin-top: var(--spacing-sm);
+            display: flex;
+            gap: var(--spacing-sm);
+        }
+
+        /* ----- role management ----- */
+        .role-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            border-radius: var(--radius-full);
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .role-badge.admin {
+            background: #dbeafe;
+            color: #1e3a8a;
+        }
+
+        .role-badge.teacher {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .role-badge.student {
+            background: #ede9fe;
+            color: #5b21b6;
+        }
+
+        .role-badge.parent {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        /* ----- permission checkboxes ----- */
+        .permission-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: var(--spacing-sm);
+        }
+
+        .permission-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-sm);
+            border-radius: var(--radius-sm);
+            background: var(--main-bg);
+        }
+
+        .permission-item input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            accent-color: var(--primary-color);
+        }
+
+        .permission-item label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+
+        /* ----- notification settings ----- */
+        .notification-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            padding: var(--spacing-sm) 0;
+        }
+
+        .notification-item .notif-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .notification-item .notif-info {
+            flex: 1;
+        }
+
+        .notification-item .notif-info .notif-name {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .notification-item .notif-info .notif-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* ---------- responsive ---------- */
+        @media (max-width: 1000px) {
+            .main-content {
+                padding: var(--spacing-lg);
+            }
+            .sidebar {
+                width: 220px;
+            }
+            .page-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+        }
+
+        @media (max-width: 700px) {
+            .app-wrapper {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid var(--border-medium);
+                max-height: 300px;
+            }
+            body {
+                overflow: auto;
+                height: auto;
+            }
+            .navbar {
+                padding: 0 var(--spacing-md);
+            }
+            .nav-links {
+                gap: var(--spacing-sm);
+            }
+            .nav-links a {
+                padding: var(--spacing-sm) var(--spacing-sm);
+            }
+            .settings-tabs {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                padding-bottom: 4px;
+            }
+            .settings-tabs .tab-btn {
+                white-space: nowrap;
+                padding: 8px 14px;
+                font-size: 0.8rem;
+            }
+            .setting-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: var(--spacing-sm);
+            }
+            .setting-row .setting-control {
+                width: 100%;
+            }
+            .setting-input {
+                width: 100%;
+            }
+            .permission-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .settings-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .settings-section {
+                padding: var(--spacing-lg);
+            }
+            .page-grid {
+                grid-template-columns: 1fr;
+            }
+            .permission-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ----- notification toast ----- */
+        .custom-notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            border-radius: 8px;
+            color: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 9999;
+            font-size: 0.9rem;
+            animation: slideUp 0.3s ease;
+            max-width: 350px;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="logo"><i class="fas fa-school"></i> EduSystem</div>
+        <div class="nav-links">
+            <a href="index.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a href="#" id="profileNavLink"><i class="far fa-user-circle"></i> Profile</a>
+            <a href="#" id="logoutBtnNav"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </div>
+    </header>
+
+    <div class="app-wrapper">
+        <aside class="sidebar">
+            <div class="sidebar-nav">
+                <ul>
+                    <li class="nav-item" data-page="dashboard"><a href="index.html"><i class="fas fa-chalkboard-user"></i> Dashboard</a></li>
+                    <li class="nav-item" data-page="users"><a href="users.html"><i class="fas fa-users"></i> Users</a></li>
+                    <li class="nav-item" data-page="academic"><a href="academics.html"><i class="fas fa-book-open"></i> Academic</a></li>
+                    <li class="nav-item" data-page="examination"><a href="examination.html"><i class="fas fa-pen-alt"></i> Examination</a></li>
+                    <li class="nav-item" data-page="liveclass"><a href="liveclass.html"><i class="fas fa-video"></i> Live class</a></li>
+                    <li class="nav-item" data-page="onlinecourses"><a href="onlinecourses.html"><i class="fas fa-laptop-code"></i> Online courses</a></li>
+                    <li class="nav-item" data-page="accounting"><a href="accounting.html"><i class="fas fa-calculator"></i> Accounting</a></li>
+                    <li class="nav-item" data-page="backoffice"><a href="backoffice.html"><i class="fas fa-archive"></i> Back office</a></li>
+                    <li class="nav-item active" data-page="settings"><a href="settings.html"><i class="fas fa-sliders-h"></i> Settings</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <main class="main-content" id="mainContent">
+            <!-- ========== SETTINGS PAGE CONTENT ========== -->
+            <div class="settings-header">
+                <div>
+                    <h1><i class="fas fa-sliders-h" style="color: var(--primary-color); margin-right: 8px;"></i>Settings</h1>
+                    <div class="subtitle"><i class="fas fa-cog"></i> Manage all system settings and configurations</div>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn--primary" onclick="saveAllSettings()"><i class="fas fa-save"></i> Save All</button>
+                    <button class="btn" onclick="resetSettings()"><i class="fas fa-undo"></i> Reset</button>
+                </div>
+            </div>
+
+            <!-- Settings Tabs -->
+            <div class="settings-tabs">
+                <button class="tab-btn active" data-tab="general" onclick="switchTab('general')">
+                    <i class="fas fa-cog"></i> General
+                </button>
+                <button class="tab-btn" data-tab="pages" onclick="switchTab('pages')">
+                    <i class="fas fa-file-alt"></i> Pages
+                </button>
+                <button class="tab-btn" data-tab="roles" onclick="switchTab('roles')">
+                    <i class="fas fa-users-cog"></i> Roles & Permissions
+                </button>
+                <button class="tab-btn" data-tab="notifications" onclick="switchTab('notifications')">
+                    <i class="fas fa-bell"></i> Notifications
+                </button>
+                <button class="tab-btn" data-tab="security" onclick="switchTab('security')">
+                    <i class="fas fa-shield-alt"></i> Security
+                </button>
+                <button class="tab-btn" data-tab="system" onclick="switchTab('system')">
+                    <i class="fas fa-server"></i> System
+                </button>
+            </div>
+
+            <!-- ====== GENERAL TAB ====== -->
+            <div class="settings-panel active" id="tab-general">
+                <div class="settings-section">
+                    <div class="section-title"><i class="fas fa-globe"></i> General Settings</div>
+                    <div class="section-desc">Configure basic system settings and preferences.</div>
+
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <div class="setting-label">School Name</div>
+                            <div class="setting-description">The name of your institution</div>
+                        </div>
+                        <div class="setting-control">
+                            <input type="text" class="setting-input" value="EduSystem School" id="schoolName">
+                        </div>
+                    </div>
+
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <div class="setting-label">School Tagline</div>
+                            <div class="setting-description">Short description of your school</div>
+                        </div>
+                        <div class="setting-control">
+                            <input type="text" class="setting-input" value="Empowering Education for Tomorrow" id="schoolTagline">
+                        </div>
+                    </div>
+
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <div class="setting-label">Academic Year</div>
+                            <div class="setting-description">Current academic year</div>
+                        </div>
+                        <div class="setting-control">
+                            <select class="setting-select" id="academicYear">
+                                <option value="2024">2024</option>
+                                <option value="2025" selected>2025</option>
+                                <option value="2026">2026</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <div class="setting-label">Semester</div>
+                            <div class="setting-description">Current semester</div>
+                        </div>
+                        <div class="setting-control">
+                            <select class="setting-select" id="semester">
+                                <option value="1">Semester 1</option>
+                                <option value="2" selected>Semester 2</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <div class="setting-label">Default Language</div>
+                            <div class="setting-description">System interface language</div>
+                        </div>
+                        <div class="setting-control">
+                            <select class="setting-select" id="defaultLanguage">
+                                <option value="en" selected>English</option>
+                                <option value="sw">Swahili</option>
+                                <option value="fr">French</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <div class="setting-label">Time Zone</div>
+                            <div class="setting-description">System time zone</div>
+                        </div>
+                        <div class="setting-control">
+                            <select class="setting-select" id="timeZone">
+                                <option value="Africa/Nairobi" selected>Africa/Nairobi (UTC+3)</option>
+                                <option value="Africa/Lagos">Africa/Lagos (UTC+1)</option>
+                                <option value="Africa/Cairo">Africa/Cairo (UTC+2)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <div class="setting-label">Primary Color</div>
+                            <div class="setting-description">Main brand color for the system</div>
+                        </div>
+                        <div class="setting-control">
+                            <div class="color-picker-wrapper">
+                                <input type="color" value="#3b82f6" id="primaryColor">
+                                <span style="font-size:0.85rem; color:var(--text-muted);">#3b82f6</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <div class="section-title"><i class="fas fa-currency-sign"></i> Currency & Finance</div>
+                    <div class="section-desc">Configure financial settings for the system.</div>
+
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <div class="setting-label">Default Currency</div>
+                            <div class="setting-description">Currency used for financial transactions</div>
+                        </div>
+                        <div class="setting-control">
+                            <select class="setting-select" id="defaultCurrency">
+                                <option value="KES" selected>KES - Kenyan Shilling</option>
+                                <option value="USD">USD - US Dollar</option>
+                                <option value="EUR">EUR - Euro</option>
+                                <option value="GBP">GBP - British Pound</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <div class="setting-label">Tax Rate</div>
+                            <div class="setting-description">Default tax rate for invoices</div>
+                        </div>
+                        <div class="setting-control">
+                            <input type="text" class="setting-input" value="16%" id="taxRate" style="width:100px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ====== PAGES TAB ====== -->
+            <div class="settings-panel" id="tab-pages">
+                <div class="settings-section">
+                    <div class="section-title"><i class="fas fa-file-alt"></i> Page Management</div>
+                    <div class="section-desc">Enable or disable pages across the system.</div>
+
+                    <div class="page-grid">
+                        <div class="page-card">
+                            <div class="page-header">
+                                <i class="fas fa-chalkboard-user"></i>
+                                <span class="page-name">Dashboard</span>
+                            </div>
+                            <div class="page-status">
+                                <span class="status-dot active"></span> Active
+                            </div>
+                            <div class="page-actions">
+                                <button class="btn" style="height:28px; padding:0 12px; font-size:0.8rem;" onclick="togglePage(this)">Disable</button>
+                                <button class="btn" style="height:28px; padding:0 12px; font-size:0.8rem;" onclick="showNotification('Dashboard settings opened', 'info')">Settings</button>
+                            </div>
+                        </div>
+
+                        <div class="page-card">
+                            <div class="page-header">
+                                <i class="fas fa-users"></i>
+                                <span class="page-name">Users</span>
+                            </div>
+                            <div class="page-status">
+                                <span class="status-dot active"></span> Active
+                            </div>
+                            <div class="page-actions">
+                                <button class="btn" style="height:28px; padding:0 12px; font-size:0.8rem;" onclick="togglePage(this)">Disable</button>
+                                <button class="btn" style="height:28px; padding:0 12px; font-size:0.8rem;" onclick="showNotification('Users page settings opened', 'info')">Settings</button>
+                            </div>
+                        </div>
+
+                        <div class="page-card">
+                            <div class="page-header">
+                                <i class="fas fa-book-open"></i>
+                                <span class="page-name">Academic</span>
+                            </div>
+                            <div class="page-status">
+                                <span class="status-dot active"></span> Active
+                            </div>
+                            <div class="page-actions">
+                                <button class="btn" style="height:28px; padding:0 12px; font-size:0.8rem;" onclick="togglePage(this)">Disable</button>
+                                <button class="btn" style="height:28px; padding:0 12px; font-size:0.8rem;" onclick="showNotification('Academic settings opened', 'info')">Settings</button>
+                            </div>
+                        </div>
+
+                        <div class="page-card">
+                            <div class="page-header">
+                                <i class="fas fa-pen-alt"></i>
+                                <span class="page-name">Examination</span>
+                            </div>
+                            <div class="page-status">
+                                <span class="status-dot active"></span> Active
+                            </div>
+                            <div class="page-actions">
+                                <button class="btn" style="height:28px; padding:0 12px; font-size:0.8rem;" onclick="togglePage(this)">Disable</button>
+                                <button class="btn" style="height:28px; padding:0 12px; font-size:0.8rem;" onclick="showNotification('Examination settings opened', 'info')">Settings</button>
+                            </div>
+                        </div>
+
+                        <div class="page-card">
+                            <div class="page-header">
+                                <i class="fas fa-video"></i>
+                                <span class="page-name">Live Class</span>
+                            </div>
+                            <div class="page-status">
+                                <span class="status-dot active"></span> Active
+                            </div>
+                            <div class="page-actions">
+                                <button class="btn" style="height:28px; padding:0 12px; font-size:0.8rem;" onclick="togglePage(this)">Disable</button>
+                                <button class="btn" style="height:28px; padding:0 12px; font-size:0.8rem;" onclick="showNotification('Live class settings opened', 'info')">Settings</button>
+                            </div>
+                        </div>
+
+                        <div class="page-card">
+                            <div class="page-header">
+                                <i class="fas fa-laptop-code"></i>
+                                <span class="page-name">Online Courses</span>
+                            </div>
+                            <div class="page-status">
+                                <span class="status-dot active"></span> Active
+                            </div>
+                            <div class="page-actions">
+                                <button class="btn" style="height:28px; padding:0 12px; font-size:0.8rem;" onclick="togglePage(this)">Disable</button>
+                                <button class="btn" style="height:28px; padding:0 12px; font-size:0.8rem;" onclick="showNotification('Online courses settings opened', 'info')">Settings</button>
+                            </div>
+                        </div>
+
+                        <div class="page-card">
+                            <div class="page-header">
+                                <i class="fas fa-calculator"></i>
+                                <span class="page-name">Accounting</span>
+                            </div>
+                            <div class="page-status">
+                                <span class="status-dot active"></span> Active
+                            </div>
+                            <div class="page-actions">
+                                <button class="btn" style="height:28px; padding:0 12px; font-size:0.8rem;" onclick="togglePage(this)">Disable</button>
+                                <button class="btn" style="height:28px; padding:0 12px; font-size:0.8rem;" onclick="showNotification('Accounting settings opened', 'info')">Settings</button>
+                            </div>
+                        </div>
+
+                        <div class="page-card">
+                            <div class="page-header">
+                                <i class="fas fa-archive"></i>
+                                <span class="page-name">Back Office</span>
+                            </div>
+                            <div class="page-status">
+                                <span class="status-dot active"></span> Active
+                            </div>
+                            <div class="page-actions">
+                                <button class="btn" style="height:28px; padding:0 12px; font-size:0.8rem;" onclick="togglePage(this)">Disable</button>
+                                <button class="btn" style="height:28px; padding:0 12px; font-size:0.8rem;" onclick="showNotification('Back office settings opened', 'info')">Settings</button>
+                            </div>
+                        </div>
+
+                        <div class="page-card">
+                            <div class="page-header">
+                                <i class="fas fa-sliders-h"></i>
+                                <span class="page-name">Settings</span>
+                            </div>
+                            <div class="page-status">
+                                <span class="status-dot active"></span> Active
+                            </div>
+                            <div class="page-actions">
+                                <button class="btn" style="height:28px; padding:0 12px; font-size:0.8rem;" onclick="togglePage(this)">Disable</button>
+                                <button class="btn" style="height:28px; padding:0 12px; font-size:0.8rem;" onclick="showNotification('Settings page opened', 'info')">Settings</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ====== ROLES & PERMISSIONS TAB ====== -->
+            <div class="settings-panel" id="tab-roles">
+                <div class="settings-section">
+                    <div class="section-title"><i class="fas fa-users-cog"></i> Role Management</div>
+                    <div class="section-desc">Configure user roles and their permissions across the system.</div>
+
+                    <div style="display:flex; gap:var(--spacing-md); flex-wrap:wrap; margin-bottom:var(--spacing-lg);">
+                        <div class="role-badge admin"><i class="fas fa-user-shield"></i> Admin</div>
+                        <div class="role-badge teacher"><i class="fas fa-chalkboard-teacher"></i> Teacher</div>
+                        <div class="role-badge student"><i class="fas fa-user-graduate"></i> Student</div>
+                        <div class="role-badge parent"><i class="fas fa-user-friends"></i> Parent</div>
+                        <button class="btn btn--primary" style="height:30px; padding:0 14px; font-size:0.8rem;" onclick="showNotification('Add role form opened', 'info')">
+                            <i class="fas fa-plus"></i> Add Role
+                        </button>
+                    </div>
+
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <div class="setting-label">Admin Permissions</div>
+                            <div class="setting-description">Full access to all system features</div>
+                        </div>
+                        <div class="setting-control">
+                            <span class="badge" style="background:#dbeafe; color:#1e3a8a; padding:4px 16px;">Full Access</span>
+                        </div>
+                    </div>
+
+                    <div class="permission-grid" style="margin-top:var(--spacing-md);">
+                        <div class="permission-item">
+                            <input type="checkbox" checked>
+                            <label>View Dashboard</label>
+                        </div>
+                        <div class="permission-item">
+                            <input type="checkbox" checked>
+                            <label>Manage Users</label>
+                        </div>
+                        <div class="permission-item">
+                            <input type="checkbox" checked>
+                            <label>Manage Academic</label>
+                        </div>
+                        <div class="permission-item">
+                            <input type="checkbox" checked>
+                            <label>Manage Examinations</label>
+                        </div>
+                        <div class="permission-item">
+                            <input type="checkbox" checked>
+                            <label>Manage Live Classes</label>
+                        </div>
+                        <div class="permission-item">
+                            <input type="checkbox" checked>
+                            <label>Manage Online Courses</label>
+                        </div>
+                        <div class="permission-item">
+                            <input type="checkbox" checked>
+                            <label>Manage Accounting</label>
+                        </div>
+                        <div class="permission-item">
+                            <input type="checkbox" checked>
+                            <label>Manage Back Office</label>
+                        </div>
+                        <div class="permission-item">
+                            <input type="checkbox" checked>
+                            <label>Manage Settings</label>
+                        </div>
+                        <div class="permission-item">
+                            <input type="checkbox" checked>
+                            <label>View Reports</label>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: var(--spacing-lg);">
+                        <button class="btn btn--primary" onclick="showNotification('Permissions updated', 'success')"><i class="fas fa-save"></i> Update Permissions</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ====== NOTIFICATIONS TAB ====== -->
+            <div class="settings-panel" id="tab-notifications">
+                <div class="settings-section">
+                    <div class="section-title"><i class="fas fa-bell"></i> Notification Settings</div>
+                    <div class="section-desc">Configure notification preferences and alerts.</div>
+
+                    <div class="notification-item">
+                        <div class="notif-icon" style="background: var(--primary-color);"><i class="fas fa-envelope"></i></div>
+                        <div class="notif-info">
+                            <div class="notif-name">Email Notifications</div>
+                            <div class="notif-desc">Send system notifications via email</div>
+                        </div>
+                        <div class="toggle-switch active" onclick="toggleSetting(this)">
+                            <div class="toggle-dot"></div>
+                        </div>
+                    </div>
+
+                    <div class="notification-item">
+                        <div class="notif-icon" style="background: var(--success);"><i class="fas fa-sms"></i></div>
+                        <div class="notif-info">
+                            <div class="notif-name">SMS Notifications</div>
+                            <div class="notif-desc">Send SMS alerts to parents and staff</div>
+                        </div>
+                        <div class="toggle-switch" onclick="toggleSetting(this)">
+                            <div class="toggle-dot"></div>
+                        </div>
+                    </div>
+
+                    <div class="notification-item">
+                        <div class="notif-icon" style="background: var(--warning);"><i class="fas fa-bell"></i></div>
+                        <div class="notif-info">
+                            <div class="notif-name">Push Notifications</div>
+                            <div class="notif-desc">In-app notification alerts</div>
+                        </div>
+                        <div class="toggle-switch active" onclick="toggleSetting(this)">
+                            <div class="toggle-dot"></div>
+                        </div>
+                    </div>
+
+                    <div class="notification-item">
+                        <div class="notif-icon" style="background: var(--purple);"><i class="fas fa-calendar-check"></i></div>
+                        <div class="notif-info">
+                            <div class="notif-name">Exam Alerts</div>
+                            <div class="notif-desc">Notify students about upcoming exams</div>
+                        </div>
+                        <div class="toggle-switch active" onclick="toggleSetting(this)">
+                            <div class="toggle-dot"></div>
+                        </div>
+                    </div>
+
+                    <div class="notification-item">
+                        <div class="notif-icon" style="background: var(--danger);"><i class="fas fa-exclamation-triangle"></i></div>
+                        <div class="notif-info">
+                            <div class="notif-name">System Alerts</div>
+                            <div class="notif-desc">Critical system notifications</div>
+                        </div>
+                        <div class="toggle-switch active" onclick="toggleSetting(this)">
+                            <div class="toggle-dot"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ====== SECURITY TAB ====== -->
+            <div class="settings-panel" id="tab-security">
+                <div class="settings-section">
+                    <div class="section-title"><i class="fas fa-shield-alt"></i> Security Settings</div>
+                    <div class="section-desc">Configure security settings to protect your system.</div>
+
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <div class="setting-label">Two-Factor Authentication</div>
+                            <div class="setting-description">Require 2FA for all admin accounts</div>
+                        </div>
+                        <div class="setting-control">
+                            <div class="toggle-switch" onclick="toggleSetting(this)">
+                                <div class="toggle-dot"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <div class="setting-label">Session Timeout</div>
+                            <div class="setting-description">Auto-logout after inactivity</div>
+                        </div>
+                        <div class="setting-control">
+                            <select class="setting-select" id="sessionTimeout">
+                                <option value="15">15 minutes</option>
+                                <option value="30" selected>30 minutes</option>
+                                <option value="60">1 hour</option>
+                                <option value="120">2 hours</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <div class="setting-label">Password Policy</div>
+                            <div class="setting-description">Minimum password requirements</div>
+                        </div>
+                        <div class="setting-control">
+                            <select class="setting-select" id="passwordPolicy">
+                                <option value="basic">Basic (8 characters)</option>
+                                <option value="medium" selected>Medium (8 chars + numbers)</option>
+                                <option value="strong">Strong (8 chars + numbers + symbols)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <div class="setting-label">Failed Login Attempts</div>
+                            <div class="setting-description">Lock account after failed attempts</div>
+                        </div>
+                        <div class="setting-control">
+                            <select class="setting-select" id="failedAttempts">
+                                <option value="3">3 attempts</option>
+                                <option value="5" selected>5 attempts</option>
+                                <option value="10">10 attempts</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <div class="setting-label">IP Whitelisting</div>
+                            <div class="setting-description">Restrict access to specific IP addresses</div>
+                        </div>
+                        <div class="setting-control">
+                            <div class="toggle-switch" onclick="toggleSetting(this)">
+                                <div class="toggle-dot"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ====== SYSTEM TAB ====== -->
+            <div class="settings-panel" id="tab-system">
+                <div class="settings-section">
+                    <div class="section-title"><i class="fas fa-server"></i> System Configuration</div>
+                    <div class="section-desc">Manage system-level settings and maintenance.</div>
+
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <div class="setting-label">System Version</div>
+                            <div class="setting-description">Current system version</div>
+                        </div>
+                        <div class="setting-control">
+                            <span style="font-weight:600; color:var(--text-primary);">v2.5.1</span>
+                            <button class="btn" style="height:28px; padding:0 12px; font-size:0.8rem;" onclick="showNotification('Checking for updates...', 'info')">
+                                <i class="fas fa-sync"></i> Check Update
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <div class="setting-label">Auto Backup</div>
+                            <div class="setting-description">Scheduled database backups</div>
+                        </div>
+                        <div class="setting-control">
+                            <select class="setting-select" id="autoBackup">
+                                <option value="daily" selected>Daily</option>
+                                <option value="weekly">Weekly</option>
+                                <option value="monthly">Monthly</option>
+                                <option value="disabled">Disabled</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <div class="setting-label">Maintenance Mode</div>
+                            <div class="setting-description">Put the system under maintenance</div>
+                        </div>
+                        <div class="setting-control">
+                            <div class="toggle-switch" onclick="toggleSetting(this)">
+                                <div class="toggle-dot"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <div class="setting-label">Log Level</div>
+                            <div class="setting-description">System logging verbosity</div>
+                        </div>
+                        <div class="setting-control">
+                            <select class="setting-select" id="logLevel">
+                                <option value="error">Error</option>
+                                <option value="warn">Warning</option>
+                                <option value="info" selected>Info</option>
+                                <option value="debug">Debug</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="setting-row" style="border-bottom: none;">
+                        <div class="setting-info">
+                            <div class="setting-label">System Cache</div>
+                            <div class="setting-description">Clear system cache</div>
+                        </div>
+                        <div class="setting-control">
+                            <button class="btn btn--danger" onclick="showNotification('Cache cleared successfully', 'success')">
+                                <i class="fas fa-trash"></i> Clear Cache
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div style="display: flex; gap: var(--spacing-md); flex-wrap: wrap; justify-content: space-between; padding-top: 16px; border-top: 1px solid var(--border-light);">
+                <span style="font-size:0.8rem; color:var(--text-muted);"><i class="fas fa-clock"></i> Settings last updated: Today 17:30</span>
+                <a href="index.html" style="color: var(--secondary-color); text-decoration: none; font-weight:500;"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // ==================== AUTHENTICATION ====================
+        function isLoggedIn() {
+            return sessionStorage.getItem('loggedIn') === 'true';
+        }
+
+        function checkAuth() {
+            if (!isLoggedIn()) {
+                window.location.href = 'login.html';
+                return false;
+            }
+            return true;
+        }
+
+        function logout() {
+            sessionStorage.clear();
+            window.location.href = 'login.html';
+        }
+
+        // ==================== TAB SWITCHING ====================
+        function switchTab(tabName) {
+            // Update tab buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.tab === tabName) {
+                    btn.classList.add('active');
+                }
+            });
+
+            // Update panels
+            document.querySelectorAll('.settings-panel').forEach(panel => {
+                panel.classList.remove('active');
+                if (panel.id === 'tab-' + tabName) {
+                    panel.classList.add('active');
+                }
+            });
+        }
+
+        // ==================== SETTINGS TOGGLES ====================
+        function toggleSetting(element) {
+            element.classList.toggle('active');
+            const isActive = element.classList.contains('active');
+            const label = element.closest('.setting-row')?.querySelector('.setting-label')?.textContent ||
+                         element.closest('.notification-item')?.querySelector('.notif-name')?.textContent ||
+                         'Setting';
+            showNotification(`${label} ${isActive ? 'enabled' : 'disabled'}`, isActive ? 'success' : 'info');
+        }
+
+        // ==================== PAGE TOGGLES ====================
+        function togglePage(btn) {
+            const card = btn.closest('.page-card');
+            const statusDot = card.querySelector('.status-dot');
+            const statusText = card.querySelector('.page-status');
+            const pageName = card.querySelector('.page-name').textContent;
+
+            if (statusDot.classList.contains('active')) {
+                statusDot.classList.remove('active');
+                statusDot.classList.add('inactive');
+                statusText.innerHTML = '<span class="status-dot inactive"></span> Inactive';
+                btn.textContent = 'Enable';
+                btn.style.borderColor = 'var(--success)';
+                btn.style.color = 'var(--success)';
+                showNotification(`${pageName} page disabled`, 'warning');
+            } else {
+                statusDot.classList.remove('inactive');
+                statusDot.classList.add('active');
+                statusText.innerHTML = '<span class="status-dot active"></span> Active';
+                btn.textContent = 'Disable';
+                btn.style.borderColor = '';
+                btn.style.color = '';
+                showNotification(`${pageName} page enabled`, 'success');
+            }
+        }
+
+        // ==================== SAVE & RESET ====================
+        function saveAllSettings() {
+            showNotification('All settings saved successfully!', 'success');
+        }
+
+        function resetSettings() {
+            if (confirm('Are you sure you want to reset all settings to default?')) {
+                showNotification('Settings reset to default', 'info');
+            }
+        }
+
+        // ==================== NOTIFICATIONS ====================
+        function showNotification(message, type = 'info') {
+            const colors = {
+                success: '#10b981',
+                error: '#ef4444',
+                info: '#3b82f6',
+                warning: '#f59e0b'
+            };
+            const existing = document.querySelector('.custom-notification');
+            if (existing) existing.remove();
+
+            const notification = document.createElement('div');
+            notification.className = 'custom-notification';
+            notification.style.background = colors[type] || '#3b82f6';
+            notification.innerHTML = message;
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transition = 'opacity 0.3s';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // ==================== INITIALIZATION ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!checkAuth()) return;
+
+            // Logout
+            document.getElementById('logoutBtnNav').addEventListener('click', function(e) {
+                e.preventDefault();
+                logout();
+            });
+
+            // Profile placeholder
+            document.getElementById('profileNavLink').addEventListener('click', function(e) {
+                e.preventDefault();
+                showNotification('Profile page coming soon!', 'info');
+            });
+
+            // Highlight active sidebar item
+            document.querySelectorAll('.nav-item').forEach(item => {
+                if (item.dataset.page === 'settings') {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+
+            // Color picker live preview
+            document.getElementById('primaryColor').addEventListener('input', function() {
+                const color = this.value;
+                const label = this.parentElement.querySelector('span');
+                label.textContent = color;
+                document.documentElement.style.setProperty('--primary-color', color);
+                showNotification(`Primary color changed to ${color}`, 'info');
+            });
+        });
+
+        // Handle browser back/forward
+        window.addEventListener('pageshow', function(event) {
+            if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+                checkAuth();
+            }
+        });
+    </script>
+
+</body>
+</html>
