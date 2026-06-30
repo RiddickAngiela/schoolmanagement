@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accounting · EduSystem</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* ============================================================
+           Accounting page styles
+           ============================================================ */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --primary-color: #3b82f6;
+            --primary-dark: #2563eb;
+            --primary-light: #60a5fa;
+            --secondary-color: #2c6e9e;
+            --secondary-dark: #1e4b6e;
+            --dark-bg: #1e293b;
+            --sidebar-bg: #ffffff;
+            --main-bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-primary: #0f172a;
+            --text-secondary: #334155;
+            --text-muted: #64748b;
+            --text-light: #94a3b8;
+            --border-light: #eef2f6;
+            --border-medium: #e2e8f0;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #3b82f6;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+            --radius-xl: 24px;
+            --radius-full: 40px;
+            --transition-fast: 0.2s ease;
+            --transition-normal: 0.3s ease;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* ---------- navbar ---------- */
+        .navbar {
+            background-color: var(--dark-bg);
+            color: white;
+            padding: 0 28px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--shadow-sm);
+            z-index: 10;
+            position: sticky;
+            top: 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+            background: linear-gradient(135deg, #fff, var(--text-light));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .logo i {
+            background: none;
+            -webkit-background-clip: unset;
+            background-clip: unset;
+            color: var(--text-light);
+            margin-right: var(--spacing-sm);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: var(--spacing-md);
+        }
+
+        .nav-links a {
+            color: #e2e8f0;
+            text-decoration: none;
+            padding: var(--spacing-sm) var(--spacing-md);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: var(--transition-fast);
+            cursor: pointer;
+            border-radius: var(--radius-sm);
+        }
+
+        .nav-links a i {
+            margin-right: 6px;
+            font-size: 0.9rem;
+        }
+
+        .nav-links a:hover {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* ---------- app wrapper + sidebar ---------- */
+        .app-wrapper {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .sidebar {
+            width: 260px;
+            background-color: var(--sidebar-bg);
+            border-right: 1px solid var(--border-light);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            box-shadow: 1px 0 0 rgba(0, 0, 0, 0.02);
+        }
+
+        .sidebar-nav {
+            padding: var(--spacing-lg) 0 var(--spacing-xl) 0;
+        }
+
+        .sidebar-nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-nav li {
+            margin: 2px 0;
+            cursor: pointer;
+        }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            padding: 10px 24px;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: var(--transition-fast);
+            gap: var(--spacing-md);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .sidebar-nav a i {
+            width: 22px;
+            font-size: 1.1rem;
+            color: #5b6e8c;
+            transition: var(--transition-fast);
+        }
+
+        .sidebar-nav li.active a,
+        .sidebar-nav a:hover {
+            background-color: #f1f5f9;
+            color: var(--secondary-color);
+        }
+
+        .sidebar-nav li.active a {
+            border-left: 3px solid var(--secondary-color);
+            padding-left: 21px;
+        }
+
+        .sidebar-nav a:hover {
+            padding-left: 21px;
+        }
+
+        .sidebar-nav li.active a i,
+        .sidebar-nav a:hover i {
+            color: var(--secondary-color);
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .sidebar::-webkit-scrollbar-track {
+            background: var(--border-light);
+        }
+        .sidebar::-webkit-scrollbar-thumb {
+            background: var(--text-light);
+            border-radius: 3px;
+        }
+
+        /* ---------- main content ---------- */
+        .main-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 28px 32px;
+            background: var(--main-bg);
+        }
+
+        .main-content::-webkit-scrollbar {
+            width: 8px;
+        }
+        .main-content::-webkit-scrollbar-track {
+            background: var(--border-light);
+        }
+        .main-content::-webkit-scrollbar-thumb {
+            background: var(--text-light);
+            border-radius: 4px;
+        }
+
+        /* ---------- accounting specific ---------- */
+        .accounting-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .accounting-header h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .accounting-header .subtitle {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .accounting-header .subtitle i {
+            color: var(--success);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: var(--spacing-sm);
+            align-items: center;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            height: 36px;
+            padding: 0 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            color: #374151;
+            background: #fff;
+            transition: background 0.15s, border-color 0.15s;
+            white-space: nowrap;
+        }
+
+        .btn:hover {
+            background: #f9fafb;
+            border-color: #9ca3af;
+        }
+
+        .btn--primary {
+            background: #6366f1;
+            color: #fff;
+            border-color: #6366f1;
+        }
+        .btn--primary:hover {
+            background: #4f46e5;
+            border-color: #4f46e5;
+        }
+
+        .btn--success {
+            background: var(--success);
+            color: #fff;
+            border-color: var(--success);
+        }
+        .btn--success:hover {
+            background: #059669;
+            border-color: #059669;
+        }
+
+        .btn--danger {
+            background: var(--danger);
+            color: #fff;
+            border-color: var(--danger);
+        }
+        .btn--danger:hover {
+            background: #dc2626;
+            border-color: #dc2626;
+        }
+
+        /* ----- accounting stats cards ----- */
+        .accounting-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--spacing-lg);
+            margin-bottom: 32px;
+        }
+
+        .stat-card-accounting {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-light);
+            transition: var(--transition-normal);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card-accounting .stat-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .stat-card-accounting .stat-icon {
+            font-size: 2rem;
+            opacity: 0.8;
+        }
+
+        .stat-card-accounting .stat-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #5b6e8c;
+        }
+
+        .stat-card-accounting .stat-number {
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            line-height: 1.2;
+        }
+
+        .stat-card-accounting .stat-change {
+            font-size: 0.75rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 2px 10px;
+            border-radius: var(--radius-full);
+        }
+
+        .stat-change.positive {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .stat-change.negative {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .stat-change.neutral {
+            background: #f3f4f6;
+            color: #4b5563;
+        }
+
+        /* ----- quick actions ----- */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--spacing-md);
+            margin-bottom: 32px;
+        }
+
+        .quick-action-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+            border: 1px solid var(--border-light);
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition-normal);
+        }
+
+        .quick-action-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary-color);
+        }
+
+        .quick-action-card i {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .quick-action-card h4 {
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .quick-action-card p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* ----- transactions table ----- */
+        .transactions-section {
+            background: var(--card-bg);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-lg);
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-md);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .section-title i {
+            color: var(--secondary-color);
+        }
+
+        .table-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-lg);
+            flex-wrap: wrap;
+            gap: var(--spacing-md);
+        }
+
+        .entries-selector {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .entries-selector select {
+            padding: 6px 12px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-medium);
+            background: white;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .invoice-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        .invoice-table th {
+            text-align: left;
+            padding: 14px 8px 12px 0;
+            font-weight: 600;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border-medium);
+        }
+
+        .invoice-table td {
+            padding: 14px 8px 14px 0;
+            border-bottom: 1px solid var(--border-light);
+            color: var(--text-primary);
+        }
+
+        .invoice-table tr:hover {
+            background-color: #f8fafc;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .badge--paid {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .badge--pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .badge--overdue {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .badge--refunded {
+            background: #e0e7ff;
+            color: #1e3a8a;
+        }
+
+        .text-success {
+            color: var(--success);
+        }
+        .text-danger {
+            color: var(--danger);
+        }
+        .text-warning {
+            color: var(--warning);
+        }
+        .text-muted {
+            color: var(--text-muted);
+        }
+
+        .amount-positive {
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        .amount-negative {
+            color: var(--danger);
+            font-weight: 600;
+        }
+
+        /* ----- financial summary ----- */
+        .financial-summary {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-lg);
+        }
+
+        .summary-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            border: 1px solid var(--border-light);
+        }
+
+        .summary-card h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .summary-item:last-child {
+            border-bottom: none;
+        }
+
+        .summary-item .label {
+            color: var(--text-secondary);
+        }
+
+        .summary-item .value {
+            font-weight: 600;
+        }
+
+        /* ---------- responsive ---------- */
+        @media (max-width: 1000px) {
+            .accounting-stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: var(--spacing-md);
+            }
+            .quick-actions {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .financial-summary {
+                grid-template-columns: 1fr;
+            }
+            .main-content {
+                padding: var(--spacing-lg);
+            }
+            .sidebar {
+                width: 220px;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .app-wrapper {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid var(--border-medium);
+                max-height: 300px;
+            }
+            body {
+                overflow: auto;
+                height: auto;
+            }
+            .accounting-stats-grid {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-md);
+            }
+            .quick-actions {
+                grid-template-columns: 1fr 1fr;
+            }
+            .navbar {
+                padding: 0 var(--spacing-md);
+            }
+            .nav-links {
+                gap: var(--spacing-sm);
+            }
+            .nav-links a {
+                padding: var(--spacing-sm) var(--spacing-sm);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .quick-actions {
+                grid-template-columns: 1fr;
+            }
+            .accounting-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="logo"><i class="fas fa-school"></i> EduSystem</div>
+        <div class="nav-links">
+            <a href="index.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a href="#" id="profileNavLink"><i class="far fa-user-circle"></i> Profile</a>
+            <a href="#" id="logoutBtnNav"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </div>
+    </header>
+
+    <div class="app-wrapper">
+        <aside class="sidebar">
+            <div class="sidebar-nav">
+                <ul>
+                    <li class="nav-item" data-page="dashboard"><a href="index.html"><i class="fas fa-chalkboard-user"></i> Dashboard</a></li>
+                    <li class="nav-item" data-page="users"><a href="users.html"><i class="fas fa-users"></i> Users</a></li>
+                    <li class="nav-item" data-page="academic"><a href="academics.html"><i class="fas fa-book-open"></i> Academic</a></li>
+                    <li class="nav-item active" data-page="accounting"><a href="accounting.html"><i class="fas fa-calculator"></i> Accounting</a></li>
+                    <li class="nav-item" data-page="alumni"><a href="alumni.html"><i class="fas fa-graduation-cap"></i> Alumni</a></li>
+                    <li class="nav-item" data-page="liveclass"><a href="#"><i class="fas fa-video"></i> Live class</a></li>
+                    <li class="nav-item" data-page="examination"><a href="#"><i class="fas fa-pen-alt"></i> Examination</a></li>
+                    <li class="nav-item" data-page="backoffice"><a href="#"><i class="fas fa-archive"></i> Back office</a></li>
+                    <li class="nav-item" data-page="onlinecourses"><a href="#"><i class="fas fa-laptop-code"></i> Online courses</a></li>
+                    <li class="nav-item" data-page="settings"><a href="#"><i class="fas fa-sliders-h"></i> Settings</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <main class="main-content" id="mainContent">
+            <!-- ========== ACCOUNTING PAGE CONTENT ========== -->
+            <div class="accounting-header">
+                <div>
+                    <h1><i class="fas fa-calculator" style="color: var(--secondary-color); margin-right: 8px;"></i>Accounting</h1>
+                    <div class="subtitle"><i class="fas fa-calendar-alt"></i> Financial Year 2025 · Q2</div>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn--success" onclick="alert('Create new invoice')"><i class="fas fa-plus"></i> New Invoice</button>
+                    <button class="btn" onclick="alert('Generate report')"><i class="fas fa-file-pdf"></i> Report</button>
+                    <button class="btn btn--primary" onclick="alert('Export data')"><i class="fas fa-download"></i> Export</button>
+                </div>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="accounting-stats-grid">
+                <div class="stat-card-accounting">
+                    <div class="stat-top">
+                        <span class="stat-label">Total Revenue</span>
+                        <i class="fas fa-coins stat-icon" style="color: var(--success);"></i>
+                    </div>
+                    <div class="stat-number">KES 1,284,500</div>
+                    <span class="stat-change positive"><i class="fas fa-arrow-up"></i> +15.3%</span>
+                </div>
+                <div class="stat-card-accounting">
+                    <div class="stat-top">
+                        <span class="stat-label">Outstanding</span>
+                        <i class="fas fa-clock stat-icon" style="color: var(--warning);"></i>
+                    </div>
+                    <div class="stat-number">KES 342,800</div>
+                    <span class="stat-change negative"><i class="fas fa-arrow-up"></i> +8.2%</span>
+                </div>
+                <div class="stat-card-accounting">
+                    <div class="stat-top">
+                        <span class="stat-label">Paid Invoices</span>
+                        <i class="fas fa-check-circle stat-icon" style="color: var(--info);"></i>
+                    </div>
+                    <div class="stat-number">164</div>
+                    <span class="stat-change positive"><i class="fas fa-arrow-up"></i> +23</span>
+                </div>
+                <div class="stat-card-accounting">
+                    <div class="stat-top">
+                        <span class="stat-label">Overdue</span>
+                        <i class="fas fa-exclamation-triangle stat-icon" style="color: var(--danger);"></i>
+                    </div>
+                    <div class="stat-number">28</div>
+                    <span class="stat-change negative"><i class="fas fa-arrow-up"></i> +5</span>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <div class="quick-action-card" onclick="alert('Create invoice')">
+                    <i class="fas fa-file-invoice"></i>
+                    <h4>Create Invoice</h4>
+                    <p>Bill students or parents</p>
+                </div>
+                <div class="quick-action-card" onclick="alert('Record payment')">
+                    <i class="fas fa-hand-holding-usd"></i>
+                    <h4>Record Payment</h4>
+                    <p>Track incoming payments</p>
+                </div>
+                <div class="quick-action-card" onclick="alert('Generate report')">
+                    <i class="fas fa-chart-bar"></i>
+                    <h4>Financial Reports</h4>
+                    <p>View analytics & summaries</p>
+                </div>
+                <div class="quick-action-card" onclick="alert('Manage expenses')">
+                    <i class="fas fa-receipt"></i>
+                    <h4>Manage Expenses</h4>
+                    <p>Track school expenses</p>
+                </div>
+            </div>
+
+            <!-- Transactions Table -->
+            <div class="transactions-section">
+                <div class="section-title">
+                    <i class="fas fa-list-ul"></i> Recent Transactions
+                </div>
+                <div class="table-controls">
+                    <div class="entries-selector">
+                        <span>Show</span>
+                        <select>
+                            <option>10</option>
+                            <option selected>25</option>
+                            <option>50</option>
+                        </select>
+                        <span>entries</span>
+                    </div>
+                    <div style="display:flex; gap:8px;">
+                        <input type="text" placeholder="Search transactions..." style="padding:6px 12px; border:1px solid var(--border-medium); border-radius:var(--radius-sm);">
+                        <button class="btn" onclick="alert('Filter transactions')"><i class="fas fa-filter"></i> Filter</button>
+                    </div>
+                </div>
+                <table class="invoice-table">
+                    <thead>
+                        <tr>
+                            <th>Invoice #</th>
+                            <th>Student</th>
+                            <th>Description</th>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>#INV-2025-001</strong></td>
+                            <td>Abdi Hassan</td>
+                            <td>Tuition Fee - June</td>
+                            <td>2025-06-01</td>
+                            <td class="amount-positive">KES 15,000</td>
+                            <td><span class="badge badge--paid">Paid</span></td>
+                            <td><button class="btn" style="height:28px; padding:0 10px; font-size:11px;" onclick="alert('View invoice')">View</button></td>
+                        </tr>
+                        <tr>
+                            <td><strong>#INV-2025-002</strong></td>
+                            <td>Wanjiru Muthoni</td>
+                            <td>Tuition Fee - June</td>
+                            <td>2025-06-01</td>
+                            <td class="amount-positive">KES 15,000</td>
+                            <td><span class="badge badge--pending">Pending</span></td>
+                            <td><button class="btn" style="height:28px; padding:0 10px; font-size:11px;" onclick="alert('View invoice')">View</button></td>
+                        </tr>
+                        <tr>
+                            <td><strong>#INV-2025-003</strong></td>
+                            <td>Omondi Otieno</td>
+                            <td>Tuition Fee - June</td>
+                            <td>2025-06-01</td>
+                            <td class="amount-positive">KES 15,000</td>
+                            <td><span class="badge badge--overdue">Overdue</span></td>
+                            <td><button class="btn" style="height:28px; padding:0 10px; font-size:11px;" onclick="alert('View invoice')">View</button></td>
+                        </tr>
+                        <tr>
+                            <td><strong>#INV-2025-004</strong></td>
+                            <td>Njeri Kamau</td>
+                            <td>Library Fee</td>
+                            <td>2025-06-05</td>
+                            <td class="amount-positive">KES 2,500</td>
+                            <td><span class="badge badge--paid">Paid</span></td>
+                            <td><button class="btn" style="height:28px; padding:0 10px; font-size:11px;" onclick="alert('View invoice')">View</button></td>
+                        </tr>
+                        <tr>
+                            <td><strong>#INV-2025-005</strong></td>
+                            <td>Kiprop Kimutai</td>
+                            <td>Sports Fee</td>
+                            <td>2025-06-10</td>
+                            <td class="amount-positive">KES 5,000</td>
+                            <td><span class="badge badge--pending">Pending</span></td>
+                            <td><button class="btn" style="height:28px; padding:0 10px; font-size:11px;" onclick="alert('View invoice')">View</button></td>
+                        </tr>
+                        <tr>
+                            <td><strong>#INV-2025-006</strong></td>
+                            <td>Faith Akinyi</td>
+                            <td>Tuition Fee - June</td>
+                            <td>2025-06-01</td>
+                            <td class="amount-positive">KES 15,000</td>
+                            <td><span class="badge badge--refunded">Refunded</span></td>
+                            <td><button class="btn" style="height:28px; padding:0 10px; font-size:11px;" onclick="alert('View invoice')">View</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div style="margin-top:12px; font-size:0.8rem; color:var(--text-muted);">Showing 1 to 6 of 42 transactions</div>
+            </div>
+
+            <!-- Financial Summary -->
+            <div class="financial-summary">
+                <div class="summary-card">
+                    <h3><i class="fas fa-chart-pie" style="color: var(--primary-color); margin-right: 8px;"></i>Income Breakdown</h3>
+                    <div class="summary-item">
+                        <span class="label">Tuition Fees</span>
+                        <span class="value">KES 945,000</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="label">Library Fees</span>
+                        <span class="value">KES 78,500</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="label">Sports Fees</span>
+                        <span class="value">KES 45,200</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="label">Other Income</span>
+                        <span class="value">KES 215,800</span>
+                    </div>
+                    <div class="summary-item" style="font-weight: 700; border-top: 2px solid var(--border-medium); padding-top: 12px; margin-top: 4px;">
+                        <span class="label">Total Income</span>
+                        <span class="value text-success">KES 1,284,500</span>
+                    </div>
+                </div>
+                <div class="summary-card">
+                    <h3><i class="fas fa-chart-line" style="color: var(--success); margin-right: 8px;"></i>Monthly Trends</h3>
+                    <div class="summary-item">
+                        <span class="label">January</span>
+                        <span class="value">KES 210,000</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="label">February</span>
+                        <span class="value">KES 235,000</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="label">March</span>
+                        <span class="value">KES 198,000</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="label">April</span>
+                        <span class="value">KES 245,000</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="label">May</span>
+                        <span class="value">KES 396,500</span>
+                    </div>
+                    <div class="summary-item" style="font-weight: 700; border-top: 2px solid var(--border-medium); padding-top: 12px; margin-top: 4px;">
+                        <span class="label">Total</span>
+                        <span class="value text-success">KES 1,284,500</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div style="display: flex; gap: var(--spacing-md); flex-wrap: wrap; justify-content: space-between; margin-top: 32px; padding-top: 16px; border-top: 1px solid var(--border-light);">
+                <span style="font-size:0.8rem; color:var(--text-muted);"><i class="fas fa-clock"></i> Last updated: today 15:45</span>
+                <a href="index.html" style="color: var(--secondary-color); text-decoration: none; font-weight:500;"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // ==================== AUTHENTICATION ====================
+        function isLoggedIn() {
+            return sessionStorage.getItem('loggedIn') === 'true';
+        }
+
+        function checkAuth() {
+            if (!isLoggedIn()) {
+                window.location.href = 'login.html';
+                return false;
+            }
+            return true;
+        }
+
+        function logout() {
+            sessionStorage.clear();
+            window.location.href = 'login.html';
+        }
+
+        // ==================== INITIALIZATION ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!checkAuth()) return;
+
+            // Logout
+            document.getElementById('logoutBtnNav').addEventListener('click', function(e) {
+                e.preventDefault();
+                logout();
+            });
+
+            // Profile placeholder
+            document.getElementById('profileNavLink').addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Profile page (coming soon)');
+            });
+
+            // Highlight active sidebar item
+            document.querySelectorAll('.nav-item').forEach(item => {
+                if (item.dataset.page === 'accounting') {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+        });
+
+        // Handle browser back/forward
+        window.addEventListener('pageshow', function(event) {
+            if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+                checkAuth();
+            }
+        });
+    </script>
+
+</body>
+</html>

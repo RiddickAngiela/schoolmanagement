@@ -31,8 +31,9 @@
                 <li class="nav-item" data-page="alumni">
                     <a href="alumni.html"><i class="fas fa-graduation-cap"></i> Alumni</a>
                 </li>
+                <!-- CHANGED: Academic link now points to academics.html -->
                 <li class="nav-item" data-page="academic">
-                    <a href="#"><i class="fas fa-book-open"></i> Academic</a>
+                    <a href="academics.html"><i class="fas fa-book-open"></i> Academic</a>
                 </li>
                 <li class="nav-item" data-page="liveclass">
                     <a href="#"><i class="fas fa-video"></i> Live class</a>
@@ -41,7 +42,7 @@
                     <a href="#"><i class="fas fa-pen-alt"></i> Examination</a>
                 </li>
                 <li class="nav-item" data-page="accounting">
-                    <a href="#"><i class="fas fa-calculator"></i> Accounting</a>
+                     <a href="accounting.html"><i class="fas fa-calculator"></i> Accounting</a>
                 </li>
                 <li class="nav-item" data-page="backoffice">
                     <a href="#"><i class="fas fa-archive"></i> Back office</a>
@@ -266,12 +267,12 @@ function updateActiveNav(pageName) {
 document.addEventListener('DOMContentLoaded', function() {
     if (!checkAuth()) return;
 
-    // Handle sidebar navigation - only intercept non-existent pages
+    // Handle sidebar navigation - allow normal navigation for actual HTML files
     document.querySelectorAll('.nav-item').forEach(item => {
         const link = item.querySelector('a');
         const href = link.getAttribute('href');
         
-        // If href is '#', it's a placeholder - intercept and show blank page
+        // Only intercept if href is '#' (placeholder)
         if (href === '#') {
             item.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -279,7 +280,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 showBlankPage(page);
             });
         }
-        // If href points to an actual HTML file, let it navigate normally
+        // For actual HTML files (like academics.html), let the browser navigate normally
         // No need to add event listener - default behavior works
     });
 
