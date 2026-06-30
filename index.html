@@ -13,7 +13,7 @@
     <div class="logo"><i class="fas fa-school"></i> EduSystem</div>
     <div class="nav-links">
         <a href="index.html" id="dashboardNavLink"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-        <a href="#" id="profileNavLink"><i class="far fa-user-circle"></i> Profile</a>
+        <a href="profile.html" id="profileNavLink"><i class="far fa-user-circle"></i> Profile</a>
         <a href="#" id="logoutBtnNav"><i class="fas fa-sign-out-alt"></i> Logout</a>
     </div>
 </header>
@@ -31,7 +31,6 @@
                 <li class="nav-item" data-page="alumni">
                     <a href="alumni.html"><i class="fas fa-graduation-cap"></i> Alumni</a>
                 </li>
-                <!-- CHANGED: Academic link now points to academics.html -->
                 <li class="nav-item" data-page="academic">
                     <a href="academics.html"><i class="fas fa-book-open"></i> Academic</a>
                 </li>
@@ -280,16 +279,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 showBlankPage(page);
             });
         }
-        // For actual HTML files (like academics.html), let the browser navigate normally
-        // No need to add event listener - default behavior works
+        // For actual HTML files, let the browser navigate normally
     });
 
-    // Top navigation
-    document.getElementById('profileNavLink').addEventListener('click', function(e) {
-        e.preventDefault();
-        showBlankPage('profile');
-    });
-
+    // Logout
     document.getElementById('logoutBtnNav').addEventListener('click', function(e) {
         e.preventDefault();
         logout();
