@@ -1,0 +1,1496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Class · EduSystem</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* ============================================================
+           Live Class page styles
+           ============================================================ */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --primary-color: #3b82f6;
+            --primary-dark: #2563eb;
+            --primary-light: #60a5fa;
+            --secondary-color: #2c6e9e;
+            --secondary-dark: #1e4b6e;
+            --dark-bg: #1e293b;
+            --sidebar-bg: #ffffff;
+            --main-bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-primary: #0f172a;
+            --text-secondary: #334155;
+            --text-muted: #64748b;
+            --text-light: #94a3b8;
+            --border-light: #eef2f6;
+            --border-medium: #e2e8f0;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #3b82f6;
+            --purple: #8b5cf6;
+            --pink: #ec489a;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+            --radius-xl: 24px;
+            --radius-full: 40px;
+            --transition-fast: 0.2s ease;
+            --transition-normal: 0.3s ease;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* ---------- navbar ---------- */
+        .navbar {
+            background-color: var(--dark-bg);
+            color: white;
+            padding: 0 28px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--shadow-sm);
+            z-index: 10;
+            position: sticky;
+            top: 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+            background: linear-gradient(135deg, #fff, var(--text-light));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .logo i {
+            background: none;
+            -webkit-background-clip: unset;
+            background-clip: unset;
+            color: var(--text-light);
+            margin-right: var(--spacing-sm);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: var(--spacing-md);
+        }
+
+        .nav-links a {
+            color: #e2e8f0;
+            text-decoration: none;
+            padding: var(--spacing-sm) var(--spacing-md);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: var(--transition-fast);
+            cursor: pointer;
+            border-radius: var(--radius-sm);
+        }
+
+        .nav-links a i {
+            margin-right: 6px;
+            font-size: 0.9rem;
+        }
+
+        .nav-links a:hover {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* ---------- app wrapper + sidebar ---------- */
+        .app-wrapper {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .sidebar {
+            width: 260px;
+            background-color: var(--sidebar-bg);
+            border-right: 1px solid var(--border-light);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            box-shadow: 1px 0 0 rgba(0, 0, 0, 0.02);
+        }
+
+        .sidebar-nav {
+            padding: var(--spacing-lg) 0 var(--spacing-xl) 0;
+        }
+
+        .sidebar-nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-nav li {
+            margin: 2px 0;
+            cursor: pointer;
+        }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            padding: 10px 24px;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: var(--transition-fast);
+            gap: var(--spacing-md);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .sidebar-nav a i {
+            width: 22px;
+            font-size: 1.1rem;
+            color: #5b6e8c;
+            transition: var(--transition-fast);
+        }
+
+        .sidebar-nav li.active a,
+        .sidebar-nav a:hover {
+            background-color: #f1f5f9;
+            color: var(--secondary-color);
+        }
+
+        .sidebar-nav li.active a {
+            border-left: 3px solid var(--secondary-color);
+            padding-left: 21px;
+        }
+
+        .sidebar-nav a:hover {
+            padding-left: 21px;
+        }
+
+        .sidebar-nav li.active a i,
+        .sidebar-nav a:hover i {
+            color: var(--secondary-color);
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .sidebar::-webkit-scrollbar-track {
+            background: var(--border-light);
+        }
+        .sidebar::-webkit-scrollbar-thumb {
+            background: var(--text-light);
+            border-radius: 3px;
+        }
+
+        /* ---------- main content ---------- */
+        .main-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 28px 32px;
+            background: var(--main-bg);
+        }
+
+        .main-content::-webkit-scrollbar {
+            width: 8px;
+        }
+        .main-content::-webkit-scrollbar-track {
+            background: var(--border-light);
+        }
+        .main-content::-webkit-scrollbar-thumb {
+            background: var(--text-light);
+            border-radius: 4px;
+        }
+
+        /* ---------- live class specific ---------- */
+        .live-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .live-header h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .live-header .subtitle {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .live-header .subtitle i {
+            color: var(--success);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: var(--spacing-sm);
+            align-items: center;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            height: 36px;
+            padding: 0 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            color: #374151;
+            background: #fff;
+            transition: background 0.15s, border-color 0.15s;
+            white-space: nowrap;
+        }
+
+        .btn:hover {
+            background: #f9fafb;
+            border-color: #9ca3af;
+        }
+
+        .btn--primary {
+            background: var(--primary-color);
+            color: #fff;
+            border-color: var(--primary-color);
+        }
+        .btn--primary:hover {
+            background: var(--primary-dark);
+            border-color: var(--primary-dark);
+        }
+
+        .btn--danger {
+            background: var(--danger);
+            color: #fff;
+            border-color: var(--danger);
+        }
+        .btn--danger:hover {
+            background: #dc2626;
+            border-color: #dc2626;
+        }
+
+        .btn--success {
+            background: var(--success);
+            color: #fff;
+            border-color: var(--success);
+        }
+        .btn--success:hover {
+            background: #059669;
+            border-color: #059669;
+        }
+
+        /* ----- video grid ----- */
+        .video-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+            min-height: 500px;
+        }
+
+        .video-container {
+            background: #1a1a2e;
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            position: relative;
+            aspect-ratio: 16/9;
+            box-shadow: var(--shadow-lg);
+            border: 2px solid var(--border-medium);
+        }
+
+        .video-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            background: #0f0f1a;
+        }
+
+        .video-container .video-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: var(--spacing-md);
+            background: linear-gradient(transparent, rgba(0,0,0,0.7));
+            color: white;
+        }
+
+        .video-container .video-overlay .participant-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .video-container .video-overlay .participant-status {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        .video-container .video-controls-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+            gap: var(--spacing-md);
+        }
+
+        .video-container:hover .video-controls-overlay {
+            display: flex;
+        }
+
+        .video-container .video-controls-overlay .control-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .video-container .video-controls-overlay .control-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.1);
+        }
+
+        .video-container .video-controls-overlay .control-btn.danger {
+            background: rgba(239, 68, 68, 0.7);
+        }
+        .video-container .video-controls-overlay .control-btn.danger:hover {
+            background: rgba(239, 68, 68, 0.9);
+        }
+
+        /* Active speaker highlight */
+        .video-container.active-speaker {
+            border-color: var(--primary-color);
+            border-width: 3px;
+        }
+
+        /* ----- live controls ----- */
+        .live-controls {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-md);
+            padding: var(--spacing-md);
+            background: var(--card-bg);
+            border-radius: var(--radius-full);
+            box-shadow: var(--shadow-md);
+            margin-bottom: var(--spacing-xl);
+            flex-wrap: wrap;
+        }
+
+        .live-controls .control-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 1px solid var(--border-medium);
+            background: white;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .live-controls .control-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .live-controls .control-btn.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .live-controls .control-btn.danger {
+            border-color: var(--danger);
+            color: var(--danger);
+        }
+
+        .live-controls .control-btn.danger:hover {
+            background: var(--danger);
+            color: white;
+        }
+
+        .live-controls .control-btn.end-call {
+            width: auto;
+            padding: 0 24px;
+            border-radius: var(--radius-full);
+            background: var(--danger);
+            color: white;
+            border-color: var(--danger);
+            font-weight: 600;
+        }
+
+        .live-controls .control-btn.end-call:hover {
+            background: #dc2626;
+            border-color: #dc2626;
+        }
+
+        /* ----- chat section ----- */
+        .chat-section {
+            background: var(--card-bg);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-lg);
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-md);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .section-title i {
+            color: var(--primary-color);
+        }
+
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            height: 300px;
+            background: var(--main-bg);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-md);
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .chat-messages::-webkit-scrollbar {
+            width: 6px;
+        }
+        .chat-messages::-webkit-scrollbar-track {
+            background: var(--border-light);
+        }
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: var(--text-light);
+            border-radius: 3px;
+        }
+
+        .chat-message {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .chat-message .avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.8rem;
+            flex-shrink: 0;
+        }
+
+        .chat-message .message-content {
+            background: white;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--radius-md);
+            max-width: 80%;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .chat-message .message-content .sender {
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: var(--text-primary);
+        }
+
+        .chat-message .message-content .text {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .chat-message .message-content .time {
+            font-size: 0.7rem;
+            color: var(--text-light);
+        }
+
+        .chat-message.self {
+            flex-direction: row-reverse;
+        }
+
+        .chat-message.self .message-content {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .chat-message.self .message-content .sender,
+        .chat-message.self .message-content .text,
+        .chat-message.self .message-content .time {
+            color: white;
+        }
+
+        .chat-input {
+            display: flex;
+            gap: var(--spacing-sm);
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 10px 16px;
+            border: 1px solid var(--border-medium);
+            border-radius: var(--radius-full);
+            font-size: 0.9rem;
+            outline: none;
+            font-family: inherit;
+        }
+
+        .chat-input input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .chat-input .send-btn {
+            padding: 10px 20px;
+            border: none;
+            background: var(--primary-color);
+            color: white;
+            border-radius: var(--radius-full);
+            cursor: pointer;
+            transition: var(--transition-fast);
+            font-weight: 600;
+        }
+
+        .chat-input .send-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        /* ----- whiteboard ----- */
+        .whiteboard-section {
+            background: var(--card-bg);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-lg);
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-md);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .whiteboard-container {
+            background: white;
+            border-radius: var(--radius-md);
+            height: 300px;
+            border: 1px solid var(--border-medium);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .whiteboard-container canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .whiteboard-tools {
+            display: flex;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-md);
+            background: var(--main-bg);
+            border-radius: var(--radius-md);
+            margin-top: var(--spacing-md);
+            flex-wrap: wrap;
+        }
+
+        .whiteboard-tools .tool-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-medium);
+            background: white;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+        }
+
+        .whiteboard-tools .tool-btn:hover,
+        .whiteboard-tools .tool-btn.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .whiteboard-tools .tool-btn .color-picker {
+            width: 20px;
+            height: 20px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .whiteboard-tools .tool-btn .color-picker::-webkit-color-swatch-wrapper {
+            padding: 0;
+        }
+
+        .whiteboard-tools .tool-btn .color-picker::-webkit-color-swatch {
+            border: none;
+            border-radius: 50%;
+        }
+
+        /* ---------- responsive ---------- */
+        @media (max-width: 1000px) {
+            .video-grid {
+                grid-template-columns: 1fr;
+                min-height: 300px;
+            }
+            .main-content {
+                padding: var(--spacing-lg);
+            }
+            .sidebar {
+                width: 220px;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .app-wrapper {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid var(--border-medium);
+                max-height: 300px;
+            }
+            body {
+                overflow: auto;
+                height: auto;
+            }
+            .navbar {
+                padding: 0 var(--spacing-md);
+            }
+            .nav-links {
+                gap: var(--spacing-sm);
+            }
+            .nav-links a {
+                padding: var(--spacing-sm) var(--spacing-sm);
+            }
+            .live-controls .control-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 0.9rem;
+            }
+            .live-controls .control-btn.end-call {
+                padding: 0 16px;
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .live-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .live-controls {
+                gap: var(--spacing-sm);
+            }
+            .live-controls .control-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 0.8rem;
+            }
+            .video-container {
+                aspect-ratio: 4/3;
+            }
+        }
+
+        /* ---------- status indicator ---------- */
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .status-indicator.live {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .status-indicator.live .dot {
+            animation: pulse 1.5s infinite;
+        }
+
+        .status-indicator.recording {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: currentColor;
+        }
+
+        .participants-list {
+            display: flex;
+            gap: var(--spacing-sm);
+            flex-wrap: wrap;
+        }
+
+        .participant-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            background: var(--main-bg);
+            border-radius: var(--radius-full);
+            font-size: 0.8rem;
+            border: 1px solid var(--border-light);
+        }
+
+        .participant-badge .online-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--success);
+        }
+
+        .participant-badge .offline-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--text-light);
+        }
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="logo"><i class="fas fa-school"></i> EduSystem</div>
+        <div class="nav-links">
+            <a href="index.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a href="#" id="profileNavLink"><i class="far fa-user-circle"></i> Profile</a>
+            <a href="#" id="logoutBtnNav"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </div>
+    </header>
+
+    <div class="app-wrapper">
+        <aside class="sidebar">
+            <div class="sidebar-nav">
+                <ul>
+                    <li class="nav-item" data-page="dashboard"><a href="index.html"><i class="fas fa-chalkboard-user"></i> Dashboard</a></li>
+                    <li class="nav-item" data-page="users"><a href="users.html"><i class="fas fa-users"></i> Users</a></li>
+                    <li class="nav-item" data-page="academic"><a href="academics.html"><i class="fas fa-book-open"></i> Academic</a></li>
+                    <li class="nav-item" data-page="examination"><a href="examination.html"><i class="fas fa-pen-alt"></i> Examination</a></li>
+                    <li class="nav-item active" data-page="liveclass"><a href="liveclass.html"><i class="fas fa-video"></i> Live class</a></li>
+                    <li class="nav-item" data-page="accounting"><a href="accounting.html"><i class="fas fa-calculator"></i> Accounting</a></li>
+                    <li class="nav-item" data-page="alumni"><a href="alumni.html"><i class="fas fa-graduation-cap"></i> Alumni</a></li>
+                    <li class="nav-item" data-page="backoffice"><a href="#"><i class="fas fa-archive"></i> Back office</a></li>
+                    <li class="nav-item" data-page="onlinecourses"><a href="#"><i class="fas fa-laptop-code"></i> Online courses</a></li>
+                    <li class="nav-item" data-page="settings"><a href="#"><i class="fas fa-sliders-h"></i> Settings</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <main class="main-content" id="mainContent">
+            <!-- ========== LIVE CLASS PAGE CONTENT ========== -->
+            <div class="live-header">
+                <div>
+                    <h1><i class="fas fa-video" style="color: var(--primary-color); margin-right: 8px;"></i>Live Class</h1>
+                    <div class="subtitle">
+                        <span class="status-indicator live"><span class="dot"></span> LIVE</span>
+                        <i class="fas fa-users"></i> 12 participants
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn--primary" onclick="toggleCamera()"><i class="fas fa-camera"></i> Camera</button>
+                    <button class="btn btn--success" onclick="toggleMic()"><i class="fas fa-microphone"></i> Mic</button>
+                    <button class="btn" onclick="shareScreen()"><i class="fas fa-desktop"></i> Share</button>
+                    <button class="btn btn--danger" onclick="endCall()"><i class="fas fa-phone-slash"></i> End</button>
+                </div>
+            </div>
+
+            <!-- Video Grid -->
+            <div class="video-grid">
+                <!-- Teacher Video -->
+                <div class="video-container active-speaker" id="teacherVideo">
+                    <video id="teacherStream" autoplay muted playsinline></video>
+                    <div class="video-overlay">
+                        <div class="participant-name"><i class="fas fa-user-circle"></i> Mr. Ochieng (Teacher)</div>
+                        <div class="participant-status"><i class="fas fa-microphone"></i> Speaking</div>
+                    </div>
+                    <div class="video-controls-overlay">
+                        <button class="control-btn" onclick="toggleVideo('teacher')"><i class="fas fa-video"></i></button>
+                        <button class="control-btn" onclick="toggleAudio('teacher')"><i class="fas fa-microphone"></i></button>
+                        <button class="control-btn" onclick="expandVideo('teacher')"><i class="fas fa-expand"></i></button>
+                    </div>
+                </div>
+
+                <!-- Student 1 Video -->
+                <div class="video-container" id="student1Video">
+                    <video id="student1Stream" autoplay muted playsinline></video>
+                    <div class="video-overlay">
+                        <div class="participant-name"><i class="fas fa-user-circle"></i> Abdi Hassan</div>
+                        <div class="participant-status"><i class="fas fa-microphone-slash"></i> Muted</div>
+                    </div>
+                    <div class="video-controls-overlay">
+                        <button class="control-btn" onclick="toggleVideo('student1')"><i class="fas fa-video"></i></button>
+                        <button class="control-btn" onclick="toggleAudio('student1')"><i class="fas fa-microphone"></i></button>
+                        <button class="control-btn" onclick="expandVideo('student1')"><i class="fas fa-expand"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Participants -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-lg); flex-wrap: wrap; gap: var(--spacing-md);">
+                <div class="participants-list">
+                    <span class="participant-badge"><span class="online-dot"></span> Mr. Ochieng (Host)</span>
+                    <span class="participant-badge"><span class="online-dot"></span> Abdi Hassan</span>
+                    <span class="participant-badge"><span class="online-dot"></span> Wanjiru Muthoni</span>
+                    <span class="participant-badge"><span class="online-dot"></span> Omondi Otieno</span>
+                    <span class="participant-badge"><span class="offline-dot"></span> Njeri Kamau</span>
+                    <span class="participant-badge"><span class="online-dot"></span> Faith Akinyi</span>
+                    <span class="participant-badge" style="cursor:pointer;" onclick="alert('View all participants')">+6 more <i class="fas fa-chevron-down" style="font-size:0.7rem;"></i></span>
+                </div>
+                <span style="font-size:0.85rem; color:var(--text-muted);"><i class="fas fa-clock"></i> 12:45:32</span>
+            </div>
+
+            <!-- Live Controls -->
+            <div class="live-controls">
+                <button class="control-btn active" onclick="toggleMic()" id="micBtn">
+                    <i class="fas fa-microphone"></i>
+                </button>
+                <button class="control-btn active" onclick="toggleCamera()" id="cameraBtn">
+                    <i class="fas fa-video"></i>
+                </button>
+                <button class="control-btn" onclick="shareScreen()">
+                    <i class="fas fa-desktop"></i>
+                </button>
+                <button class="control-btn" onclick="toggleChat()">
+                    <i class="fas fa-comment-dots"></i>
+                </button>
+                <button class="control-btn" onclick="toggleWhiteboard()">
+                    <i class="fas fa-pen"></i>
+                </button>
+                <button class="control-btn" onclick="recordSession()">
+                    <i class="fas fa-circle" style="color: var(--danger);"></i>
+                </button>
+                <button class="control-btn end-call" onclick="endCall()">
+                    <i class="fas fa-phone-slash"></i> End Class
+                </button>
+            </div>
+
+            <!-- Chat Section -->
+            <div class="chat-section" id="chatSection">
+                <div class="section-title">
+                    <i class="fas fa-comments"></i> Class Chat
+                    <span style="font-size:0.7rem; color:var(--text-muted); font-weight:400; margin-left:8px;">12 participants</span>
+                </div>
+                <div class="chat-container">
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="chat-message">
+                            <div class="avatar" style="background: var(--primary-color);">MO</div>
+                            <div class="message-content">
+                                <div class="sender">Mr. Ochieng</div>
+                                <div class="text">Good morning everyone! Today we'll cover quadratic equations.</div>
+                                <div class="time">12:30 PM</div>
+                            </div>
+                        </div>
+                        <div class="chat-message">
+                            <div class="avatar" style="background: var(--success);">AH</div>
+                            <div class="message-content">
+                                <div class="sender">Abdi Hassan</div>
+                                <div class="text">Good morning sir! I'm ready.</div>
+                                <div class="time">12:31 PM</div>
+                            </div>
+                        </div>
+                        <div class="chat-message self">
+                            <div class="avatar" style="background: var(--purple);">WM</div>
+                            <div class="message-content">
+                                <div class="sender">Wanjiru Muthoni</div>
+                                <div class="text">Could you please explain the quadratic formula again?</div>
+                                <div class="time">12:33 PM</div>
+                            </div>
+                        </div>
+                        <div class="chat-message">
+                            <div class="avatar" style="background: var(--warning);">MO</div>
+                            <div class="message-content">
+                                <div class="sender">Mr. Ochieng</div>
+                                <div class="text">Of course! Let me write it on the whiteboard.</div>
+                                <div class="time">12:34 PM</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chat-input">
+                        <input type="text" placeholder="Type a message..." id="chatInput" onkeypress="if(event.key==='Enter') sendMessage()">
+                        <button class="send-btn" onclick="sendMessage()"><i class="fas fa-paper-plane"></i> Send</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Whiteboard Section -->
+            <div class="whiteboard-section" id="whiteboardSection">
+                <div class="section-title">
+                    <i class="fas fa-chalkboard"></i> Whiteboard
+                    <span style="font-size:0.7rem; color:var(--text-muted); font-weight:400; margin-left:8px;">Collaborative</span>
+                </div>
+                <div class="whiteboard-container">
+                    <canvas id="whiteboard"></canvas>
+                </div>
+                <div class="whiteboard-tools">
+                    <button class="tool-btn active" onclick="setTool('pen')" id="penTool"><i class="fas fa-pen"></i></button>
+                    <button class="tool-btn" onclick="setTool('eraser')" id="eraserTool"><i class="fas fa-eraser"></i></button>
+                    <button class="tool-btn" onclick="setTool('line')" id="lineTool"><i class="fas fa-minus"></i></button>
+                    <button class="tool-btn" onclick="setTool('rectangle')" id="rectTool"><i class="fas fa-square"></i></button>
+                    <button class="tool-btn" onclick="setTool('circle')" id="circleTool"><i class="fas fa-circle"></i></button>
+                    <button class="tool-btn" onclick="setColor()" id="colorPicker">
+                        <input type="color" class="color-picker" value="#3b82f6" onchange="setColor(this.value)">
+                    </button>
+                    <button class="tool-btn" onclick="clearWhiteboard()"><i class="fas fa-trash"></i></button>
+                    <button class="tool-btn" onclick="undoWhiteboard()"><i class="fas fa-undo"></i></button>
+                    <span style="font-size:0.75rem; color:var(--text-muted); margin-left:auto;">Drawing: <span id="currentTool">Pen</span></span>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div style="display: flex; gap: var(--spacing-md); flex-wrap: wrap; justify-content: space-between; margin-top: 8px; padding-top: 16px; border-top: 1px solid var(--border-light);">
+                <span style="font-size:0.8rem; color:var(--text-muted);"><i class="fas fa-shield-alt"></i> End-to-end encrypted</span>
+                <a href="index.html" style="color: var(--secondary-color); text-decoration: none; font-weight:500;"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // ==================== AUTHENTICATION ====================
+        function isLoggedIn() {
+            return sessionStorage.getItem('loggedIn') === 'true';
+        }
+
+        function checkAuth() {
+            if (!isLoggedIn()) {
+                window.location.href = 'login.html';
+                return false;
+            }
+            return true;
+        }
+
+        function logout() {
+            sessionStorage.clear();
+            window.location.href = 'login.html';
+        }
+
+        // ==================== VIDEO & AUDIO ====================
+        let localStream = null;
+        let isCameraOn = true;
+        let isMicOn = true;
+
+        async function initCamera() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({
+                    video: true,
+                    audio: true
+                });
+                localStream = stream;
+                const videoElement = document.getElementById('teacherStream');
+                if (videoElement) {
+                    videoElement.srcObject = stream;
+                }
+                // Simulate student video
+                const studentVideo = document.getElementById('student1Stream');
+                if (studentVideo) {
+                    // Use a simulated stream or mirror for demo
+                    try {
+                        const studentStream = await navigator.mediaDevices.getUserMedia({
+                            video: true,
+                            audio: false
+                        });
+                        studentVideo.srcObject = studentStream;
+                    } catch (e) {
+                        // If camera unavailable, use a placeholder
+                        studentVideo.poster = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><rect width="100" height="100" fill="%236366f1"/><circle cx="50" cy="40" r="20" fill="%23ffffff"/><circle cx="50" cy="80" r="25" fill="%23ffffff"/></svg>';
+                    }
+                }
+                return true;
+            } catch (error) {
+                console.log('Camera access denied:', error);
+                showNotification('Camera access denied. Please allow camera permissions.', 'error');
+                return false;
+            }
+        }
+
+        function toggleCamera() {
+            isCameraOn = !isCameraOn;
+            const videoElement = document.getElementById('teacherStream');
+            if (videoElement && localStream) {
+                const tracks = localStream.getVideoTracks();
+                tracks.forEach(track => {
+                    track.enabled = isCameraOn;
+                });
+            }
+            const btn = document.getElementById('cameraBtn');
+            if (isCameraOn) {
+                btn.classList.add('active');
+                btn.innerHTML = '<i class="fas fa-video"></i>';
+                showNotification('Camera turned on', 'success');
+            } else {
+                btn.classList.remove('active');
+                btn.innerHTML = '<i class="fas fa-video-slash"></i>';
+                showNotification('Camera turned off', 'info');
+            }
+        }
+
+        function toggleMic() {
+            isMicOn = !isMicOn;
+            if (localStream) {
+                const tracks = localStream.getAudioTracks();
+                tracks.forEach(track => {
+                    track.enabled = isMicOn;
+                });
+            }
+            const btn = document.getElementById('micBtn');
+            if (isMicOn) {
+                btn.classList.add('active');
+                btn.innerHTML = '<i class="fas fa-microphone"></i>';
+                showNotification('Microphone unmuted', 'success');
+            } else {
+                btn.classList.remove('active');
+                btn.innerHTML = '<i class="fas fa-microphone-slash"></i>';
+                showNotification('Microphone muted', 'info');
+            }
+        }
+
+        function toggleVideo(user) {
+            showNotification('Video toggled for ' + user, 'info');
+        }
+
+        function toggleAudio(user) {
+            showNotification('Audio toggled for ' + user, 'info');
+        }
+
+        function expandVideo(user) {
+            showNotification('Expanding video for ' + user, 'info');
+        }
+
+        function shareScreen() {
+            if (navigator.mediaDevices && navigator.mediaDevices.getDisplayMedia) {
+                navigator.mediaDevices.getDisplayMedia({ video: true })
+                    .then(stream => {
+                        const videoElement = document.getElementById('teacherStream');
+                        if (videoElement) {
+                            videoElement.srcObject = stream;
+                        }
+                        showNotification('Screen sharing started', 'success');
+                    })
+                    .catch(err => {
+                        showNotification('Screen sharing cancelled', 'info');
+                    });
+            } else {
+                showNotification('Screen sharing not supported', 'error');
+            }
+        }
+
+        function recordSession() {
+            showNotification('Recording started. Click again to stop.', 'success');
+        }
+
+        function endCall() {
+            if (confirm('Are you sure you want to end the live class?')) {
+                if (localStream) {
+                    localStream.getTracks().forEach(track => track.stop());
+                }
+                showNotification('Class ended', 'info');
+                // Reset video elements
+                const videoElement = document.getElementById('teacherStream');
+                if (videoElement) {
+                    videoElement.srcObject = null;
+                }
+            }
+        }
+
+        // ==================== CHAT ====================
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            if (!message) return;
+
+            const messagesContainer = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'chat-message self';
+            messageDiv.innerHTML = `
+                <div class="avatar" style="background: var(--purple);">ME</div>
+                <div class="message-content">
+                    <div class="sender">You (Teacher)</div>
+                    <div class="text">${message}</div>
+                    <div class="time">${new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</div>
+                </div>
+            `;
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            input.value = '';
+            showNotification('Message sent', 'success');
+        }
+
+        function toggleChat() {
+            const chatSection = document.getElementById('chatSection');
+            if (chatSection.style.display === 'none') {
+                chatSection.style.display = 'block';
+                showNotification('Chat opened', 'info');
+            } else {
+                chatSection.style.display = 'none';
+            }
+        }
+
+        // ==================== WHITEBOARD ====================
+        let isDrawing = false;
+        let currentTool = 'pen';
+        let currentColor = '#3b82f6';
+        let lastX = 0;
+        let lastY = 0;
+        let canvas = null;
+        let ctx = null;
+        let drawHistory = [];
+        let historyIndex = -1;
+
+        function initWhiteboard() {
+            canvas = document.getElementById('whiteboard');
+            ctx = canvas.getContext('2d');
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+            canvas.addEventListener('mousedown', startDraw);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', endDraw);
+            canvas.addEventListener('mouseleave', endDraw);
+            // Touch events
+            canvas.addEventListener('touchstart', touchStart);
+            canvas.addEventListener('touchmove', touchMove);
+            canvas.addEventListener('touchend', endDraw);
+            // Set initial color
+            ctx.strokeStyle = currentColor;
+            ctx.lineWidth = 2;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+        }
+
+        function resizeCanvas() {
+            const rect = canvas.parentElement.getBoundingClientRect();
+            canvas.width = rect.width;
+            canvas.height = rect.height;
+            // Redraw last state
+            if (drawHistory.length > 0 && historyIndex >= 0) {
+                const imageData = drawHistory[historyIndex];
+                if (imageData) {
+                    const img = new Image();
+                    img.onload = () => {
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        ctx.drawImage(img, 0, 0);
+                    };
+                    img.src = imageData;
+                }
+            } else {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                // Draw a grid
+                drawGrid();
+            }
+        }
+
+        function drawGrid() {
+            ctx.strokeStyle = '#e5e7eb';
+            ctx.lineWidth = 0.5;
+            for (let x = 0; x <= canvas.width; x += 40) {
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, canvas.height);
+                ctx.stroke();
+            }
+            for (let y = 0; y <= canvas.height; y += 40) {
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(canvas.width, y);
+                ctx.stroke();
+            }
+            ctx.strokeStyle = currentColor;
+            ctx.lineWidth = 2;
+        }
+
+        function getPos(e) {
+            const rect = canvas.getBoundingClientRect();
+            return {
+                x: e.clientX - rect.left,
+                y: e.clientY - rect.top
+            };
+        }
+
+        function startDraw(e) {
+            isDrawing = true;
+            const pos = getPos(e);
+            lastX = pos.x;
+            lastY = pos.y;
+            // Save state
+            saveState();
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            const pos = getPos(e);
+            ctx.beginPath();
+            ctx.moveTo(lastX, lastY);
+            ctx.lineTo(pos.x, pos.y);
+            ctx.stroke();
+            lastX = pos.x;
+            lastY = pos.y;
+        }
+
+        function endDraw() {
+            isDrawing = false;
+        }
+
+        function touchStart(e) {
+            e.preventDefault();
+            const touch = e.touches[0];
+            const rect = canvas.getBoundingClientRect();
+            startDraw({ clientX: touch.clientX, clientY: touch.clientY });
+        }
+
+        function touchMove(e) {
+            e.preventDefault();
+            const touch = e.touches[0];
+            const rect = canvas.getBoundingClientRect();
+            draw({ clientX: touch.clientX, clientY: touch.clientY });
+        }
+
+        function saveState() {
+            if (drawHistory.length > 100) {
+                drawHistory.shift();
+            }
+            // Remove future states
+            drawHistory = drawHistory.slice(0, historyIndex + 1);
+            const imageData = canvas.toDataURL();
+            drawHistory.push(imageData);
+            historyIndex = drawHistory.length - 1;
+        }
+
+        function setTool(tool) {
+            currentTool = tool;
+            document.getElementById('currentTool').textContent = tool.charAt(0).toUpperCase() + tool.slice(1);
+            document.querySelectorAll('.whiteboard-tools .tool-btn').forEach(btn => btn.classList.remove('active'));
+            const toolMap = {
+                'pen': document.getElementById('penTool'),
+                'eraser': document.getElementById('eraserTool'),
+                'line': document.getElementById('lineTool'),
+                'rectangle': document.getElementById('rectTool'),
+                'circle': document.getElementById('circleTool')
+            };
+            if (toolMap[tool]) {
+                toolMap[tool].classList.add('active');
+            }
+            if (tool === 'eraser') {
+                ctx.globalCompositeOperation = 'destination-out';
+                ctx.lineWidth = 20;
+            } else {
+                ctx.globalCompositeOperation = 'source-over';
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = currentColor;
+            }
+            showNotification('Tool changed to ' + tool.charAt(0).toUpperCase() + tool.slice(1), 'info');
+        }
+
+        function setColor(color) {
+            if (color) {
+                currentColor = color;
+            } else {
+                const picker = document.querySelector('.color-picker');
+                currentColor = picker.value;
+            }
+            ctx.strokeStyle = currentColor;
+            if (currentTool !== 'eraser') {
+                ctx.globalCompositeOperation = 'source-over';
+            }
+        }
+
+        function clearWhiteboard() {
+            if (confirm('Clear the whiteboard?')) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                drawGrid();
+                saveState();
+                showNotification('Whiteboard cleared', 'info');
+            }
+        }
+
+        function undoWhiteboard() {
+            if (historyIndex > 0) {
+                historyIndex--;
+                const imageData = drawHistory[historyIndex];
+                const img = new Image();
+                img.onload = () => {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.drawImage(img, 0, 0);
+                };
+                img.src = imageData;
+                showNotification('Undo successful', 'info');
+            } else {
+                showNotification('Nothing to undo', 'info');
+            }
+        }
+
+        function toggleWhiteboard() {
+            const whiteboardSection = document.getElementById('whiteboardSection');
+            if (whiteboardSection.style.display === 'none') {
+                whiteboardSection.style.display = 'block';
+                setTimeout(resizeCanvas, 100);
+                showNotification('Whiteboard opened', 'info');
+            } else {
+                whiteboardSection.style.display = 'none';
+            }
+        }
+
+        // ==================== NOTIFICATIONS ====================
+        function showNotification(message, type = 'info') {
+            const colors = {
+                success: '#10b981',
+                error: '#ef4444',
+                info: '#3b82f6',
+                warning: '#f59e0b'
+            };
+            const existing = document.querySelector('.custom-notification');
+            if (existing) existing.remove();
+
+            const notification = document.createElement('div');
+            notification.className = 'custom-notification';
+            notification.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                padding: 12px 20px;
+                border-radius: 8px;
+                color: white;
+                background: ${colors[type] || '#3b82f6'};
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                z-index: 9999;
+                font-size: 0.9rem;
+                animation: slideUp 0.3s ease;
+                max-width: 350px;
+            `;
+            notification.innerHTML = message;
+            document.body.appendChild(notification);
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transition = 'opacity 0.3s';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // Add animation styles
+        const styleSheet = document.createElement('style');
+        styleSheet.textContent = `
+            @keyframes slideUp {
+                from { transform: translateY(20px); opacity: 0; }
+                to { transform: translateY(0); opacity: 1; }
+            }
+        `;
+        document.head.appendChild(styleSheet);
+
+        // ==================== INITIALIZATION ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!checkAuth()) return;
+
+            // Logout
+            document.getElementById('logoutBtnNav').addEventListener('click', function(e) {
+                e.preventDefault();
+                logout();
+            });
+
+            // Profile placeholder
+            document.getElementById('profileNavLink').addEventListener('click', function(e) {
+                e.preventDefault();
+                showNotification('Profile page coming soon!', 'info');
+            });
+
+            // Highlight active sidebar item
+            document.querySelectorAll('.nav-item').forEach(item => {
+                if (item.dataset.page === 'liveclass') {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+
+            // Initialize camera
+            initCamera();
+
+            // Initialize whiteboard
+            initWhiteboard();
+
+            // Chat auto-scroll
+            const chatMessages = document.getElementById('chatMessages');
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        });
+
+        // Handle browser back/forward
+        window.addEventListener('pageshow', function(event) {
+            if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+                checkAuth();
+            }
+        });
+    </script>
+
+</body>
+</html>

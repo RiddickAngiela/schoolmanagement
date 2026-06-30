@@ -1,0 +1,1553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Courses · EduSystem</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* ============================================================
+           Online Courses page styles
+           ============================================================ */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --primary-color: #3b82f6;
+            --primary-dark: #2563eb;
+            --primary-light: #60a5fa;
+            --secondary-color: #2c6e9e;
+            --secondary-dark: #1e4b6e;
+            --dark-bg: #1e293b;
+            --sidebar-bg: #ffffff;
+            --main-bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-primary: #0f172a;
+            --text-secondary: #334155;
+            --text-muted: #64748b;
+            --text-light: #94a3b8;
+            --border-light: #eef2f6;
+            --border-medium: #e2e8f0;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #3b82f6;
+            --purple: #8b5cf6;
+            --pink: #ec489a;
+            --orange: #f97316;
+            --teal: #14b8a6;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+            --radius-xl: 24px;
+            --radius-full: 40px;
+            --transition-fast: 0.2s ease;
+            --transition-normal: 0.3s ease;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* ---------- navbar ---------- */
+        .navbar {
+            background-color: var(--dark-bg);
+            color: white;
+            padding: 0 28px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--shadow-sm);
+            z-index: 10;
+            position: sticky;
+            top: 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+            background: linear-gradient(135deg, #fff, var(--text-light));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .logo i {
+            background: none;
+            -webkit-background-clip: unset;
+            background-clip: unset;
+            color: var(--text-light);
+            margin-right: var(--spacing-sm);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: var(--spacing-md);
+        }
+
+        .nav-links a {
+            color: #e2e8f0;
+            text-decoration: none;
+            padding: var(--spacing-sm) var(--spacing-md);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: var(--transition-fast);
+            cursor: pointer;
+            border-radius: var(--radius-sm);
+        }
+
+        .nav-links a i {
+            margin-right: 6px;
+            font-size: 0.9rem;
+        }
+
+        .nav-links a:hover {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* ---------- app wrapper + sidebar ---------- */
+        .app-wrapper {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .sidebar {
+            width: 260px;
+            background-color: var(--sidebar-bg);
+            border-right: 1px solid var(--border-light);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            box-shadow: 1px 0 0 rgba(0, 0, 0, 0.02);
+        }
+
+        .sidebar-nav {
+            padding: var(--spacing-lg) 0 var(--spacing-xl) 0;
+        }
+
+        .sidebar-nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-nav li {
+            margin: 2px 0;
+            cursor: pointer;
+        }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            padding: 10px 24px;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: var(--transition-fast);
+            gap: var(--spacing-md);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .sidebar-nav a i {
+            width: 22px;
+            font-size: 1.1rem;
+            color: #5b6e8c;
+            transition: var(--transition-fast);
+        }
+
+        .sidebar-nav li.active a,
+        .sidebar-nav a:hover {
+            background-color: #f1f5f9;
+            color: var(--secondary-color);
+        }
+
+        .sidebar-nav li.active a {
+            border-left: 3px solid var(--secondary-color);
+            padding-left: 21px;
+        }
+
+        .sidebar-nav a:hover {
+            padding-left: 21px;
+        }
+
+        .sidebar-nav li.active a i,
+        .sidebar-nav a:hover i {
+            color: var(--secondary-color);
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .sidebar::-webkit-scrollbar-track {
+            background: var(--border-light);
+        }
+        .sidebar::-webkit-scrollbar-thumb {
+            background: var(--text-light);
+            border-radius: 3px;
+        }
+
+        /* ---------- main content ---------- */
+        .main-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 28px 32px;
+            background: var(--main-bg);
+        }
+
+        .main-content::-webkit-scrollbar {
+            width: 8px;
+        }
+        .main-content::-webkit-scrollbar-track {
+            background: var(--border-light);
+        }
+        .main-content::-webkit-scrollbar-thumb {
+            background: var(--text-light);
+            border-radius: 4px;
+        }
+
+        /* ---------- online courses specific ---------- */
+        .courses-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .courses-header h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .courses-header .subtitle {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .courses-header .subtitle i {
+            color: var(--teal);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: var(--spacing-sm);
+            align-items: center;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            height: 36px;
+            padding: 0 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            color: #374151;
+            background: #fff;
+            transition: background 0.15s, border-color 0.15s;
+            white-space: nowrap;
+        }
+
+        .btn:hover {
+            background: #f9fafb;
+            border-color: #9ca3af;
+        }
+
+        .btn--primary {
+            background: var(--primary-color);
+            color: #fff;
+            border-color: var(--primary-color);
+        }
+        .btn--primary:hover {
+            background: var(--primary-dark);
+            border-color: var(--primary-dark);
+        }
+
+        .btn--success {
+            background: var(--success);
+            color: #fff;
+            border-color: var(--success);
+        }
+        .btn--success:hover {
+            background: #059669;
+            border-color: #059669;
+        }
+
+        .btn--purple {
+            background: var(--purple);
+            color: #fff;
+            border-color: var(--purple);
+        }
+        .btn--purple:hover {
+            background: #7c3aed;
+            border-color: #7c3aed;
+        }
+
+        /* ----- search and filter ----- */
+        .search-filter {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-xl);
+            flex-wrap: wrap;
+        }
+
+        .search-filter .search-box {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            background: white;
+            border: 1px solid var(--border-medium);
+            border-radius: var(--radius-full);
+            padding: 4px 16px;
+            transition: var(--transition-fast);
+            min-width: 200px;
+        }
+
+        .search-filter .search-box:focus-within {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .search-filter .search-box i {
+            color: var(--text-light);
+            margin-right: 10px;
+        }
+
+        .search-filter .search-box input {
+            flex: 1;
+            border: none;
+            padding: 10px 0;
+            font-size: 0.9rem;
+            outline: none;
+            font-family: inherit;
+            background: transparent;
+        }
+
+        .search-filter .filter-btns {
+            display: flex;
+            gap: var(--spacing-sm);
+            flex-wrap: wrap;
+        }
+
+        .search-filter .filter-btns .filter-btn {
+            padding: 8px 16px;
+            border: 1px solid var(--border-medium);
+            border-radius: var(--radius-full);
+            background: white;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .search-filter .filter-btns .filter-btn:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .search-filter .filter-btns .filter-btn.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        /* ----- course cards ----- */
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .course-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition-normal);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .course-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-light);
+        }
+
+        .course-card .course-thumbnail {
+            height: 180px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--primary-color), var(--purple));
+        }
+
+        .course-card .course-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .course-card .course-thumbnail .course-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            padding: 4px 12px;
+            border-radius: var(--radius-full);
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .course-badge.popular {
+            background: var(--warning);
+            color: white;
+        }
+
+        .course-badge.new {
+            background: var(--success);
+            color: white;
+        }
+
+        .course-badge.premium {
+            background: var(--purple);
+            color: white;
+        }
+
+        .course-badge.free {
+            background: var(--teal);
+            color: white;
+        }
+
+        .course-card .course-thumbnail .play-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: var(--transition-normal);
+        }
+
+        .course-card:hover .course-thumbnail .play-overlay {
+            opacity: 1;
+        }
+
+        .course-card .course-thumbnail .play-overlay i {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-left: 4px;
+        }
+
+        .course-card .course-body {
+            padding: var(--spacing-lg);
+        }
+
+        .course-card .course-body .course-category {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .course-card .course-body .course-title {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .course-card .course-body .course-description {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-md);
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .course-card .course-body .course-meta {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            flex-wrap: wrap;
+            padding-top: var(--spacing-md);
+            border-top: 1px solid var(--border-light);
+        }
+
+        .course-card .course-body .course-meta .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .course-card .course-body .course-meta .meta-item i {
+            font-size: 0.9rem;
+        }
+
+        .course-card .course-body .course-meta .meta-item .rating {
+            color: var(--warning);
+        }
+
+        .course-card .course-body .course-meta .meta-item .rating i {
+            margin-right: 2px;
+        }
+
+        .course-card .course-body .course-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: var(--spacing-md);
+        }
+
+        .course-card .course-body .course-footer .course-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .course-card .course-body .course-footer .course-price .original {
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            text-decoration: line-through;
+            margin-right: 8px;
+        }
+
+        .course-card .course-body .course-footer .enroll-btn {
+            padding: 6px 20px;
+            border: none;
+            border-radius: var(--radius-full);
+            background: var(--primary-color);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            font-size: 0.85rem;
+        }
+
+        .course-card .course-body .course-footer .enroll-btn:hover {
+            background: var(--primary-dark);
+            transform: scale(1.05);
+        }
+
+        .course-card .course-body .course-footer .enroll-btn.enrolled {
+            background: var(--success);
+        }
+
+        .course-card .course-progress {
+            height: 4px;
+            background: var(--border-light);
+            margin: 0 var(--spacing-lg);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .course-card .course-progress .progress-bar {
+            height: 100%;
+            background: var(--success);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        /* ----- lesson modal ----- */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: var(--radius-xl);
+            max-width: 900px;
+            width: 95%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: var(--spacing-xl);
+            position: relative;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 36px;
+            height: 36px;
+            border: none;
+            background: var(--border-light);
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: var(--transition-fast);
+        }
+
+        .modal-close:hover {
+            background: var(--danger);
+            color: white;
+        }
+
+        .modal-content .modal-header {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .modal-content .modal-header h2 {
+            font-size: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .modal-content .modal-header .modal-subtitle {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .modal-content .lesson-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+        }
+
+        .modal-content .lesson-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            padding: var(--spacing-md);
+            background: var(--main-bg);
+            border-radius: var(--radius-md);
+            transition: var(--transition-fast);
+            cursor: pointer;
+        }
+
+        .modal-content .lesson-item:hover {
+            background: #eef2ff;
+        }
+
+        .modal-content .lesson-item .lesson-number {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.8rem;
+            flex-shrink: 0;
+        }
+
+        .modal-content .lesson-item .lesson-number.completed {
+            background: var(--success);
+        }
+
+        .modal-content .lesson-item .lesson-info {
+            flex: 1;
+        }
+
+        .modal-content .lesson-item .lesson-info .lesson-title {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .modal-content .lesson-item .lesson-info .lesson-duration {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .modal-content .lesson-item .lesson-status {
+            font-size: 0.8rem;
+            padding: 2px 12px;
+            border-radius: var(--radius-full);
+            font-weight: 500;
+        }
+
+        .lesson-status.completed {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .lesson-status.in-progress {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .lesson-status.locked {
+            background: #f3f4f6;
+            color: #4b5563;
+        }
+
+        /* ----- category section ----- */
+        .category-section {
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .category-section .category-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-md);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .category-section .category-title i {
+            color: var(--secondary-color);
+        }
+
+        .category-section .category-title .view-all {
+            font-size: 0.85rem;
+            font-weight: 400;
+            color: var(--primary-color);
+            cursor: pointer;
+            margin-left: auto;
+        }
+
+        .category-section .category-title .view-all:hover {
+            text-decoration: underline;
+        }
+
+        /* ---------- responsive ---------- */
+        @media (max-width: 1000px) {
+            .courses-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: var(--spacing-lg);
+            }
+            .main-content {
+                padding: var(--spacing-lg);
+            }
+            .sidebar {
+                width: 220px;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .app-wrapper {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid var(--border-medium);
+                max-height: 300px;
+            }
+            body {
+                overflow: auto;
+                height: auto;
+            }
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+            .navbar {
+                padding: 0 var(--spacing-md);
+            }
+            .nav-links {
+                gap: var(--spacing-sm);
+            }
+            .nav-links a {
+                padding: var(--spacing-sm) var(--spacing-sm);
+            }
+            .search-filter {
+                flex-direction: column;
+            }
+            .search-filter .search-box {
+                width: 100%;
+            }
+            .modal-content {
+                padding: var(--spacing-lg);
+                margin: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .courses-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .course-card .course-body .course-footer {
+                flex-direction: column;
+                gap: var(--spacing-sm);
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="logo"><i class="fas fa-school"></i> EduSystem</div>
+        <div class="nav-links">
+            <a href="index.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a href="#" id="profileNavLink"><i class="far fa-user-circle"></i> Profile</a>
+            <a href="#" id="logoutBtnNav"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </div>
+    </header>
+
+    <div class="app-wrapper">
+        <aside class="sidebar">
+            <div class="sidebar-nav">
+                <ul>
+                    <li class="nav-item" data-page="dashboard"><a href="index.html"><i class="fas fa-chalkboard-user"></i> Dashboard</a></li>
+                    <li class="nav-item" data-page="users"><a href="users.html"><i class="fas fa-users"></i> Users</a></li>
+                    <li class="nav-item" data-page="academic"><a href="academics.html"><i class="fas fa-book-open"></i> Academic</a></li>
+                    <li class="nav-item" data-page="examination"><a href="examination.html"><i class="fas fa-pen-alt"></i> Examination</a></li>
+                    <li class="nav-item" data-page="liveclass"><a href="liveclass.html"><i class="fas fa-video"></i> Live class</a></li>
+                    <li class="nav-item active" data-page="onlinecourses"><a href="onlinecourses.html"><i class="fas fa-laptop-code"></i> Online courses</a></li>
+                    <li class="nav-item" data-page="accounting"><a href="accounting.html"><i class="fas fa-calculator"></i> Accounting</a></li>
+                    <li class="nav-item" data-page="alumni"><a href="alumni.html"><i class="fas fa-graduation-cap"></i> Alumni</a></li>
+                    <li class="nav-item" data-page="backoffice"><a href="#"><i class="fas fa-archive"></i> Back office</a></li>
+                    <li class="nav-item" data-page="settings"><a href="#"><i class="fas fa-sliders-h"></i> Settings</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <main class="main-content" id="mainContent">
+            <!-- ========== ONLINE COURSES PAGE CONTENT ========== -->
+            <div class="courses-header">
+                <div>
+                    <h1><i class="fas fa-laptop-code" style="color: var(--teal); margin-right: 8px;"></i>Online Courses</h1>
+                    <div class="subtitle"><i class="fas fa-graduation-cap"></i> 24 courses available · 1,284 students enrolled</div>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn--primary" onclick="alert('Create new course')"><i class="fas fa-plus"></i> New Course</button>
+                    <button class="btn btn--success" onclick="alert('My learning')"><i class="fas fa-book-open"></i> My Learning</button>
+                </div>
+            </div>
+
+            <!-- Search and Filter -->
+            <div class="search-filter">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search for courses, lessons, or topics..." id="searchInput" onkeyup="filterCourses()">
+                </div>
+                <div class="filter-btns">
+                    <button class="filter-btn active" onclick="filterCategory('all')">All</button>
+                    <button class="filter-btn" onclick="filterCategory('mathematics')">Mathematics</button>
+                    <button class="filter-btn" onclick="filterCategory('science')">Science</button>
+                    <button class="filter-btn" onclick="filterCategory('languages')">Languages</button>
+                    <button class="filter-btn" onclick="filterCategory('computer')">Computer</button>
+                    <button class="filter-btn" onclick="filterCategory('business')">Business</button>
+                </div>
+            </div>
+
+            <!-- Mathematics Courses -->
+            <div class="category-section" data-category="mathematics">
+                <div class="category-title">
+                    <i class="fas fa-calculator"></i> Mathematics
+                    <span class="view-all" onclick="filterCategory('mathematics')">View All →</span>
+                </div>
+                <div class="courses-grid" id="mathCourses">
+                    <!-- Course 1 -->
+                    <div class="course-card" onclick="openCourse('Algebra Fundamentals', 'mathematics')">
+                        <div class="course-thumbnail" style="background: linear-gradient(135deg, #3b82f6, #6366f1);">
+                            <span class="course-badge popular">Popular</span>
+                            <div class="play-overlay"><i class="fas fa-play"></i></div>
+                        </div>
+                        <div class="course-body">
+                            <div class="course-category">Mathematics</div>
+                            <div class="course-title">Algebra Fundamentals</div>
+                            <div class="course-description">Master the core concepts of algebra including equations, functions, and graphing.</div>
+                            <div class="course-meta">
+                                <span class="meta-item"><i class="fas fa-clock"></i> 12 hours</span>
+                                <span class="meta-item"><i class="fas fa-book"></i> 24 lessons</span>
+                                <span class="meta-item"><span class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></span> 4.5</span>
+                            </div>
+                            <div class="course-footer">
+                                <div class="course-price">KES 2,500 <span class="original">KES 5,000</span></div>
+                                <button class="enroll-btn" onclick="event.stopPropagation(); enrollCourse(this)">Enroll Now</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Course 2 -->
+                    <div class="course-card" onclick="openCourse('Calculus I', 'mathematics')">
+                        <div class="course-thumbnail" style="background: linear-gradient(135deg, #8b5cf6, #6d28d9);">
+                            <span class="course-badge premium">Premium</span>
+                            <div class="play-overlay"><i class="fas fa-play"></i></div>
+                        </div>
+                        <div class="course-body">
+                            <div class="course-category">Mathematics</div>
+                            <div class="course-title">Calculus I: Limits & Derivatives</div>
+                            <div class="course-description">Introduction to calculus covering limits, derivatives, and their applications.</div>
+                            <div class="course-meta">
+                                <span class="meta-item"><i class="fas fa-clock"></i> 18 hours</span>
+                                <span class="meta-item"><i class="fas fa-book"></i> 32 lessons</span>
+                                <span class="meta-item"><span class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span> 5.0</span>
+                            </div>
+                            <div class="course-footer">
+                                <div class="course-price">KES 4,500 <span class="original">KES 7,000</span></div>
+                                <button class="enroll-btn" onclick="event.stopPropagation(); enrollCourse(this)">Enroll Now</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Course 3 -->
+                    <div class="course-card" onclick="openCourse('Statistics & Probability', 'mathematics')">
+                        <div class="course-thumbnail" style="background: linear-gradient(135deg, #10b981, #059669);">
+                            <span class="course-badge free">Free</span>
+                            <div class="play-overlay"><i class="fas fa-play"></i></div>
+                        </div>
+                        <div class="course-body">
+                            <div class="course-category">Mathematics</div>
+                            <div class="course-title">Statistics & Probability</div>
+                            <div class="course-description">Learn statistical analysis, probability theory, and data interpretation skills.</div>
+                            <div class="course-meta">
+                                <span class="meta-item"><i class="fas fa-clock"></i> 10 hours</span>
+                                <span class="meta-item"><i class="fas fa-book"></i> 20 lessons</span>
+                                <span class="meta-item"><span class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span> 4.8</span>
+                            </div>
+                            <div class="course-footer">
+                                <div class="course-price">FREE</div>
+                                <button class="enroll-btn" onclick="event.stopPropagation(); enrollCourse(this)">Enroll Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Science Courses -->
+            <div class="category-section" data-category="science">
+                <div class="category-title">
+                    <i class="fas fa-flask"></i> Science
+                    <span class="view-all" onclick="filterCategory('science')">View All →</span>
+                </div>
+                <div class="courses-grid" id="scienceCourses">
+                    <div class="course-card" onclick="openCourse('Biology Essentials', 'science')">
+                        <div class="course-thumbnail" style="background: linear-gradient(135deg, #14b8a6, #0d9488);">
+                            <span class="course-badge new">New</span>
+                            <div class="play-overlay"><i class="fas fa-play"></i></div>
+                        </div>
+                        <div class="course-body">
+                            <div class="course-category">Science</div>
+                            <div class="course-title">Biology Essentials</div>
+                            <div class="course-description">Explore the fundamentals of biology including cells, genetics, and ecosystems.</div>
+                            <div class="course-meta">
+                                <span class="meta-item"><i class="fas fa-clock"></i> 14 hours</span>
+                                <span class="meta-item"><i class="fas fa-book"></i> 28 lessons</span>
+                                <span class="meta-item"><span class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></span> 4.6</span>
+                            </div>
+                            <div class="course-footer">
+                                <div class="course-price">KES 3,200 <span class="original">KES 5,500</span></div>
+                                <button class="enroll-btn" onclick="event.stopPropagation(); enrollCourse(this)">Enroll Now</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="course-card" onclick="openCourse('Physics Fundamentals', 'science')">
+                        <div class="course-thumbnail" style="background: linear-gradient(135deg, #f97316, #ea580c);">
+                            <span class="course-badge popular">Popular</span>
+                            <div class="play-overlay"><i class="fas fa-play"></i></div>
+                        </div>
+                        <div class="course-body">
+                            <div class="course-category">Science</div>
+                            <div class="course-title">Physics Fundamentals</div>
+                            <div class="course-description">Master the basic principles of physics including mechanics, energy, and waves.</div>
+                            <div class="course-meta">
+                                <span class="meta-item"><i class="fas fa-clock"></i> 16 hours</span>
+                                <span class="meta-item"><i class="fas fa-book"></i> 30 lessons</span>
+                                <span class="meta-item"><span class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span> 4.9</span>
+                            </div>
+                            <div class="course-footer">
+                                <div class="course-price">KES 3,800 <span class="original">KES 6,000</span></div>
+                                <button class="enroll-btn" onclick="event.stopPropagation(); enrollCourse(this)">Enroll Now</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="course-card" onclick="openCourse('Chemistry Basics', 'science')">
+                        <div class="course-thumbnail" style="background: linear-gradient(135deg, #ec489a, #db2777);">
+                            <span class="course-badge premium">Premium</span>
+                            <div class="play-overlay"><i class="fas fa-play"></i></div>
+                        </div>
+                        <div class="course-body">
+                            <div class="course-category">Science</div>
+                            <div class="course-title">Chemistry Basics</div>
+                            <div class="course-description">Learn about atoms, molecules, chemical reactions, and the periodic table.</div>
+                            <div class="course-meta">
+                                <span class="meta-item"><i class="fas fa-clock"></i> 12 hours</span>
+                                <span class="meta-item"><i class="fas fa-book"></i> 22 lessons</span>
+                                <span class="meta-item"><span class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></span> 4.7</span>
+                            </div>
+                            <div class="course-footer">
+                                <div class="course-price">KES 4,200 <span class="original">KES 6,500</span></div>
+                                <button class="enroll-btn" onclick="event.stopPropagation(); enrollCourse(this)">Enroll Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Languages Courses -->
+            <div class="category-section" data-category="languages">
+                <div class="category-title">
+                    <i class="fas fa-language"></i> Languages
+                    <span class="view-all" onclick="filterCategory('languages')">View All →</span>
+                </div>
+                <div class="courses-grid" id="languageCourses">
+                    <div class="course-card" onclick="openCourse('English Literature', 'languages')">
+                        <div class="course-thumbnail" style="background: linear-gradient(135deg, #3b82f6, #2563eb);">
+                            <span class="course-badge popular">Popular</span>
+                            <div class="play-overlay"><i class="fas fa-play"></i></div>
+                        </div>
+                        <div class="course-body">
+                            <div class="course-category">Languages</div>
+                            <div class="course-title">English Literature & Composition</div>
+                            <div class="course-description">Develop your reading, writing, and analytical skills through literature.</div>
+                            <div class="course-meta">
+                                <span class="meta-item"><i class="fas fa-clock"></i> 15 hours</span>
+                                <span class="meta-item"><i class="fas fa-book"></i> 26 lessons</span>
+                                <span class="meta-item"><span class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span> 4.8</span>
+                            </div>
+                            <div class="course-footer">
+                                <div class="course-price">KES 2,800 <span class="original">KES 4,500</span></div>
+                                <button class="enroll-btn" onclick="event.stopPropagation(); enrollCourse(this)">Enroll Now</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="course-card" onclick="openCourse('Swahili for Beginners', 'languages')">
+                        <div class="course-thumbnail" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">
+                            <span class="course-badge free">Free</span>
+                            <div class="play-overlay"><i class="fas fa-play"></i></div>
+                        </div>
+                        <div class="course-body">
+                            <div class="course-category">Languages</div>
+                            <div class="course-title">Swahili for Beginners</div>
+                            <div class="course-description">Learn basic Swahili vocabulary, grammar, and everyday conversation skills.</div>
+                            <div class="course-meta">
+                                <span class="meta-item"><i class="fas fa-clock"></i> 8 hours</span>
+                                <span class="meta-item"><i class="fas fa-book"></i> 16 lessons</span>
+                                <span class="meta-item"><span class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span> 4.9</span>
+                            </div>
+                            <div class="course-footer">
+                                <div class="course-price">FREE</div>
+                                <button class="enroll-btn" onclick="event.stopPropagation(); enrollCourse(this)">Enroll Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Computer Science Courses -->
+            <div class="category-section" data-category="computer">
+                <div class="category-title">
+                    <i class="fas fa-code"></i> Computer Science
+                    <span class="view-all" onclick="filterCategory('computer')">View All →</span>
+                </div>
+                <div class="courses-grid" id="computerCourses">
+                    <div class="course-card" onclick="openCourse('Python Programming', 'computer')">
+                        <div class="course-thumbnail" style="background: linear-gradient(135deg, #14b8a6, #0d9488);">
+                            <span class="course-badge premium">Premium</span>
+                            <div class="play-overlay"><i class="fas fa-play"></i></div>
+                        </div>
+                        <div class="course-body">
+                            <div class="course-category">Computer Science</div>
+                            <div class="course-title">Python Programming</div>
+                            <div class="course-description">Learn Python from scratch including data structures, functions, and OOP.</div>
+                            <div class="course-meta">
+                                <span class="meta-item"><i class="fas fa-clock"></i> 20 hours</span>
+                                <span class="meta-item"><i class="fas fa-book"></i> 36 lessons</span>
+                                <span class="meta-item"><span class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span> 5.0</span>
+                            </div>
+                            <div class="course-footer">
+                                <div class="course-price">KES 5,000 <span class="original">KES 8,000</span></div>
+                                <button class="enroll-btn" onclick="event.stopPropagation(); enrollCourse(this)">Enroll Now</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="course-card" onclick="openCourse('Web Development', 'computer')">
+                        <div class="course-thumbnail" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
+                            <span class="course-badge popular">Popular</span>
+                            <div class="play-overlay"><i class="fas fa-play"></i></div>
+                        </div>
+                        <div class="course-body">
+                            <div class="course-category">Computer Science</div>
+                            <div class="course-title">Web Development</div>
+                            <div class="course-description">Build websites with HTML, CSS, and JavaScript. Learn responsive design.</div>
+                            <div class="course-meta">
+                                <span class="meta-item"><i class="fas fa-clock"></i> 18 hours</span>
+                                <span class="meta-item"><i class="fas fa-book"></i> 30 lessons</span>
+                                <span class="meta-item"><span class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></span> 4.7</span>
+                            </div>
+                            <div class="course-footer">
+                                <div class="course-price">KES 4,500 <span class="original">KES 7,000</span></div>
+                                <button class="enroll-btn" onclick="event.stopPropagation(); enrollCourse(this)">Enroll Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Business Courses -->
+            <div class="category-section" data-category="business">
+                <div class="category-title">
+                    <i class="fas fa-briefcase"></i> Business
+                    <span class="view-all" onclick="filterCategory('business')">View All →</span>
+                </div>
+                <div class="courses-grid" id="businessCourses">
+                    <div class="course-card" onclick="openCourse('Entrepreneurship', 'business')">
+                        <div class="course-thumbnail" style="background: linear-gradient(135deg, #ec489a, #db2777);">
+                            <span class="course-badge new">New</span>
+                            <div class="play-overlay"><i class="fas fa-play"></i></div>
+                        </div>
+                        <div class="course-body">
+                            <div class="course-category">Business</div>
+                            <div class="course-title">Entrepreneurship</div>
+                            <div class="course-description">Learn how to start and grow a successful business from idea to execution.</div>
+                            <div class="course-meta">
+                                <span class="meta-item"><i class="fas fa-clock"></i> 12 hours</span>
+                                <span class="meta-item"><i class="fas fa-book"></i> 24 lessons</span>
+                                <span class="meta-item"><span class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span> 4.9</span>
+                            </div>
+                            <div class="course-footer">
+                                <div class="course-price">KES 3,500 <span class="original">KES 5,500</span></div>
+                                <button class="enroll-btn" onclick="event.stopPropagation(); enrollCourse(this)">Enroll Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div style="display: flex; gap: var(--spacing-md); flex-wrap: wrap; justify-content: space-between; padding-top: 16px; border-top: 1px solid var(--border-light);">
+                <span style="font-size:0.8rem; color:var(--text-muted);"><i class="fas fa-users"></i> 1,284 students enrolled</span>
+                <a href="index.html" style="color: var(--secondary-color); text-decoration: none; font-weight:500;"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+            </div>
+        </main>
+    </div>
+
+    <!-- Course Modal -->
+    <div class="modal-overlay" id="courseModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+            <div class="modal-header">
+                <h2 id="modalCourseTitle">Course Title</h2>
+                <div class="modal-subtitle" id="modalCourseCategory">Category</div>
+            </div>
+            <div class="lesson-list" id="modalLessons">
+                <!-- Lessons will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==================== AUTHENTICATION ====================
+        function isLoggedIn() {
+            return sessionStorage.getItem('loggedIn') === 'true';
+        }
+
+        function checkAuth() {
+            if (!isLoggedIn()) {
+                window.location.href = 'login.html';
+                return false;
+            }
+            return true;
+        }
+
+        function logout() {
+            sessionStorage.clear();
+            window.location.href = 'login.html';
+        }
+
+        // ==================== COURSE DATA ====================
+        const courseLessons = {
+            'Algebra Fundamentals': {
+                category: 'Mathematics',
+                lessons: [
+                    { title: 'Introduction to Algebra', duration: '25 min' },
+                    { title: 'Solving Linear Equations', duration: '30 min' },
+                    { title: 'Graphing Linear Functions', duration: '35 min' },
+                    { title: 'Systems of Equations', duration: '40 min' },
+                    { title: 'Quadratic Equations', duration: '45 min' },
+                    { title: 'Polynomial Functions', duration: '35 min' },
+                    { title: 'Rational Expressions', duration: '30 min' },
+                    { title: 'Radical Equations', duration: '25 min' }
+                ]
+            },
+            'Calculus I': {
+                category: 'Mathematics',
+                lessons: [
+                    { title: 'Introduction to Limits', duration: '35 min' },
+                    { title: 'Calculating Limits', duration: '40 min' },
+                    { title: 'Continuity', duration: '30 min' },
+                    { title: 'Introduction to Derivatives', duration: '45 min' },
+                    { title: 'Derivative Rules', duration: '50 min' },
+                    { title: 'Product and Quotient Rules', duration: '40 min' },
+                    { title: 'Chain Rule', duration: '35 min' },
+                    { title: 'Applications of Derivatives', duration: '45 min' }
+                ]
+            },
+            'Statistics & Probability': {
+                category: 'Mathematics',
+                lessons: [
+                    { title: 'Descriptive Statistics', duration: '30 min' },
+                    { title: 'Measures of Central Tendency', duration: '25 min' },
+                    { title: 'Measures of Dispersion', duration: '30 min' },
+                    { title: 'Probability Basics', duration: '35 min' },
+                    { title: 'Conditional Probability', duration: '30 min' },
+                    { title: 'Probability Distributions', duration: '40 min' },
+                    { title: 'Binomial Distribution', duration: '35 min' },
+                    { title: 'Normal Distribution', duration: '40 min' }
+                ]
+            },
+            'Biology Essentials': {
+                category: 'Science',
+                lessons: [
+                    { title: 'Cell Structure & Function', duration: '35 min' },
+                    { title: 'Cellular Respiration', duration: '40 min' },
+                    { title: 'Photosynthesis', duration: '35 min' },
+                    { title: 'Genetics & DNA', duration: '45 min' },
+                    { title: 'Evolution', duration: '40 min' },
+                    { title: 'Ecology & Ecosystems', duration: '35 min' },
+                    { title: 'Human Body Systems', duration: '50 min' },
+                    { title: 'Immunology', duration: '35 min' }
+                ]
+            },
+            'Physics Fundamentals': {
+                category: 'Science',
+                lessons: [
+                    { title: 'Motion & Kinematics', duration: '40 min' },
+                    { title: 'Newton\'s Laws of Motion', duration: '45 min' },
+                    { title: 'Work & Energy', duration: '35 min' },
+                    { title: 'Momentum & Collisions', duration: '40 min' },
+                    { title: 'Rotational Motion', duration: '35 min' },
+                    { title: 'Waves & Sound', duration: '40 min' },
+                    { title: 'Electricity & Circuits', duration: '45 min' },
+                    { title: 'Magnetism', duration: '35 min' }
+                ]
+            },
+            'Chemistry Basics': {
+                category: 'Science',
+                lessons: [
+                    { title: 'Atoms & Elements', duration: '30 min' },
+                    { title: 'Chemical Bonding', duration: '35 min' },
+                    { title: 'Chemical Reactions', duration: '40 min' },
+                    { title: 'Stoichiometry', duration: '45 min' },
+                    { title: 'Gases & Pressure', duration: '35 min' },
+                    { title: 'Solutions & Solubility', duration: '30 min' },
+                    { title: 'Acids & Bases', duration: '35 min' },
+                    { title: 'Organic Chemistry', duration: '40 min' }
+                ]
+            },
+            'English Literature & Composition': {
+                category: 'Languages',
+                lessons: [
+                    { title: 'Introduction to Literature', duration: '30 min' },
+                    { title: 'Reading Comprehension', duration: '35 min' },
+                    { title: 'Literary Devices', duration: '40 min' },
+                    { title: 'Essay Writing', duration: '45 min' },
+                    { title: 'Argumentative Writing', duration: '40 min' },
+                    { title: 'Grammar & Punctuation', duration: '35 min' },
+                    { title: 'Vocabulary Building', duration: '30 min' },
+                    { title: 'Creative Writing', duration: '45 min' }
+                ]
+            },
+            'Swahili for Beginners': {
+                category: 'Languages',
+                lessons: [
+                    { title: 'Swahili Alphabet & Pronunciation', duration: '25 min' },
+                    { title: 'Basic Greetings', duration: '20 min' },
+                    { title: 'Numbers & Counting', duration: '25 min' },
+                    { title: 'Common Vocabulary', duration: '30 min' },
+                    { title: 'Basic Grammar', duration: '35 min' },
+                    { title: 'Verb Conjugation', duration: '30 min' },
+                    { title: 'Everyday Conversations', duration: '35 min' },
+                    { title: 'Travel Phrases', duration: '25 min' }
+                ]
+            },
+            'Python Programming': {
+                category: 'Computer Science',
+                lessons: [
+                    { title: 'Python Installation & Setup', duration: '20 min' },
+                    { title: 'Variables & Data Types', duration: '30 min' },
+                    { title: 'Control Flow (if/else)', duration: '35 min' },
+                    { title: 'Loops (for/while)', duration: '35 min' },
+                    { title: 'Functions', duration: '40 min' },
+                    { title: 'Lists & Dictionaries', duration: '35 min' },
+                    { title: 'Classes & Objects (OOP)', duration: '45 min' },
+                    { title: 'File Handling', duration: '30 min' }
+                ]
+            },
+            'Web Development': {
+                category: 'Computer Science',
+                lessons: [
+                    { title: 'HTML Fundamentals', duration: '35 min' },
+                    { title: 'CSS Styling', duration: '40 min' },
+                    { title: 'CSS Flexbox & Grid', duration: '35 min' },
+                    { title: 'JavaScript Basics', duration: '45 min' },
+                    { title: 'DOM Manipulation', duration: '40 min' },
+                    { title: 'Responsive Design', duration: '35 min' },
+                    { title: 'Forms & Validation', duration: '30 min' },
+                    { title: 'Introduction to React', duration: '45 min' }
+                ]
+            },
+            'Entrepreneurship': {
+                category: 'Business',
+                lessons: [
+                    { title: 'Introduction to Entrepreneurship', duration: '30 min' },
+                    { title: 'Identifying Business Opportunities', duration: '35 min' },
+                    { title: 'Market Research', duration: '40 min' },
+                    { title: 'Business Planning', duration: '45 min' },
+                    { title: 'Marketing Strategy', duration: '35 min' },
+                    { title: 'Financial Management', duration: '40 min' },
+                    { title: 'Risk Management', duration: '30 min' },
+                    { title: 'Scaling Your Business', duration: '35 min' }
+                ]
+            }
+        };
+
+        // ==================== MODAL FUNCTIONS ====================
+        function openCourse(title, category) {
+            const modal = document.getElementById('courseModal');
+            const modalTitle = document.getElementById('modalCourseTitle');
+            const modalCategory = document.getElementById('modalCourseCategory');
+            const lessonList = document.getElementById('modalLessons');
+
+            modalTitle.textContent = title;
+            modalCategory.textContent = category.charAt(0).toUpperCase() + category.slice(1);
+
+            const courseData = courseLessons[title];
+            if (courseData) {
+                lessonList.innerHTML = courseData.lessons.map((lesson, index) => `
+                    <div class="lesson-item" onclick="alert('Opening lesson: ${lesson.title}')">
+                        <div class="lesson-number ${index < 3 ? 'completed' : ''}">${index + 1}</div>
+                        <div class="lesson-info">
+                            <div class="lesson-title">${lesson.title}</div>
+                            <div class="lesson-duration"><i class="fas fa-clock"></i> ${lesson.duration}</div>
+                        </div>
+                        <span class="lesson-status ${index < 3 ? 'completed' : index === 3 ? 'in-progress' : 'locked'}">
+                            ${index < 3 ? 'Completed' : index === 3 ? 'In Progress' : 'Locked'}
+                        </span>
+                    </div>
+                `).join('');
+            }
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('courseModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Close modal on overlay click
+        document.getElementById('courseModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Close modal with escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // ==================== ENROLL FUNCTION ====================
+        function enrollCourse(btn) {
+            if (btn.textContent === 'Enroll Now') {
+                btn.textContent = 'Enrolled ✓';
+                btn.classList.add('enrolled');
+                showNotification('You have successfully enrolled!', 'success');
+            } else {
+                btn.textContent = 'Enroll Now';
+                btn.classList.remove('enrolled');
+                showNotification('Unenrolled from course', 'info');
+            }
+        }
+
+        // ==================== FILTER FUNCTION ====================
+        function filterCategory(category) {
+            // Update filter buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent.toLowerCase() === category || 
+                    (category === 'all' && btn.textContent === 'All')) {
+                    btn.classList.add('active');
+                }
+            });
+
+            // Show/hide categories
+            document.querySelectorAll('.category-section').forEach(section => {
+                if (category === 'all' || section.dataset.category === category) {
+                    section.style.display = 'block';
+                } else {
+                    section.style.display = 'none';
+                }
+            });
+        }
+
+        function filterCourses() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const courseCards = document.querySelectorAll('.course-card');
+
+            courseCards.forEach(card => {
+                const title = card.querySelector('.course-title').textContent.toLowerCase();
+                const description = card.querySelector('.course-description').textContent.toLowerCase();
+                const category = card.querySelector('.course-category').textContent.toLowerCase();
+
+                if (title.includes(searchTerm) || description.includes(searchTerm) || category.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // ==================== NOTIFICATIONS ====================
+        function showNotification(message, type = 'info') {
+            const colors = {
+                success: '#10b981',
+                error: '#ef4444',
+                info: '#3b82f6',
+                warning: '#f59e0b'
+            };
+            const existing = document.querySelector('.custom-notification');
+            if (existing) existing.remove();
+
+            const notification = document.createElement('div');
+            notification.className = 'custom-notification';
+            notification.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                padding: 12px 20px;
+                border-radius: 8px;
+                color: white;
+                background: ${colors[type] || '#3b82f6'};
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                z-index: 9999;
+                font-size: 0.9rem;
+                animation: slideUp 0.3s ease;
+                max-width: 350px;
+            `;
+            notification.innerHTML = message;
+            document.body.appendChild(notification);
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transition = 'opacity 0.3s';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // Add animation styles
+        const styleSheet = document.createElement('style');
+        styleSheet.textContent = `
+            @keyframes slideUp {
+                from { transform: translateY(20px); opacity: 0; }
+                to { transform: translateY(0); opacity: 1; }
+            }
+        `;
+        document.head.appendChild(styleSheet);
+
+        // ==================== INITIALIZATION ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!checkAuth()) return;
+
+            // Logout
+            document.getElementById('logoutBtnNav').addEventListener('click', function(e) {
+                e.preventDefault();
+                logout();
+            });
+
+            // Profile placeholder
+            document.getElementById('profileNavLink').addEventListener('click', function(e) {
+                e.preventDefault();
+                showNotification('Profile page coming soon!', 'info');
+            });
+
+            // Highlight active sidebar item
+            document.querySelectorAll('.nav-item').forEach(item => {
+                if (item.dataset.page === 'onlinecourses') {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+        });
+
+        // Handle browser back/forward
+        window.addEventListener('pageshow', function(event) {
+            if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+                checkAuth();
+            }
+        });
+    </script>
+
+</body>
+</html>
