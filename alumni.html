@@ -4,49 +4,261 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Alumni — School Management System</title>
-  <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    /* ---- Alumni-specific styles ---- */
+    /* ============================================================
+       MODERN STYLES - Matching Dashboard Design Language
+       ============================================================ */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --primary-color: #3b82f6;
+      --primary-dark: #2563eb;
+      --primary-light: #60a5fa;
+      --secondary-color: #2c6e9e;
+      --secondary-dark: #1e4b6e;
+      --dark-bg: #1e293b;
+      --sidebar-bg: #ffffff;
+      --main-bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text-primary: #0f172a;
+      --text-secondary: #334155;
+      --text-muted: #64748b;
+      --text-light: #94a3b8;
+      --border-light: #eef2f6;
+      --border-medium: #e2e8f0;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --info: #3b82f6;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+      --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.05);
+      --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.08);
+      --radius-lg: 16px;
+      --radius-md: 10px;
+      --radius-sm: 8px;
+      --radius-full: 40px;
+      --transition-fast: 0.2s ease;
+      --transition-normal: 0.3s ease;
+    }
+
+    body {
+      font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background-color: #f0f2f5;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* ---------- NAVBAR (matching dashboard) ---------- */
+    .navbar {
+      background: white;
+      padding: 0 32px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #e2e8f0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: 700;
+      color: #1e293b;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo i {
+      color: #3b82f6;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #64748b;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-links a:hover {
+      color: #1e293b;
+    }
+
+    /* ---------- APP WRAPPER + SIDEBAR ---------- */
+    .app-wrapper {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .sidebar {
+      width: 250px;
+      background: white;
+      border-right: 1px solid #e2e8f0;
+      padding: 20px 0;
+      overflow-y: auto;
+      flex-shrink: 0;
+    }
+
+    .sidebar-nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .sidebar-nav li {
+      padding: 0 16px;
+      margin-bottom: 2px;
+    }
+
+    .sidebar-nav li a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      color: #64748b;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
+    .sidebar-nav li a:hover {
+      background: #f1f5f9;
+      color: #1e293b;
+    }
+
+    .sidebar-nav li.active a {
+      background: #3b82f6;
+      color: white;
+    }
+
+    .sidebar-nav li.active a i {
+      color: white;
+    }
+
+    .sidebar-nav li a i {
+      width: 20px;
+      font-size: 16px;
+      color: #94a3b8;
+    }
+
+    .sidebar-nav li.active a i {
+      color: white;
+    }
+
+    /* ---------- MAIN CONTENT ---------- */
+    .main-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 32px;
+      background: #f8fafc;
+    }
+
+    .main-content::-webkit-scrollbar {
+      width: 8px;
+    }
+    .main-content::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    .main-content::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    .main-content::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+
+    .page-wrapper {
+      max-width: 100%;
+    }
+
+    /* ---------- ALUMNI HERO ---------- */
     .alumni-hero {
-      background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%);
-      border-radius: 14px;
-      padding: 2rem 2rem 1.75rem;
-      margin-bottom: 1.25rem;
+      background: linear-gradient(135deg, #1e293b 0%, #3b82f6 100%);
+      border-radius: 12px;
+      padding: 28px 32px;
+      margin-bottom: 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
-      gap: 1rem;
+      gap: 16px;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
     }
+
     .alumni-hero__left h1 {
       font-size: 24px;
-      font-weight: 600;
+      font-weight: 700;
       color: #fff;
       margin: 0 0 4px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
+
     .alumni-hero__left p {
       font-size: 14px;
       color: #bfdbfe;
       margin: 0;
     }
+
     .alumni-hero__icon {
       font-size: 56px;
-      color: rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.12);
+    }
+
+    /* ---------- STATS CARDS ---------- */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
     }
 
     .alumni-stat-card {
-      background: #fff;
-      border: 1px solid #e5e7eb;
-      border-radius: 10px;
-      padding: 1rem 1.125rem;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid #f1f5f9;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
       display: flex;
       align-items: center;
       gap: 14px;
+      transition: all 0.3s ease;
     }
+
+    .alumni-stat-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+    }
+
     .alumni-stat-card__icon {
-      width: 44px;
-      height: 44px;
+      width: 48px;
+      height: 48px;
       border-radius: 10px;
       display: flex;
       align-items: center;
@@ -54,118 +266,263 @@
       font-size: 20px;
       flex-shrink: 0;
     }
+
     .alumni-stat-card__icon--blue   { background: #dbeafe; color: #1d4ed8; }
     .alumni-stat-card__icon--green  { background: #d1fae5; color: #065f46; }
     .alumni-stat-card__icon--purple { background: #ede9fe; color: #5b21b6; }
     .alumni-stat-card__icon--amber  { background: #fef3c7; color: #92400e; }
     .alumni-stat-card__icon--red    { background: #fee2e2; color: #991b1b; }
 
-    .alumni-stat-card__info {}
     .alumni-stat-card__value {
-      font-size: 22px;
-      font-weight: 600;
-      color: #1a1a1a;
+      font-size: 24px;
+      font-weight: 700;
+      color: #0f172a;
       line-height: 1;
     }
+
     .alumni-stat-card__label {
-      font-size: 12px;
-      color: #6b7280;
-      margin-top: 3px;
+      font-size: 13px;
+      color: #64748b;
+      margin-top: 2px;
     }
 
+    /* ---------- FILTER BAR ---------- */
     .filter-bar {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       flex-wrap: wrap;
-      margin-bottom: 1rem;
+      margin-bottom: 20px;
     }
 
-    .tab-strip {
-      display: flex;
-      gap: 4px;
-      background: #f3f4f6;
+    .input-search,
+    .input-select {
+      padding: 8px 14px;
+      border: 1px solid #e2e8f0;
       border-radius: 8px;
-      padding: 3px;
-      margin-bottom: 1.25rem;
+      font-size: 14px;
+      background: white;
+      outline: none;
+      transition: all 0.2s;
+      color: #1e293b;
     }
-    .tab-strip__btn {
+
+    .input-search {
       flex: 1;
-      padding: 7px 14px;
+      min-width: 200px;
+    }
+
+    .input-search:focus,
+    .input-select:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .input-select {
+      min-width: 130px;
+      cursor: pointer;
+    }
+
+    .btn {
+      padding: 8px 18px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      background: #f1f5f9;
+      color: #1e293b;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .btn--primary {
+      background: #3b82f6;
+      color: white;
+    }
+
+    .btn--primary:hover {
+      background: #2563eb;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+
+    .btn--icon {
+      padding: 6px 8px;
+      background: transparent;
+      color: #64748b;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    .btn--icon:hover {
+      background: #f1f5f9;
+      color: #1e293b;
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* ---------- TAB STRIP ---------- */
+    .tab-strip {
+      display: inline-flex;
+      gap: 4px;
+      background: #f1f5f9;
+      border-radius: 8px;
+      padding: 4px;
+      margin-bottom: 20px;
+    }
+
+    .tab-strip__btn {
+      padding: 7px 16px;
       border: none;
       border-radius: 6px;
       font-size: 13px;
       font-weight: 500;
       cursor: pointer;
       background: transparent;
-      color: #6b7280;
-      transition: background 0.15s, color 0.15s;
+      color: #64748b;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
+
     .tab-strip__btn.active {
-      background: #fff;
-      color: #1a1a1a;
+      background: white;
+      color: #0f172a;
       box-shadow: 0 1px 3px rgba(0,0,0,0.08);
     }
 
-    /* Card grid view */
+    .tab-strip__btn:hover:not(.active) {
+      color: #1e293b;
+    }
+
+    /* ---------- ALUMNI GRID ---------- */
     .alumni-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 12px;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
     }
+
     .alumni-card {
-      background: #fff;
-      border: 1px solid #e5e7eb;
+      background: white;
+      border: 1px solid #f1f5f9;
       border-radius: 12px;
-      padding: 1.125rem;
+      padding: 20px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+      transition: all 0.3s ease;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
     }
+
+    .alumni-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+      border-color: #3b82f6;
+    }
+
     .alumni-card__header {
       display: flex;
       align-items: center;
       gap: 12px;
     }
+
+    .avatar {
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
     .alumni-card__name {
       font-weight: 600;
-      font-size: 14px;
-      color: #1a1a1a;
+      font-size: 15px;
+      color: #0f172a;
     }
+
     .alumni-card__meta {
-      font-size: 12px;
-      color: #6b7280;
+      font-size: 13px;
+      color: #64748b;
       margin-top: 2px;
     }
+
     .alumni-card__body {
       display: flex;
       flex-direction: column;
       gap: 6px;
-      font-size: 13px;
-      color: #374151;
-      border-top: 1px solid #f3f4f6;
-      padding-top: 10px;
+      font-size: 14px;
+      color: #1e293b;
+      border-top: 1px solid #f1f5f9;
+      padding-top: 12px;
     }
+
     .alumni-card__row {
       display: flex;
       align-items: flex-start;
       gap: 8px;
     }
+
     .alumni-card__row i {
-      color: #9ca3af;
+      color: #94a3b8;
       width: 16px;
       flex-shrink: 0;
-      margin-top: 1px;
+      margin-top: 2px;
     }
+
     .alumni-card__footer {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-top: 1px solid #f3f4f6;
-      padding-top: 10px;
+      border-top: 1px solid #f1f5f9;
+      padding-top: 12px;
     }
 
-    /* Avatar colours by index */
+    .action-btns {
+      display: flex;
+      gap: 4px;
+    }
+
+    /* ---------- BADGES ---------- */
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .badge--employed {
+      background: #d1fae5;
+      color: #065f46;
+    }
+
+    .badge--studying {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+
+    .badge--self-employed {
+      background: #ede9fe;
+      color: #5b21b6;
+    }
+
+    .badge--unemployed {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    /* ---------- AVATAR COLORS ---------- */
     .av-blue   { background: #dbeafe; color: #1e40af; }
     .av-green  { background: #d1fae5; color: #065f46; }
     .av-purple { background: #ede9fe; color: #5b21b6; }
@@ -173,13 +530,185 @@
     .av-teal   { background: #ccfbf1; color: #0f766e; }
     .av-pink   { background: #fce7f3; color: #9d174d; }
 
-    .badge--employed     { background: #d1fae5; color: #065f46; }
-    .badge--studying     { background: #dbeafe; color: #1e40af; }
-    .badge--self-employed{ background: #ede9fe; color: #5b21b6; }
-    .badge--unemployed   { background: #fee2e2; color: #991b1b; }
+    /* ---------- TABLE ---------- */
+    #alumni-table-view {
+      display: none;
+    }
 
-    /* Table view */
-    #alumni-table-view { display: none; }
+    .table-wrapper {
+      background: white;
+      border-radius: 12px;
+      border: 1px solid #f1f5f9;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    }
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    .table thead {
+      background: #f8fafc;
+    }
+
+    .table th {
+      text-align: left;
+      padding: 12px 16px;
+      font-weight: 600;
+      color: #475569;
+      border-bottom: 2px solid #e2e8f0;
+    }
+
+    .table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid #f1f5f9;
+      color: #1e293b;
+    }
+
+    .table tbody tr {
+      transition: background 0.15s;
+    }
+
+    .table tbody tr:hover {
+      background: #f8fafc;
+    }
+
+    .cell-user {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .user-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .user-info__name {
+      font-weight: 600;
+      color: #0f172a;
+    }
+
+    .user-info__email {
+      font-size: 12px;
+      color: #94a3b8;
+    }
+
+    .cell-muted {
+      color: #64748b;
+    }
+
+    /* ---------- EMPTY STATE ---------- */
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: #94a3b8;
+      font-size: 15px;
+    }
+
+    .results-count {
+      font-size: 14px;
+      color: #64748b;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid #f1f5f9;
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 1200px) {
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        display: none;
+      }
+      
+      .main-content {
+        padding: 16px;
+      }
+      
+      .alumni-hero {
+        padding: 20px;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .alumni-hero__icon {
+        display: none;
+      }
+      
+      .stats-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      
+      .alumni-stat-card {
+        padding: 16px;
+      }
+      
+      .alumni-stat-card__value {
+        font-size: 20px;
+      }
+      
+      .filter-bar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      
+      .input-search,
+      .input-select {
+        width: 100%;
+      }
+      
+      .alumni-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .table {
+        font-size: 12px;
+      }
+      
+      .table th,
+      .table td {
+        padding: 8px 10px;
+      }
+      
+      .navbar {
+        padding: 0 16px;
+      }
+      
+      .nav-links {
+        gap: 12px;
+      }
+      
+      .nav-links a {
+        font-size: 12px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .alumni-stat-card {
+        padding: 14px;
+      }
+      
+      .tab-strip {
+        width: 100%;
+      }
+      
+      .tab-strip__btn {
+        flex: 1;
+        justify-content: center;
+      }
+    }
   </style>
 </head>
 <body>
@@ -188,8 +717,8 @@
   <div class="logo"><i class="fas fa-school"></i> EduSystem</div>
   <div class="nav-links">
     <a href="index.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-    <a href="#"><i class="far fa-user-circle"></i> Profile</a>
-    <a href="login.html"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    <a href="#" id="profileNavLink"><i class="far fa-user-circle"></i> Profile</a>
+    <a href="#" id="logoutBtnNav"><i class="fas fa-sign-out-alt"></i> Logout</a>
   </div>
 </header>
 
@@ -200,10 +729,10 @@
         <li class="nav-item" data-page="dashboard"><a href="index.html"><i class="fas fa-chalkboard-user"></i> Dashboard</a></li>
         <li class="nav-item" data-page="users"><a href="users.html"><i class="fas fa-users"></i> Users</a></li>
         <li class="nav-item active" data-page="alumni"><a href="alumni.html"><i class="fas fa-graduation-cap"></i> Alumni</a></li>
-        <li class="nav-item" data-page="academic"><a href="#"><i class="fas fa-book-open"></i> Academic</a></li>
+        <li class="nav-item" data-page="academic"><a href="academics.html"><i class="fas fa-book-open"></i> Academic</a></li>
         <li class="nav-item" data-page="liveclass"><a href="#"><i class="fas fa-video"></i> Live class</a></li>
         <li class="nav-item" data-page="examination"><a href="#"><i class="fas fa-pen-alt"></i> Examination</a></li>
-        <li class="nav-item" data-page="accounting"><a href="#"><i class="fas fa-calculator"></i> Accounting</a></li>
+        <li class="nav-item" data-page="accounting"><a href="accounting.html"><i class="fas fa-calculator"></i> Accounting</a></li>
         <li class="nav-item" data-page="backoffice"><a href="#"><i class="fas fa-archive"></i> Back office</a></li>
         <li class="nav-item" data-page="onlinecourses"><a href="#"><i class="fas fa-laptop-code"></i> Online courses</a></li>
         <li class="nav-item" data-page="settings"><a href="#"><i class="fas fa-sliders-h"></i> Settings</a></li>
@@ -217,18 +746,18 @@
       <!-- Hero banner -->
       <div class="alumni-hero">
         <div class="alumni-hero__left">
-          <h1><i class="fas fa-graduation-cap" style="margin-right:10px;"></i>Alumni Directory</h1>
+          <h1><i class="fas fa-graduation-cap"></i>Alumni Directory</h1>
           <p>Tracking the journeys of our graduates since 2010</p>
         </div>
         <i class="fas fa-university alumni-hero__icon"></i>
       </div>
 
       <!-- Stat cards -->
-      <div class="stats-grid" style="margin-bottom:1.25rem;" id="alumni-stats"></div>
+      <div class="stats-grid" id="alumni-stats"></div>
 
       <!-- Controls -->
       <div class="filter-bar">
-        <input type="text" id="search-input" class="input-search" placeholder="Search alumni..." oninput="renderAlumni()" />
+        <input type="text" id="search-input" class="input-search" placeholder="Search alumni by name, email, or occupation..." oninput="renderAlumni()" />
         <select id="status-filter" class="input-select" onchange="renderAlumni()">
           <option value="">All statuses</option>
           <option value="Employed">Employed</option>
@@ -252,7 +781,7 @@
       </div>
 
       <!-- View toggle -->
-      <div class="tab-strip" style="max-width:280px;">
+      <div class="tab-strip">
         <button class="tab-strip__btn active" id="btn-cards" onclick="switchView('cards')">
           <i class="fas fa-th-large"></i> Cards
         </button>
@@ -264,29 +793,33 @@
       <!-- Card grid -->
       <div id="alumni-cards-view">
         <div class="alumni-grid" id="alumni-grid"></div>
-        <p id="no-results-cards" class="empty-state" style="display:none;">No alumni match your search.</p>
+        <p id="no-results-cards" class="empty-state" style="display:none;">
+          <i class="fas fa-search" style="display:block;font-size:32px;margin-bottom:12px;color:#e2e8f0;"></i>
+          No alumni match your search.
+        </p>
       </div>
 
       <!-- Table view -->
       <div id="alumni-table-view">
-        <div class="card">
-          <div class="table-wrapper">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Grad year</th>
-                  <th>Program</th>
-                  <th>Status</th>
-                  <th>Occupation</th>
-                  <th>Location</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody id="alumni-table-body"></tbody>
-            </table>
-            <p id="no-results-table" class="empty-state" style="display:none;">No alumni match your search.</p>
-          </div>
+        <div class="table-wrapper">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Grad year</th>
+                <th>Program</th>
+                <th>Status</th>
+                <th>Occupation</th>
+                <th>Location</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="alumni-table-body"></tbody>
+          </table>
+          <p id="no-results-table" class="empty-state" style="display:none;">
+            <i class="fas fa-search" style="display:block;font-size:32px;margin-bottom:12px;color:#e2e8f0;"></i>
+            No alumni match your search.
+          </p>
         </div>
       </div>
 
@@ -298,6 +831,25 @@
 
 <script src="mock-data.js"></script>
 <script>
+  // ==================== AUTHENTICATION ====================
+  function isLoggedIn() {
+    return sessionStorage.getItem('loggedIn') === 'true';
+  }
+
+  function checkAuth() {
+    if (!isLoggedIn()) {
+      window.location.href = 'login.html';
+      return false;
+    }
+    return true;
+  }
+
+  function logout() {
+    sessionStorage.clear();
+    window.location.href = 'login.html';
+  }
+
+  // ==================== ALUMNI LOGIC ====================
   const AV_COLORS = ['av-blue','av-green','av-purple','av-amber','av-teal','av-pink'];
   const STATUS_BADGE = {
     'Employed':      'badge--employed',
@@ -322,7 +874,8 @@
     const sel = document.getElementById('year-filter');
     years.forEach(y => {
       const o = document.createElement('option');
-      o.value = y; o.textContent = y;
+      o.value = y; 
+      o.textContent = y;
       sel.appendChild(o);
     });
   }
@@ -333,28 +886,28 @@
     document.getElementById('alumni-stats').innerHTML = `
       <div class="alumni-stat-card">
         <div class="alumni-stat-card__icon alumni-stat-card__icon--blue"><i class="fas fa-graduation-cap"></i></div>
-        <div class="alumni-stat-card__info">
+        <div>
           <div class="alumni-stat-card__value">${s.total}</div>
           <div class="alumni-stat-card__label">Total alumni</div>
         </div>
       </div>
       <div class="alumni-stat-card">
         <div class="alumni-stat-card__icon alumni-stat-card__icon--green"><i class="fas fa-briefcase"></i></div>
-        <div class="alumni-stat-card__info">
+        <div>
           <div class="alumni-stat-card__value">${s.employed}</div>
           <div class="alumni-stat-card__label">Employed</div>
         </div>
       </div>
       <div class="alumni-stat-card">
         <div class="alumni-stat-card__icon alumni-stat-card__icon--purple"><i class="fas fa-book-open"></i></div>
-        <div class="alumni-stat-card__info">
+        <div>
           <div class="alumni-stat-card__value">${s.studying}</div>
           <div class="alumni-stat-card__label">Further studies</div>
         </div>
       </div>
       <div class="alumni-stat-card">
         <div class="alumni-stat-card__icon alumni-stat-card__icon--amber"><i class="fas fa-store"></i></div>
-        <div class="alumni-stat-card__info">
+        <div>
           <div class="alumni-stat-card__value">${s.selfEmployed}</div>
           <div class="alumni-stat-card__label">Self-employed</div>
         </div>
@@ -368,7 +921,11 @@
     const year    = document.getElementById('year-filter').value;
     const program = document.getElementById('program-filter').value;
     return MOCK_ALUMNI.filter(a => {
-      const matchSearch  = !search  || a.name.toLowerCase().includes(search) || a.email.toLowerCase().includes(search) || a.occupation.toLowerCase().includes(search);
+      const matchSearch  = !search  || 
+        a.name.toLowerCase().includes(search) || 
+        a.email.toLowerCase().includes(search) || 
+        a.occupation.toLowerCase().includes(search) ||
+        a.employer.toLowerCase().includes(search);
       const matchStatus  = !status  || a.status === status;
       const matchYear    = !year    || String(a.gradYear) === year;
       const matchProgram = !program || a.program === program;
@@ -387,10 +944,10 @@
     grid.innerHTML = filtered.map((a, i) => `
       <div class="alumni-card">
         <div class="alumni-card__header">
-          <div class="avatar ${avColor(i)}" style="width:42px;height:42px;font-size:14px;">${initials(a.name)}</div>
+          <div class="avatar ${avColor(i)}" style="width:42px;height:42px;font-size:14px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;flex-shrink:0;">${initials(a.name)}</div>
           <div>
             <div class="alumni-card__name">${a.name}</div>
-            <div class="alumni-card__meta">Class of ${a.gradYear} &nbsp;·&nbsp; ${a.program}</div>
+            <div class="alumni-card__meta">Class of ${a.gradYear} · ${a.program}</div>
           </div>
         </div>
         <div class="alumni-card__body">
@@ -408,7 +965,7 @@
           </div>
           <div class="alumni-card__row">
             <i class="fas fa-envelope"></i>
-            <span style="color:#2563eb;">${a.email}</span>
+            <span style="color:#3b82f6;">${a.email}</span>
           </div>
         </div>
         <div class="alumni-card__footer">
@@ -432,11 +989,13 @@
     document.getElementById('no-results-table').style.display = 'none';
     tbody.innerHTML = filtered.map((a, i) => `
       <tr>
-        <td class="cell-user">
-          <div class="avatar ${avColor(i)}" style="width:34px;height:34px;font-size:12px;">${initials(a.name)}</div>
-          <div class="user-info">
-            <span class="user-info__name">${a.name}</span>
-            <span class="user-info__email">${a.email}</span>
+        <td>
+          <div class="cell-user">
+            <div class="avatar ${avColor(i)}" style="width:34px;height:34px;font-size:12px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;flex-shrink:0;">${initials(a.name)}</div>
+            <div class="user-info">
+              <span class="user-info__name">${a.name}</span>
+              <span class="user-info__email">${a.email}</span>
+            </div>
           </div>
         </td>
         <td class="cell-muted">${a.gradYear}</td>
@@ -471,10 +1030,43 @@
     document.getElementById('btn-table').classList.toggle('active', view === 'table');
   }
 
-  // Init
-  buildYearFilter();
-  buildStats();
-  renderAlumni();
+  // ==================== INITIALIZATION ====================
+  document.addEventListener('DOMContentLoaded', function() {
+    if (!checkAuth()) return;
+
+    // Logout
+    document.getElementById('logoutBtnNav').addEventListener('click', function(e) {
+      e.preventDefault();
+      logout();
+    });
+
+    // Profile placeholder
+    document.getElementById('profileNavLink').addEventListener('click', function(e) {
+      e.preventDefault();
+      alert('Profile page (coming soon)');
+    });
+
+    // Highlight active sidebar item
+    document.querySelectorAll('.nav-item').forEach(item => {
+      if (item.dataset.page === 'alumni') {
+        item.classList.add('active');
+      } else {
+        item.classList.remove('active');
+      }
+    });
+
+    // Initialize alumni data
+    buildYearFilter();
+    buildStats();
+    renderAlumni();
+  });
+
+  // Handle browser back/forward
+  window.addEventListener('pageshow', function(event) {
+    if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+      checkAuth();
+    }
+  });
 </script>
 
 </body>
