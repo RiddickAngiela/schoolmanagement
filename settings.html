@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         /* ============================================================
-           Settings page styles
+           MODERN STYLES - Matching Dashboard Design Language
            ============================================================ */
         *,
         *::before,
@@ -42,17 +42,17 @@
             --orange: #f97316;
             --teal: #14b8a6;
             --indigo: #4f46e5;
-            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
             --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.05);
-            --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.08);
             --spacing-sm: 8px;
             --spacing-md: 16px;
             --spacing-lg: 24px;
             --spacing-xl: 32px;
             --radius-sm: 8px;
-            --radius-md: 12px;
-            --radius-lg: 20px;
-            --radius-xl: 24px;
+            --radius-md: 10px;
+            --radius-lg: 16px;
+            --radius-xl: 20px;
             --radius-full: 40px;
             --transition-fast: 0.2s ease;
             --transition-normal: 0.3s ease;
@@ -67,66 +67,56 @@
             overflow: hidden;
         }
 
-        /* ---------- navbar ---------- */
+        /* ---------- NAVBAR ---------- */
         .navbar {
-            background-color: var(--dark-bg);
-            color: white;
-            padding: 0 28px;
+            background: white;
+            padding: 0 32px;
             height: 64px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            box-shadow: var(--shadow-sm);
-            z-index: 10;
+            border-bottom: 1px solid #e2e8f0;
             position: sticky;
             top: 0;
+            z-index: 100;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
         }
 
         .logo {
-            font-size: 1.5rem;
-            font-weight: 600;
-            letter-spacing: -0.3px;
-            background: linear-gradient(135deg, #fff, var(--text-light));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+            font-size: 20px;
+            font-weight: 700;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .logo i {
-            background: none;
-            -webkit-background-clip: unset;
-            background-clip: unset;
-            color: var(--text-light);
-            margin-right: var(--spacing-sm);
+            color: #3b82f6;
         }
 
         .nav-links {
             display: flex;
-            gap: var(--spacing-md);
+            align-items: center;
+            gap: 24px;
         }
 
         .nav-links a {
-            color: #e2e8f0;
             text-decoration: none;
-            padding: var(--spacing-sm) var(--spacing-md);
+            color: #64748b;
+            font-size: 14px;
             font-weight: 500;
-            font-size: 0.95rem;
-            transition: var(--transition-fast);
-            cursor: pointer;
-            border-radius: var(--radius-sm);
-        }
-
-        .nav-links a i {
-            margin-right: 6px;
-            font-size: 0.9rem;
+            transition: color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .nav-links a:hover {
-            color: white;
-            background-color: rgba(255, 255, 255, 0.1);
+            color: #1e293b;
         }
 
-        /* ---------- app wrapper + sidebar ---------- */
+        /* ---------- APP WRAPPER + SIDEBAR ---------- */
         .app-wrapper {
             display: flex;
             flex: 1;
@@ -134,17 +124,12 @@
         }
 
         .sidebar {
-            width: 260px;
-            background-color: var(--sidebar-bg);
-            border-right: 1px solid var(--border-light);
-            display: flex;
-            flex-direction: column;
+            width: 250px;
+            background: white;
+            border-right: 1px solid #e2e8f0;
+            padding: 20px 0;
             overflow-y: auto;
-            box-shadow: 1px 0 0 rgba(0, 0, 0, 0.02);
-        }
-
-        .sidebar-nav {
-            padding: var(--spacing-lg) 0 var(--spacing-xl) 0;
+            flex-shrink: 0;
         }
 
         .sidebar-nav ul {
@@ -154,226 +139,228 @@
         }
 
         .sidebar-nav li {
-            margin: 2px 0;
-            cursor: pointer;
+            padding: 0 16px;
+            margin-bottom: 2px;
         }
 
-        .sidebar-nav a {
+        .sidebar-nav li a {
             display: flex;
             align-items: center;
-            padding: 10px 24px;
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            font-weight: 500;
+            gap: 12px;
+            padding: 10px 14px;
+            color: #64748b;
             text-decoration: none;
-            transition: var(--transition-fast);
-            gap: var(--spacing-md);
-            cursor: pointer;
-            position: relative;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
         }
 
-        .sidebar-nav a i {
-            width: 22px;
-            font-size: 1.1rem;
-            color: #5b6e8c;
-            transition: var(--transition-fast);
-        }
-
-        .sidebar-nav li.active a,
-        .sidebar-nav a:hover {
-            background-color: #f1f5f9;
-            color: var(--secondary-color);
+        .sidebar-nav li a:hover {
+            background: #f1f5f9;
+            color: #1e293b;
         }
 
         .sidebar-nav li.active a {
-            border-left: 3px solid var(--secondary-color);
-            padding-left: 21px;
+            background: #3b82f6;
+            color: white;
         }
 
-        .sidebar-nav a:hover {
-            padding-left: 21px;
+        .sidebar-nav li.active a i {
+            color: white;
         }
 
-        .sidebar-nav li.active a i,
-        .sidebar-nav a:hover i {
-            color: var(--secondary-color);
+        .sidebar-nav li a i {
+            width: 20px;
+            font-size: 16px;
+            color: #94a3b8;
         }
 
-        .sidebar::-webkit-scrollbar {
-            width: 6px;
-        }
-        .sidebar::-webkit-scrollbar-track {
-            background: var(--border-light);
-        }
-        .sidebar::-webkit-scrollbar-thumb {
-            background: var(--text-light);
-            border-radius: 3px;
+        .sidebar-nav li.active a i {
+            color: white;
         }
 
-        /* ---------- main content ---------- */
+        /* ---------- MAIN CONTENT ---------- */
         .main-content {
             flex: 1;
             overflow-y: auto;
-            padding: 28px 32px;
-            background: var(--main-bg);
+            padding: 32px;
+            background: #f8fafc;
         }
 
         .main-content::-webkit-scrollbar {
             width: 8px;
         }
         .main-content::-webkit-scrollbar-track {
-            background: var(--border-light);
+            background: #f1f5f9;
         }
         .main-content::-webkit-scrollbar-thumb {
-            background: var(--text-light);
+            background: #cbd5e1;
             border-radius: 4px;
         }
+        .main-content::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
 
-        /* ---------- settings specific ---------- */
+        /* ---------- SETTINGS HEADER ---------- */
         .settings-header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-start;
             flex-wrap: wrap;
-            gap: var(--spacing-md);
-            margin-bottom: var(--spacing-lg);
+            gap: 16px;
+            margin-bottom: 28px;
         }
 
         .settings-header h1 {
-            font-size: 1.8rem;
-            font-weight: 600;
-            color: var(--text-primary);
+            font-size: 28px;
+            font-weight: 700;
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .settings-header h1 i {
+            color: #3b82f6;
         }
 
         .settings-header .subtitle {
-            color: var(--text-muted);
-            font-size: 0.95rem;
+            color: #64748b;
+            font-size: 14px;
             display: flex;
             align-items: center;
             gap: 6px;
+            margin-top: 4px;
         }
 
         .settings-header .subtitle i {
-            color: var(--warning);
+            color: #f59e0b;
         }
 
         .header-actions {
             display: flex;
-            gap: var(--spacing-sm);
+            gap: 10px;
             align-items: center;
+            flex-wrap: wrap;
         }
 
+        /* ---------- BUTTONS ---------- */
         .btn {
+            padding: 8px 18px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            height: 36px;
-            padding: 0 14px;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
-            font-size: 13px;
-            font-weight: 500;
-            cursor: pointer;
             text-decoration: none;
-            color: #374151;
-            background: #fff;
-            transition: background 0.15s, border-color 0.15s;
-            white-space: nowrap;
+            background: #f1f5f9;
+            color: #1e293b;
         }
 
         .btn:hover {
-            background: #f9fafb;
-            border-color: #9ca3af;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         }
 
         .btn--primary {
-            background: var(--primary-color);
-            color: #fff;
-            border-color: var(--primary-color);
+            background: #3b82f6;
+            color: white;
         }
+
         .btn--primary:hover {
-            background: var(--primary-dark);
-            border-color: var(--primary-dark);
+            background: #2563eb;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
         }
 
         .btn--success {
-            background: var(--success);
-            color: #fff;
-            border-color: var(--success);
+            background: #10b981;
+            color: white;
         }
+
         .btn--success:hover {
             background: #059669;
-            border-color: #059669;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
         }
 
         .btn--danger {
-            background: var(--danger);
-            color: #fff;
-            border-color: var(--danger);
+            background: #ef4444;
+            color: white;
         }
+
         .btn--danger:hover {
             background: #dc2626;
-            border-color: #dc2626;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
         }
 
         .btn--purple {
-            background: var(--purple);
-            color: #fff;
-            border-color: var(--purple);
-        }
-        .btn--purple:hover {
-            background: #7c3aed;
-            border-color: #7c3aed;
+            background: #8b5cf6;
+            color: white;
         }
 
-        /* ----- settings tabs ----- */
+        .btn--purple:hover {
+            background: #7c3aed;
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+        }
+
+        .btn-sm {
+            padding: 4px 12px;
+            font-size: 12px;
+            height: 28px;
+        }
+
+        /* ---------- SETTINGS TABS ---------- */
         .settings-tabs {
             display: flex;
-            gap: var(--spacing-sm);
-            margin-bottom: var(--spacing-xl);
+            gap: 4px;
+            margin-bottom: 24px;
             flex-wrap: wrap;
-            border-bottom: 2px solid var(--border-light);
-            padding-bottom: var(--spacing-sm);
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 4px;
         }
 
         .settings-tabs .tab-btn {
             padding: 10px 20px;
             border: none;
             background: transparent;
-            font-size: 0.9rem;
+            font-size: 14px;
             font-weight: 500;
-            color: var(--text-muted);
+            color: #64748b;
             cursor: pointer;
-            border-radius: var(--radius-sm);
-            transition: var(--transition-fast);
+            border-radius: 8px;
+            transition: all 0.2s;
             position: relative;
         }
 
         .settings-tabs .tab-btn:hover {
-            color: var(--text-primary);
-            background: var(--border-light);
+            color: #0f172a;
+            background: #f1f5f9;
         }
 
         .settings-tabs .tab-btn.active {
-            color: var(--primary-color);
+            color: #3b82f6;
             background: #eef2ff;
         }
 
         .settings-tabs .tab-btn.active::after {
             content: '';
             position: absolute;
-            bottom: -2px;
+            bottom: -6px;
             left: 0;
             right: 0;
             height: 2px;
-            background: var(--primary-color);
+            background: #3b82f6;
         }
 
         .settings-tabs .tab-btn i {
             margin-right: 6px;
         }
 
-        /* ----- settings panels ----- */
+        /* ---------- SETTINGS PANELS ---------- */
         .settings-panel {
             display: none;
             animation: fadeIn 0.3s ease;
@@ -388,43 +375,49 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* ----- settings sections ----- */
+        /* ---------- SETTINGS SECTIONS ---------- */
         .settings-section {
-            background: var(--card-bg);
-            border-radius: var(--radius-xl);
-            padding: var(--spacing-xl);
-            border: 1px solid var(--border-light);
-            box-shadow: var(--shadow-md);
-            margin-bottom: var(--spacing-xl);
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            border: 1px solid #f1f5f9;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+            margin-bottom: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .settings-section:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
         }
 
         .settings-section .section-title {
-            font-size: 1.1rem;
+            font-size: 17px;
             font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: var(--spacing-lg);
+            color: #0f172a;
+            margin-bottom: 4px;
             display: flex;
             align-items: center;
-            gap: var(--spacing-sm);
+            gap: 10px;
         }
 
         .settings-section .section-title i {
-            color: var(--primary-color);
+            color: #3b82f6;
         }
 
         .settings-section .section-desc {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-bottom: var(--spacing-lg);
+            font-size: 14px;
+            color: #64748b;
+            margin-bottom: 20px;
         }
 
-        /* ----- settings items ----- */
+        /* ---------- SETTING ROWS ---------- */
         .setting-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: var(--spacing-md) 0;
-            border-bottom: 1px solid var(--border-light);
+            padding: 14px 0;
+            border-bottom: 1px solid #f1f5f9;
+            gap: 16px;
         }
 
         .setting-row:last-child {
@@ -437,34 +430,35 @@
 
         .setting-row .setting-info .setting-label {
             font-weight: 500;
-            color: var(--text-primary);
+            color: #0f172a;
+            font-size: 14px;
         }
 
         .setting-row .setting-info .setting-description {
-            font-size: 0.85rem;
-            color: var(--text-muted);
+            font-size: 13px;
+            color: #64748b;
         }
 
         .setting-row .setting-control {
             display: flex;
             align-items: center;
-            gap: var(--spacing-md);
+            gap: 12px;
         }
 
-        /* ----- toggle switch ----- */
+        /* ---------- TOGGLE SWITCH ---------- */
         .toggle-switch {
             width: 48px;
             height: 26px;
-            background: var(--border-medium);
-            border-radius: var(--radius-full);
+            background: #e2e8f0;
+            border-radius: 40px;
             cursor: pointer;
-            transition: var(--transition-fast);
+            transition: all 0.3s ease;
             position: relative;
             flex-shrink: 0;
         }
 
         .toggle-switch.active {
-            background: var(--success);
+            background: #10b981;
         }
 
         .toggle-switch .toggle-dot {
@@ -475,56 +469,70 @@
             position: absolute;
             top: 3px;
             left: 3px;
-            transition: var(--transition-fast);
-            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
         }
 
         .toggle-switch.active .toggle-dot {
             left: 25px;
         }
 
-        /* ----- input fields ----- */
+        .toggle-switch:hover {
+            transform: scale(1.05);
+        }
+
+        /* ---------- INPUTS ---------- */
         .setting-input {
             padding: 8px 14px;
-            border: 1px solid var(--border-medium);
-            border-radius: var(--radius-sm);
-            font-size: 0.9rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 14px;
             font-family: inherit;
             outline: none;
-            transition: var(--transition-fast);
+            transition: all 0.2s ease;
+            background: white;
+            color: #1e293b;
             width: 200px;
         }
 
         .setting-input:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
         }
 
         .setting-select {
             padding: 8px 14px;
-            border: 1px solid var(--border-medium);
-            border-radius: var(--radius-sm);
-            font-size: 0.9rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 14px;
             font-family: inherit;
             outline: none;
             background: white;
             cursor: pointer;
+            color: #1e293b;
+            min-width: 140px;
         }
 
-        /* ----- color picker ----- */
+        .setting-select:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+        }
+
+        /* ---------- COLOR PICKER ---------- */
         .color-picker-wrapper {
             display: flex;
             align-items: center;
-            gap: var(--spacing-sm);
+            gap: 8px;
         }
 
         .color-picker-wrapper input[type="color"] {
             width: 36px;
             height: 36px;
-            border: 2px solid var(--border-medium);
-            border-radius: var(--radius-sm);
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
             cursor: pointer;
             padding: 2px;
+            background: white;
         }
 
         .color-picker-wrapper input[type="color"]::-webkit-color-swatch-wrapper {
@@ -536,79 +544,88 @@
             border-radius: 4px;
         }
 
-        /* ----- page management grid ----- */
+        .color-picker-wrapper .color-hex {
+            font-size: 13px;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        /* ---------- PAGE GRID ---------- */
         .page-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: var(--spacing-md);
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 12px;
         }
 
         .page-card {
-            background: var(--main-bg);
-            border-radius: var(--radius-md);
-            padding: var(--spacing-md);
-            border: 1px solid var(--border-light);
-            transition: var(--transition-normal);
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 16px;
+            border: 1px solid #f1f5f9;
+            transition: all 0.3s ease;
         }
 
         .page-card:hover {
-            border-color: var(--primary-color);
-            box-shadow: var(--shadow-sm);
+            border-color: #3b82f6;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+            transform: translateY(-2px);
         }
 
         .page-card .page-header {
             display: flex;
             align-items: center;
-            gap: var(--spacing-sm);
-            margin-bottom: var(--spacing-sm);
+            gap: 10px;
+            margin-bottom: 8px;
         }
 
         .page-card .page-header i {
-            font-size: 1.2rem;
-            color: var(--primary-color);
+            font-size: 18px;
+            color: #3b82f6;
         }
 
         .page-card .page-header .page-name {
             font-weight: 600;
-            color: var(--text-primary);
+            color: #0f172a;
+            font-size: 14px;
         }
 
         .page-card .page-status {
             display: flex;
             align-items: center;
-            gap: var(--spacing-sm);
-            font-size: 0.85rem;
-            color: var(--text-muted);
+            gap: 6px;
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 10px;
         }
 
         .page-card .page-status .status-dot {
             width: 8px;
             height: 8px;
             border-radius: 50%;
+            display: inline-block;
         }
 
         .page-card .page-status .status-dot.active {
-            background: var(--success);
+            background: #10b981;
         }
 
         .page-card .page-status .status-dot.inactive {
-            background: var(--danger);
+            background: #ef4444;
         }
 
         .page-card .page-actions {
-            margin-top: var(--spacing-sm);
             display: flex;
-            gap: var(--spacing-sm);
+            gap: 6px;
         }
 
-        /* ----- role management ----- */
+        /* ---------- ROLE BADGES ---------- */
         .role-badge {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            padding: 4px 12px;
-            border-radius: var(--radius-full);
-            font-size: 0.8rem;
+            padding: 4px 14px;
+            border-radius: 40px;
+            font-size: 13px;
             font-weight: 500;
         }
 
@@ -632,41 +649,54 @@
             color: #92400e;
         }
 
-        /* ----- permission checkboxes ----- */
+        /* ---------- PERMISSION GRID ---------- */
         .permission-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: var(--spacing-sm);
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 8px;
+            margin-top: 12px;
         }
 
         .permission-item {
             display: flex;
             align-items: center;
-            gap: var(--spacing-sm);
-            padding: var(--spacing-sm);
-            border-radius: var(--radius-sm);
-            background: var(--main-bg);
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            background: #f8fafc;
+            border: 1px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .permission-item:hover {
+            border-color: #e2e8f0;
+            background: white;
         }
 
         .permission-item input[type="checkbox"] {
             width: 16px;
             height: 16px;
             cursor: pointer;
-            accent-color: var(--primary-color);
+            accent-color: #3b82f6;
         }
 
         .permission-item label {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
+            font-size: 13px;
+            color: #334155;
             cursor: pointer;
         }
 
-        /* ----- notification settings ----- */
+        /* ---------- NOTIFICATION ITEMS ---------- */
         .notification-item {
             display: flex;
             align-items: center;
-            gap: var(--spacing-md);
-            padding: var(--spacing-sm) 0;
+            gap: 14px;
+            padding: 10px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .notification-item:last-child {
+            border-bottom: none;
         }
 
         .notification-item .notif-icon {
@@ -678,6 +708,7 @@
             justify-content: center;
             color: white;
             flex-shrink: 0;
+            font-size: 14px;
         }
 
         .notification-item .notif-info {
@@ -686,18 +717,77 @@
 
         .notification-item .notif-info .notif-name {
             font-weight: 500;
-            color: var(--text-primary);
+            color: #0f172a;
+            font-size: 14px;
         }
 
         .notification-item .notif-info .notif-desc {
-            font-size: 0.85rem;
-            color: var(--text-muted);
+            font-size: 13px;
+            color: #64748b;
         }
 
-        /* ---------- responsive ---------- */
-        @media (max-width: 1000px) {
+        /* ---------- FOOTER ---------- */
+        .footer-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .footer-actions .timestamp {
+            font-size: 13px;
+            color: #94a3b8;
+        }
+
+        .footer-actions .back-link {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .footer-actions .back-link:hover {
+            color: #2563eb;
+        }
+
+        /* ---------- NOTIFICATION ---------- */
+        .custom-notification {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            padding: 14px 24px;
+            border-radius: 10px;
+            color: white;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            z-index: 9999;
+            font-size: 14px;
+            animation: slideUp 0.3s ease;
+            max-width: 400px;
+            font-weight: 500;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* ---------- RESPONSIVE ---------- */
+        @media (max-width: 1024px) {
             .main-content {
-                padding: var(--spacing-lg);
+                padding: 24px;
             }
             .sidebar {
                 width: 220px;
@@ -707,89 +797,118 @@
             }
         }
 
-        @media (max-width: 700px) {
-            .app-wrapper {
-                flex-direction: column;
-            }
+        @media (max-width: 768px) {
             .sidebar {
-                width: 100%;
-                border-right: none;
-                border-bottom: 1px solid var(--border-medium);
-                max-height: 300px;
+                display: none;
             }
-            body {
-                overflow: auto;
-                height: auto;
-            }
-            .navbar {
-                padding: 0 var(--spacing-md);
-            }
-            .nav-links {
-                gap: var(--spacing-sm);
-            }
-            .nav-links a {
-                padding: var(--spacing-sm) var(--spacing-sm);
-            }
-            .settings-tabs {
-                flex-wrap: nowrap;
-                overflow-x: auto;
-                padding-bottom: 4px;
-            }
-            .settings-tabs .tab-btn {
-                white-space: nowrap;
-                padding: 8px 14px;
-                font-size: 0.8rem;
-            }
-            .setting-row {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: var(--spacing-sm);
-            }
-            .setting-row .setting-control {
-                width: 100%;
-            }
-            .setting-input {
-                width: 100%;
-            }
-            .permission-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
 
-        @media (max-width: 480px) {
+            .main-content {
+                padding: 16px;
+            }
+
             .settings-header {
                 flex-direction: column;
                 align-items: flex-start;
             }
-            .settings-section {
-                padding: var(--spacing-lg);
+
+            .header-actions {
+                width: 100%;
             }
+
+            .header-actions .btn {
+                flex: 1;
+                justify-content: center;
+            }
+
+            .settings-tabs {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                padding-bottom: 8px;
+                gap: 2px;
+            }
+
+            .settings-tabs .tab-btn {
+                white-space: nowrap;
+                padding: 8px 14px;
+                font-size: 13px;
+            }
+
+            .setting-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+
+            .setting-row .setting-control {
+                width: 100%;
+            }
+
+            .setting-input {
+                width: 100%;
+            }
+
+            .setting-select {
+                width: 100%;
+                min-width: unset;
+            }
+
+            .page-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .permission-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .footer-actions {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .navbar {
+                padding: 0 16px;
+            }
+
+            .nav-links {
+                gap: 12px;
+            }
+
+            .nav-links a {
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .settings-section {
+                padding: 16px;
+            }
+
             .page-grid {
                 grid-template-columns: 1fr;
             }
+
             .permission-grid {
                 grid-template-columns: 1fr;
             }
-        }
 
-        /* ----- notification toast ----- */
-        .custom-notification {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            padding: 12px 20px;
-            border-radius: 8px;
-            color: white;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            z-index: 9999;
-            font-size: 0.9rem;
-            animation: slideUp 0.3s ease;
-            max-width: 350px;
-        }
+            .settings-tabs .tab-btn {
+                font-size: 12px;
+                padding: 6px 12px;
+            }
 
-        @keyframes slideUp {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+            .settings-header h1 {
+                font-size: 22px;
+            }
+
+            .notification-item {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+
+            .notification-item .notif-info {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -799,7 +918,7 @@
         <div class="logo"><i class="fas fa-school"></i> EduSystem</div>
         <div class="nav-links">
             <a href="index.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-            <a href="#" id="profileNavLink"><i class="far fa-user-circle"></i> Profile</a>
+            <a href="profile.html"><i class="far fa-user-circle"></i> Profile</a>
             <a href="#" id="logoutBtnNav"><i class="fas fa-sign-out-alt"></i> Logout</a>
         </div>
     </header>
@@ -822,10 +941,10 @@
         </aside>
 
         <main class="main-content" id="mainContent">
-            <!-- ========== SETTINGS PAGE CONTENT ========== -->
+            <!-- ========== SETTINGS HEADER ========== -->
             <div class="settings-header">
                 <div>
-                    <h1><i class="fas fa-sliders-h" style="color: var(--primary-color); margin-right: 8px;"></i>Settings</h1>
+                    <h1><i class="fas fa-sliders-h"></i>Settings</h1>
                     <div class="subtitle"><i class="fas fa-cog"></i> Manage all system settings and configurations</div>
                 </div>
                 <div class="header-actions">
@@ -834,7 +953,7 @@
                 </div>
             </div>
 
-            <!-- Settings Tabs -->
+            <!-- ========== SETTINGS TABS ========== -->
             <div class="settings-tabs">
                 <button class="tab-btn active" data-tab="general" onclick="switchTab('general')">
                     <i class="fas fa-cog"></i> General
@@ -945,7 +1064,7 @@
                         <div class="setting-control">
                             <div class="color-picker-wrapper">
                                 <input type="color" value="#3b82f6" id="primaryColor">
-                                <span style="font-size:0.85rem; color:var(--text-muted);">#3b82f6</span>
+                                <span class="color-hex">#3b82f6</span>
                             </div>
                         </div>
                     </div>
@@ -998,8 +1117,8 @@
                                 <span class="status-dot active"></span> Active
                             </div>
                             <div class="page-actions">
-                                <button class="btn" style="height:28px; padding:0 12px; font-size:0.8rem;" onclick="togglePage(this)">Disable</button>
-                                <button class="btn" style="height:28px; padding:0 12px; font-size:0.8rem;" onclick="showNotification('Dashboard settings opened', 'info')">Settings</button>
+                                <button class="btn btn-sm" onclick="togglePage(this)">Disable</button>
+                                <button class="btn btn-sm" onclick="showNotification('Dashboard settings opened', 'info')">Settings</button>
                             </div>
                         </div>
 
@@ -1012,8 +1131,8 @@
                                 <span class="status-dot active"></span> Active
                             </div>
                             <div class="page-actions">
-                                <button class="btn" style="height:28px; padding:0 12px; font-size:0.8rem;" onclick="togglePage(this)">Disable</button>
-                                <button class="btn" style="height:28px; padding:0 12px; font-size:0.8rem;" onclick="showNotification('Users page settings opened', 'info')">Settings</button>
+                                <button class="btn btn-sm" onclick="togglePage(this)">Disable</button>
+                                <button class="btn btn-sm" onclick="showNotification('Users page settings opened', 'info')">Settings</button>
                             </div>
                         </div>
 
@@ -1026,8 +1145,8 @@
                                 <span class="status-dot active"></span> Active
                             </div>
                             <div class="page-actions">
-                                <button class="btn" style="height:28px; padding:0 12px; font-size:0.8rem;" onclick="togglePage(this)">Disable</button>
-                                <button class="btn" style="height:28px; padding:0 12px; font-size:0.8rem;" onclick="showNotification('Academic settings opened', 'info')">Settings</button>
+                                <button class="btn btn-sm" onclick="togglePage(this)">Disable</button>
+                                <button class="btn btn-sm" onclick="showNotification('Academic settings opened', 'info')">Settings</button>
                             </div>
                         </div>
 
@@ -1040,8 +1159,8 @@
                                 <span class="status-dot active"></span> Active
                             </div>
                             <div class="page-actions">
-                                <button class="btn" style="height:28px; padding:0 12px; font-size:0.8rem;" onclick="togglePage(this)">Disable</button>
-                                <button class="btn" style="height:28px; padding:0 12px; font-size:0.8rem;" onclick="showNotification('Examination settings opened', 'info')">Settings</button>
+                                <button class="btn btn-sm" onclick="togglePage(this)">Disable</button>
+                                <button class="btn btn-sm" onclick="showNotification('Examination settings opened', 'info')">Settings</button>
                             </div>
                         </div>
 
@@ -1054,8 +1173,8 @@
                                 <span class="status-dot active"></span> Active
                             </div>
                             <div class="page-actions">
-                                <button class="btn" style="height:28px; padding:0 12px; font-size:0.8rem;" onclick="togglePage(this)">Disable</button>
-                                <button class="btn" style="height:28px; padding:0 12px; font-size:0.8rem;" onclick="showNotification('Live class settings opened', 'info')">Settings</button>
+                                <button class="btn btn-sm" onclick="togglePage(this)">Disable</button>
+                                <button class="btn btn-sm" onclick="showNotification('Live class settings opened', 'info')">Settings</button>
                             </div>
                         </div>
 
@@ -1068,8 +1187,8 @@
                                 <span class="status-dot active"></span> Active
                             </div>
                             <div class="page-actions">
-                                <button class="btn" style="height:28px; padding:0 12px; font-size:0.8rem;" onclick="togglePage(this)">Disable</button>
-                                <button class="btn" style="height:28px; padding:0 12px; font-size:0.8rem;" onclick="showNotification('Online courses settings opened', 'info')">Settings</button>
+                                <button class="btn btn-sm" onclick="togglePage(this)">Disable</button>
+                                <button class="btn btn-sm" onclick="showNotification('Online courses settings opened', 'info')">Settings</button>
                             </div>
                         </div>
 
@@ -1082,8 +1201,8 @@
                                 <span class="status-dot active"></span> Active
                             </div>
                             <div class="page-actions">
-                                <button class="btn" style="height:28px; padding:0 12px; font-size:0.8rem;" onclick="togglePage(this)">Disable</button>
-                                <button class="btn" style="height:28px; padding:0 12px; font-size:0.8rem;" onclick="showNotification('Accounting settings opened', 'info')">Settings</button>
+                                <button class="btn btn-sm" onclick="togglePage(this)">Disable</button>
+                                <button class="btn btn-sm" onclick="showNotification('Accounting settings opened', 'info')">Settings</button>
                             </div>
                         </div>
 
@@ -1096,8 +1215,8 @@
                                 <span class="status-dot active"></span> Active
                             </div>
                             <div class="page-actions">
-                                <button class="btn" style="height:28px; padding:0 12px; font-size:0.8rem;" onclick="togglePage(this)">Disable</button>
-                                <button class="btn" style="height:28px; padding:0 12px; font-size:0.8rem;" onclick="showNotification('Back office settings opened', 'info')">Settings</button>
+                                <button class="btn btn-sm" onclick="togglePage(this)">Disable</button>
+                                <button class="btn btn-sm" onclick="showNotification('Back office settings opened', 'info')">Settings</button>
                             </div>
                         </div>
 
@@ -1110,8 +1229,8 @@
                                 <span class="status-dot active"></span> Active
                             </div>
                             <div class="page-actions">
-                                <button class="btn" style="height:28px; padding:0 12px; font-size:0.8rem;" onclick="togglePage(this)">Disable</button>
-                                <button class="btn" style="height:28px; padding:0 12px; font-size:0.8rem;" onclick="showNotification('Settings page opened', 'info')">Settings</button>
+                                <button class="btn btn-sm" onclick="togglePage(this)">Disable</button>
+                                <button class="btn btn-sm" onclick="showNotification('Settings page opened', 'info')">Settings</button>
                             </div>
                         </div>
                     </div>
@@ -1124,12 +1243,12 @@
                     <div class="section-title"><i class="fas fa-users-cog"></i> Role Management</div>
                     <div class="section-desc">Configure user roles and their permissions across the system.</div>
 
-                    <div style="display:flex; gap:var(--spacing-md); flex-wrap:wrap; margin-bottom:var(--spacing-lg);">
-                        <div class="role-badge admin"><i class="fas fa-user-shield"></i> Admin</div>
-                        <div class="role-badge teacher"><i class="fas fa-chalkboard-teacher"></i> Teacher</div>
-                        <div class="role-badge student"><i class="fas fa-user-graduate"></i> Student</div>
-                        <div class="role-badge parent"><i class="fas fa-user-friends"></i> Parent</div>
-                        <button class="btn btn--primary" style="height:30px; padding:0 14px; font-size:0.8rem;" onclick="showNotification('Add role form opened', 'info')">
+                    <div style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom:20px;">
+                        <span class="role-badge admin"><i class="fas fa-user-shield"></i> Admin</span>
+                        <span class="role-badge teacher"><i class="fas fa-chalkboard-teacher"></i> Teacher</span>
+                        <span class="role-badge student"><i class="fas fa-user-graduate"></i> Student</span>
+                        <span class="role-badge parent"><i class="fas fa-user-friends"></i> Parent</span>
+                        <button class="btn btn--primary btn-sm" onclick="showNotification('Add role form opened', 'info')">
                             <i class="fas fa-plus"></i> Add Role
                         </button>
                     </div>
@@ -1140,11 +1259,11 @@
                             <div class="setting-description">Full access to all system features</div>
                         </div>
                         <div class="setting-control">
-                            <span class="badge" style="background:#dbeafe; color:#1e3a8a; padding:4px 16px;">Full Access</span>
+                            <span class="badge" style="background:#dbeafe; color:#1e3a8a; padding:4px 16px; border-radius:20px; font-size:12px; font-weight:500;">Full Access</span>
                         </div>
                     </div>
 
-                    <div class="permission-grid" style="margin-top:var(--spacing-md);">
+                    <div class="permission-grid">
                         <div class="permission-item">
                             <input type="checkbox" checked>
                             <label>View Dashboard</label>
@@ -1187,8 +1306,8 @@
                         </div>
                     </div>
 
-                    <div style="margin-top: var(--spacing-lg);">
-                        <button class="btn btn--primary" onclick="showNotification('Permissions updated', 'success')"><i class="fas fa-save"></i> Update Permissions</button>
+                    <div style="margin-top: 20px;">
+                        <button class="btn btn--primary" onclick="showNotification('Permissions updated successfully', 'success')"><i class="fas fa-save"></i> Update Permissions</button>
                     </div>
                 </div>
             </div>
@@ -1200,7 +1319,7 @@
                     <div class="section-desc">Configure notification preferences and alerts.</div>
 
                     <div class="notification-item">
-                        <div class="notif-icon" style="background: var(--primary-color);"><i class="fas fa-envelope"></i></div>
+                        <div class="notif-icon" style="background: #3b82f6;"><i class="fas fa-envelope"></i></div>
                         <div class="notif-info">
                             <div class="notif-name">Email Notifications</div>
                             <div class="notif-desc">Send system notifications via email</div>
@@ -1211,7 +1330,7 @@
                     </div>
 
                     <div class="notification-item">
-                        <div class="notif-icon" style="background: var(--success);"><i class="fas fa-sms"></i></div>
+                        <div class="notif-icon" style="background: #10b981;"><i class="fas fa-sms"></i></div>
                         <div class="notif-info">
                             <div class="notif-name">SMS Notifications</div>
                             <div class="notif-desc">Send SMS alerts to parents and staff</div>
@@ -1222,7 +1341,7 @@
                     </div>
 
                     <div class="notification-item">
-                        <div class="notif-icon" style="background: var(--warning);"><i class="fas fa-bell"></i></div>
+                        <div class="notif-icon" style="background: #f59e0b;"><i class="fas fa-bell"></i></div>
                         <div class="notif-info">
                             <div class="notif-name">Push Notifications</div>
                             <div class="notif-desc">In-app notification alerts</div>
@@ -1233,7 +1352,7 @@
                     </div>
 
                     <div class="notification-item">
-                        <div class="notif-icon" style="background: var(--purple);"><i class="fas fa-calendar-check"></i></div>
+                        <div class="notif-icon" style="background: #8b5cf6;"><i class="fas fa-calendar-check"></i></div>
                         <div class="notif-info">
                             <div class="notif-name">Exam Alerts</div>
                             <div class="notif-desc">Notify students about upcoming exams</div>
@@ -1244,7 +1363,7 @@
                     </div>
 
                     <div class="notification-item">
-                        <div class="notif-icon" style="background: var(--danger);"><i class="fas fa-exclamation-triangle"></i></div>
+                        <div class="notif-icon" style="background: #ef4444;"><i class="fas fa-exclamation-triangle"></i></div>
                         <div class="notif-info">
                             <div class="notif-name">System Alerts</div>
                             <div class="notif-desc">Critical system notifications</div>
@@ -1343,8 +1462,8 @@
                             <div class="setting-description">Current system version</div>
                         </div>
                         <div class="setting-control">
-                            <span style="font-weight:600; color:var(--text-primary);">v2.5.1</span>
-                            <button class="btn" style="height:28px; padding:0 12px; font-size:0.8rem;" onclick="showNotification('Checking for updates...', 'info')">
+                            <span style="font-weight:600; color:#0f172a;">v2.5.1</span>
+                            <button class="btn btn-sm" onclick="showNotification('Checking for updates...', 'info')">
                                 <i class="fas fa-sync"></i> Check Update
                             </button>
                         </div>
@@ -1398,7 +1517,7 @@
                             <div class="setting-description">Clear system cache</div>
                         </div>
                         <div class="setting-control">
-                            <button class="btn btn--danger" onclick="showNotification('Cache cleared successfully', 'success')">
+                            <button class="btn btn--danger btn-sm" onclick="showNotification('Cache cleared successfully', 'success')">
                                 <i class="fas fa-trash"></i> Clear Cache
                             </button>
                         </div>
@@ -1406,10 +1525,10 @@
                 </div>
             </div>
 
-            <!-- Footer -->
-            <div style="display: flex; gap: var(--spacing-md); flex-wrap: wrap; justify-content: space-between; padding-top: 16px; border-top: 1px solid var(--border-light);">
-                <span style="font-size:0.8rem; color:var(--text-muted);"><i class="fas fa-clock"></i> Settings last updated: Today 17:30</span>
-                <a href="index.html" style="color: var(--secondary-color); text-decoration: none; font-weight:500;"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+            <!-- ========== FOOTER ========== -->
+            <div class="footer-actions">
+                <span class="timestamp"><i class="fas fa-clock"></i> Settings last updated: Today 17:30</span>
+                <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
             </div>
         </main>
     </div>
@@ -1435,7 +1554,6 @@
 
         // ==================== TAB SWITCHING ====================
         function switchTab(tabName) {
-            // Update tab buttons
             document.querySelectorAll('.tab-btn').forEach(btn => {
                 btn.classList.remove('active');
                 if (btn.dataset.tab === tabName) {
@@ -1443,7 +1561,6 @@
                 }
             });
 
-            // Update panels
             document.querySelectorAll('.settings-panel').forEach(panel => {
                 panel.classList.remove('active');
                 if (panel.id === 'tab-' + tabName) {
@@ -1474,15 +1591,15 @@
                 statusDot.classList.add('inactive');
                 statusText.innerHTML = '<span class="status-dot inactive"></span> Inactive';
                 btn.textContent = 'Enable';
-                btn.style.borderColor = 'var(--success)';
-                btn.style.color = 'var(--success)';
+                btn.style.background = '#10b981';
+                btn.style.color = 'white';
                 showNotification(`${pageName} page disabled`, 'warning');
             } else {
                 statusDot.classList.remove('inactive');
                 statusDot.classList.add('active');
                 statusText.innerHTML = '<span class="status-dot active"></span> Active';
                 btn.textContent = 'Disable';
-                btn.style.borderColor = '';
+                btn.style.background = '';
                 btn.style.color = '';
                 showNotification(`${pageName} page enabled`, 'success');
             }
@@ -1527,19 +1644,11 @@
         document.addEventListener('DOMContentLoaded', function() {
             if (!checkAuth()) return;
 
-            // Logout
             document.getElementById('logoutBtnNav').addEventListener('click', function(e) {
                 e.preventDefault();
                 logout();
             });
 
-            // Profile placeholder
-            document.getElementById('profileNavLink').addEventListener('click', function(e) {
-                e.preventDefault();
-                showNotification('Profile page coming soon!', 'info');
-            });
-
-            // Highlight active sidebar item
             document.querySelectorAll('.nav-item').forEach(item => {
                 if (item.dataset.page === 'settings') {
                     item.classList.add('active');
@@ -1551,14 +1660,13 @@
             // Color picker live preview
             document.getElementById('primaryColor').addEventListener('input', function() {
                 const color = this.value;
-                const label = this.parentElement.querySelector('span');
+                const label = this.parentElement.querySelector('.color-hex');
                 label.textContent = color;
                 document.documentElement.style.setProperty('--primary-color', color);
                 showNotification(`Primary color changed to ${color}`, 'info');
             });
         });
 
-        // Handle browser back/forward
         window.addEventListener('pageshow', function(event) {
             if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
                 checkAuth();

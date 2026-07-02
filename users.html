@@ -6,6 +6,837 @@
   <title>Users — School Management System</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* ============================================================
+       MODERN STYLES - Matching Dashboard Design Language
+       ============================================================ */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --primary-color: #3b82f6;
+      --primary-dark: #2563eb;
+      --primary-light: #60a5fa;
+      --secondary-color: #2c6e9e;
+      --secondary-dark: #1e4b6e;
+      --dark-bg: #1e293b;
+      --sidebar-bg: #ffffff;
+      --main-bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text-primary: #0f172a;
+      --text-secondary: #334155;
+      --text-muted: #64748b;
+      --text-light: #94a3b8;
+      --border-light: #eef2f6;
+      --border-medium: #e2e8f0;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --info: #3b82f6;
+      --purple: #8b5cf6;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+      --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.05);
+      --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.08);
+      --radius-sm: 8px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --radius-full: 40px;
+      --transition-fast: 0.2s ease;
+      --transition-normal: 0.3s ease;
+    }
+
+    body {
+      font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background-color: #f0f2f5;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* ---------- NAVBAR ---------- */
+    .navbar {
+      background: white;
+      padding: 0 32px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #e2e8f0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: 700;
+      color: #1e293b;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo i {
+      color: #3b82f6;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #64748b;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-links a:hover {
+      color: #1e293b;
+    }
+
+    /* ---------- APP WRAPPER + SIDEBAR ---------- */
+    .app-wrapper {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .sidebar {
+      width: 250px;
+      background: white;
+      border-right: 1px solid #e2e8f0;
+      padding: 20px 0;
+      overflow-y: auto;
+      flex-shrink: 0;
+    }
+
+    .sidebar-nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .sidebar-nav li {
+      padding: 0 16px;
+      margin-bottom: 2px;
+    }
+
+    .sidebar-nav li a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      color: #64748b;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
+    .sidebar-nav li a:hover {
+      background: #f1f5f9;
+      color: #1e293b;
+    }
+
+    .sidebar-nav li.active a {
+      background: #3b82f6;
+      color: white;
+    }
+
+    .sidebar-nav li.active a i {
+      color: white;
+    }
+
+    .sidebar-nav li a i {
+      width: 20px;
+      font-size: 16px;
+      color: #94a3b8;
+    }
+
+    .sidebar-nav li.active a i {
+      color: white;
+    }
+
+    /* ---------- MAIN CONTENT ---------- */
+    .main-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 32px;
+      background: #f8fafc;
+    }
+
+    .main-content::-webkit-scrollbar {
+      width: 8px;
+    }
+    .main-content::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    .main-content::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    .main-content::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+
+    /* ---------- PAGE HEADER ---------- */
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .page-header__title h1 {
+      font-size: 28px;
+      font-weight: 700;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .page-header__subtitle {
+      color: #64748b;
+      font-size: 14px;
+      margin-top: 4px;
+    }
+
+    .page-header__actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .input-search {
+      padding: 8px 16px 8px 40px;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      font-size: 14px;
+      background: white;
+      outline: none;
+      transition: all 0.2s;
+      color: #1e293b;
+      min-width: 200px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: 12px center;
+    }
+
+    .input-search:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .input-select {
+      padding: 8px 14px;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      font-size: 14px;
+      background: white;
+      outline: none;
+      transition: all 0.2s;
+      color: #1e293b;
+      cursor: pointer;
+      min-width: 130px;
+    }
+
+    .input-select:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    /* ---------- BUTTONS ---------- */
+    .btn {
+      padding: 8px 18px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      background: #f1f5f9;
+      color: #1e293b;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .btn--primary {
+      background: #3b82f6;
+      color: white;
+    }
+
+    .btn--primary:hover {
+      background: #2563eb;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+
+    .btn--icon {
+      padding: 6px 8px;
+      background: transparent;
+      color: #64748b;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    .btn--icon:hover {
+      background: #f1f5f9;
+      color: #1e293b;
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* ---------- STATS GRID ---------- */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .stat-card {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid #f1f5f9;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+    }
+
+    .stat-card:nth-child(1)::after {
+      background: linear-gradient(90deg, #3b82f6, #60a5fa);
+    }
+    .stat-card:nth-child(2)::after {
+      background: linear-gradient(90deg, #10b981, #34d399);
+    }
+    .stat-card:nth-child(3)::after {
+      background: linear-gradient(90deg, #f59e0b, #fbbf24);
+    }
+    .stat-card:nth-child(4)::after {
+      background: linear-gradient(90deg, #8b5cf6, #a78bfa);
+    }
+
+    .stat-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+    }
+
+    .stat-card__label {
+      font-size: 13px;
+      font-weight: 500;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .stat-card__value {
+      font-size: 28px;
+      font-weight: 700;
+      color: #0f172a;
+      line-height: 1.2;
+      margin-top: 4px;
+    }
+
+    /* ---------- TABLE ---------- */
+    .card {
+      background: white;
+      border-radius: 12px;
+      border: 1px solid #f1f5f9;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .card:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+      padding: 0;
+    }
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    .table thead {
+      background: #f8fafc;
+    }
+
+    .table th {
+      text-align: left;
+      padding: 14px 20px;
+      font-weight: 600;
+      color: #475569;
+      border-bottom: 2px solid #e2e8f0;
+      white-space: nowrap;
+    }
+
+    .table td {
+      padding: 14px 20px;
+      border-bottom: 1px solid #f1f5f9;
+      color: #1e293b;
+    }
+
+    .table tbody tr {
+      transition: background 0.15s;
+    }
+
+    .table tbody tr:hover {
+      background: #f8fafc;
+    }
+
+    .table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .col-user { min-width: 220px; }
+    .col-role { min-width: 100px; }
+    .col-group { min-width: 130px; }
+    .col-status { min-width: 100px; }
+    .col-actions { min-width: 120px; }
+
+    /* ---------- CELL USER ---------- */
+    .cell-user {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 14px;
+      color: white;
+      flex-shrink: 0;
+    }
+
+    .avatar--student { background: #dbeafe; color: #1e40af; }
+    .avatar--teacher { background: #d1fae5; color: #065f46; }
+    .avatar--admin   { background: #ede9fe; color: #5b21b6; }
+    .avatar--parent  { background: #fef3c7; color: #92400e; }
+
+    .user-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .user-info__name {
+      font-weight: 600;
+      color: #0f172a;
+    }
+
+    .user-info__email {
+      font-size: 12px;
+      color: #94a3b8;
+    }
+
+    /* ---------- BADGES ---------- */
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .badge--student {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+
+    .badge--teacher {
+      background: #d1fae5;
+      color: #065f46;
+    }
+
+    .badge--admin {
+      background: #ede9fe;
+      color: #5b21b6;
+    }
+
+    .badge--parent {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .badge--status-active {
+      background: #d1fae5;
+      color: #065f46;
+    }
+
+    .badge--status-inactive {
+      background: #f3f4f6;
+      color: #4b5563;
+    }
+
+    .badge--status-suspended {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    /* ---------- ACTION BUTTONS ---------- */
+    .action-btns {
+      display: flex;
+      gap: 4px;
+    }
+
+    /* ---------- PAGINATION ---------- */
+    .table-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 20px;
+      border-top: 1px solid #f1f5f9;
+      flex-wrap: wrap;
+      gap: 12px;
+      background: #fafbfc;
+    }
+
+    .table-footer .entries-info {
+      font-size: 14px;
+      color: #64748b;
+    }
+
+    .table-footer .entries-info strong {
+      color: #0f172a;
+    }
+
+    .pagination-controls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .pagination-btn {
+      padding: 6px 12px;
+      border: 1px solid #e2e8f0;
+      background: white;
+      color: #475569;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 13px;
+      font-weight: 500;
+      min-width: 36px;
+      text-align: center;
+    }
+
+    .pagination-btn:hover:not(:disabled):not(.active) {
+      background: #f1f5f9;
+      border-color: #3b82f6;
+      color: #3b82f6;
+    }
+
+    .pagination-btn.active {
+      background: #3b82f6;
+      border-color: #3b82f6;
+      color: white;
+    }
+
+    .pagination-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .pagination-ellipsis {
+      padding: 6px 4px;
+      color: #94a3b8;
+      font-size: 13px;
+    }
+
+    .entries-selector-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: #64748b;
+    }
+
+    .entries-selector-wrapper select {
+      padding: 6px 10px;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      background: white;
+      font-size: 14px;
+      cursor: pointer;
+      outline: none;
+      color: #1e293b;
+    }
+
+    .entries-selector-wrapper select:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    /* ---------- EMPTY STATE ---------- */
+    .empty-state {
+      text-align: center;
+      padding: 48px 20px;
+      color: #94a3b8;
+      font-size: 15px;
+    }
+
+    .empty-state i {
+      display: block;
+      font-size: 32px;
+      margin-bottom: 12px;
+      color: #e2e8f0;
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 1200px) {
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .page-header__actions {
+        width: 100%;
+      }
+
+      .page-header__actions .input-search {
+        flex: 1;
+        min-width: 150px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        display: none;
+      }
+
+      .main-content {
+        padding: 16px;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+
+      .stat-card {
+        padding: 14px;
+      }
+
+      .stat-card__value {
+        font-size: 22px;
+      }
+
+      .page-header__actions {
+        flex-wrap: wrap;
+      }
+
+      .page-header__actions .input-search {
+        width: 100%;
+        min-width: unset;
+      }
+
+      .page-header__actions .input-select {
+        flex: 1;
+        min-width: unset;
+      }
+
+      .page-header__actions .btn {
+        flex: 1;
+        justify-content: center;
+      }
+
+      .table {
+        font-size: 13px;
+      }
+
+      .table th,
+      .table td {
+        padding: 10px 12px;
+      }
+
+      .col-user { min-width: 180px; }
+      .col-actions { min-width: 100px; }
+
+      .avatar {
+        width: 32px;
+        height: 32px;
+        font-size: 12px;
+      }
+
+      .user-info__email {
+        font-size: 11px;
+      }
+
+      .table-footer {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+        padding: 12px 16px;
+      }
+
+      .table-footer .entries-info {
+        text-align: center;
+      }
+
+      .pagination-controls {
+        justify-content: center;
+      }
+
+      .entries-selector-wrapper {
+        justify-content: center;
+      }
+
+      .navbar {
+        padding: 0 16px;
+      }
+
+      .nav-links {
+        gap: 12px;
+      }
+
+      .nav-links a {
+        font-size: 12px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .stats-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+
+      .stat-card {
+        padding: 12px;
+      }
+
+      .stat-card__value {
+        font-size: 18px;
+      }
+
+      .stat-card__label {
+        font-size: 11px;
+      }
+
+      .table {
+        font-size: 12px;
+      }
+
+      .table th,
+      .table td {
+        padding: 8px 10px;
+      }
+
+      .col-user { min-width: 150px; }
+      .col-role { min-width: 80px; }
+      .col-group { min-width: 100px; }
+      .col-status { min-width: 80px; }
+      .col-actions { min-width: 80px; }
+
+      .action-btns .btn--icon {
+        padding: 4px 6px;
+        font-size: 12px;
+      }
+
+      .badge {
+        font-size: 10px;
+        padding: 2px 10px;
+      }
+
+      .pagination-btn {
+        padding: 4px 10px;
+        font-size: 12px;
+        min-width: 32px;
+      }
+
+      .entries-selector-wrapper {
+        font-size: 12px;
+      }
+
+      .entries-selector-wrapper select {
+        font-size: 12px;
+        padding: 4px 8px;
+      }
+    }
+
+    /* ---------- NOTIFICATION ---------- */
+    .custom-notification {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      padding: 14px 24px;
+      border-radius: 10px;
+      color: white;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      z-index: 9999;
+      font-size: 14px;
+      animation: slideUp 0.3s ease;
+      max-width: 400px;
+      font-weight: 500;
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+  </style>
 </head>
 <body>
 
@@ -13,8 +844,8 @@
   <div class="logo"><i class="fas fa-school"></i> EduSystem</div>
   <div class="nav-links">
     <a href="index.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-    <a href="#"><i class="far fa-user-circle"></i> Profile</a>
-    <a href="login.html"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    <a href="profile.html"><i class="far fa-user-circle"></i> Profile</a>
+    <a href="#" id="logoutBtnNav"><i class="fas fa-sign-out-alt"></i> Logout</a>
   </div>
 </header>
 
@@ -32,25 +863,25 @@
           <a href="alumni.html"><i class="fas fa-graduation-cap"></i> Alumni</a>
         </li>
         <li class="nav-item" data-page="academic">
-          <a href="#"><i class="fas fa-book-open"></i> Academic</a>
+          <a href="academics.html"><i class="fas fa-book-open"></i> Academic</a>
         </li>
         <li class="nav-item" data-page="liveclass">
-          <a href="#"><i class="fas fa-video"></i> Live class</a>
+          <a href="liveclass.html"><i class="fas fa-video"></i> Live class</a>
         </li>
         <li class="nav-item" data-page="examination">
           <a href="#"><i class="fas fa-pen-alt"></i> Examination</a>
         </li>
         <li class="nav-item" data-page="accounting">
-          <a href="#"><i class="fas fa-calculator"></i> Accounting</a>
+          <a href="accounting.html"><i class="fas fa-calculator"></i> Accounting</a>
         </li>
         <li class="nav-item" data-page="backoffice">
-          <a href="#"><i class="fas fa-archive"></i> Back office</a>
+          <a href="backoffice.html"><i class="fas fa-archive"></i> Back office</a>
         </li>
         <li class="nav-item" data-page="onlinecourses">
-          <a href="#"><i class="fas fa-laptop-code"></i> Online courses</a>
+          <a href="onlinecourses.html"><i class="fas fa-laptop-code"></i> Online courses</a>
         </li>
-        <li class="nav-item" data-page="settings">
-          <a href="#"><i class="fas fa-sliders-h"></i> Settings</a>
+        <li class="nav-item" data-page="profile">
+          <a href="profile.html"><i class="fas fa-sliders-h"></i> Profile</a>
         </li>
       </ul>
     </div>
@@ -62,19 +893,19 @@
       <!-- Page header -->
       <div class="page-header">
         <div class="page-header__title">
-          <h1>Users</h1>
+          <h1><i class="fas fa-users" style="color: #3b82f6;"></i> Users</h1>
           <p class="page-header__subtitle" id="total-count">Loading...</p>
         </div>
         <div class="page-header__actions">
-          <input type="text" id="search-input" class="input-search" placeholder="Search users..." oninput="filterUsers()" />
-          <select id="role-filter" class="input-select" onchange="filterUsers()">
+          <input type="text" id="search-input" class="input-search" placeholder="Search users by name or email..." oninput="applyFiltersAndPagination()" />
+          <select id="role-filter" class="input-select" onchange="applyFiltersAndPagination()">
             <option value="">All roles</option>
             <option value="Student">Student</option>
             <option value="Teacher">Teacher</option>
             <option value="Admin">Admin</option>
             <option value="Parent">Parent</option>
           </select>
-          <button class="btn btn--primary" onclick="alert('Add user form coming soon!')">
+          <button class="btn btn--primary" onclick="showNotification('Add user form coming soon!', 'info')">
             <i class="fas fa-plus"></i> Add user
           </button>
         </div>
@@ -83,7 +914,7 @@
       <!-- Summary cards -->
       <div class="stats-grid" id="user-stats"></div>
 
-      <!-- Users table -->
+      <!-- Users table with pagination -->
       <div class="card">
         <div class="table-wrapper">
           <table class="table" id="users-table">
@@ -98,11 +929,32 @@
             </thead>
             <tbody id="users-table-body"></tbody>
           </table>
-          <p id="no-results" class="empty-state" style="display:none;">No users match your search.</p>
+          <p id="no-results" class="empty-state" style="display:none;">
+            <i class="fas fa-search"></i>
+            No users match your search.
+          </p>
+        </div>
+
+        <!-- Table Footer with Pagination -->
+        <div class="table-footer" id="tableFooter">
+          <div class="entries-info" id="entriesInfo">
+            Showing <strong id="startEntry">0</strong> to <strong id="endEntry">0</strong> of <strong id="totalEntries">0</strong> users
+          </div>
+          <div class="pagination-controls" id="paginationControls">
+            <!-- Pagination buttons will be rendered here -->
+          </div>
+          <div class="entries-selector-wrapper">
+            <span>Show</span>
+            <select id="pageSizeSelect" onchange="changePageSize()">
+              <option value="5">5</option>
+              <option value="10" selected>10</option>
+              <option value="25">25</option>
+              <option value="50">50</option>
+            </select>
+            <span>entries</span>
+          </div>
         </div>
       </div>
-
-      <p class="results-count" id="results-count"></p>
     </div>
   </main>
 </div>
@@ -110,15 +962,52 @@
 <!-- Shared data -->
 <script src="mock-data.js"></script>
 <script>
-  // Handle placeholder links (href="#") - show blank page
-  document.querySelectorAll('.nav-item a[href="#"]').forEach(link => {
-    link.addEventListener('click', function(e) {
-      e.preventDefault();
-      const page = this.closest('.nav-item').getAttribute('data-page');
-      // Redirect to index with page parameter
-      window.location.href = `index.html?page=${page}`;
-    });
-  });
+  // ==================== AUTHENTICATION ====================
+  function isLoggedIn() {
+    return sessionStorage.getItem('loggedIn') === 'true';
+  }
+
+  function checkAuth() {
+    if (!isLoggedIn()) {
+      window.location.href = 'login.html';
+      return false;
+    }
+    return true;
+  }
+
+  function logout() {
+    sessionStorage.clear();
+    window.location.href = 'login.html';
+  }
+
+  // ==================== NOTIFICATIONS ====================
+  function showNotification(message, type = 'info') {
+    const colors = {
+      success: '#10b981',
+      error: '#ef4444',
+      info: '#3b82f6',
+      warning: '#f59e0b'
+    };
+    const existing = document.querySelector('.custom-notification');
+    if (existing) existing.remove();
+
+    const notification = document.createElement('div');
+    notification.className = 'custom-notification';
+    notification.style.background = colors[type] || '#3b82f6';
+    notification.innerHTML = message;
+    document.body.appendChild(notification);
+
+    setTimeout(() => {
+      notification.style.opacity = '0';
+      notification.style.transition = 'opacity 0.3s';
+      setTimeout(() => notification.remove(), 300);
+    }, 3000);
+  }
+
+  // ==================== USERS FUNCTIONS ====================
+  let filteredUsers = [];
+  let currentPage = 1;
+  let pageSize = 10;
 
   function initials(name) {
     return name.replace(/^(Mr\.|Ms\.|Dr\.)\s*/i, '').split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase();
@@ -128,54 +1017,197 @@
     const s = MOCK_STATS;
     document.getElementById('total-count').textContent = `${MOCK_USERS.length} total members`;
     document.getElementById('user-stats').innerHTML = `
-      <div class="stat-card"><span class="stat-card__label">Students</span><span class="stat-card__value">${s.students}</span></div>
-      <div class="stat-card"><span class="stat-card__label">Teachers</span><span class="stat-card__value">${s.teachers}</span></div>
-      <div class="stat-card"><span class="stat-card__label">Parents</span><span class="stat-card__value">${s.parents}</span></div>
-      <div class="stat-card"><span class="stat-card__label">Admins</span><span class="stat-card__value">${s.admins}</span></div>
+      <div class="stat-card">
+        <span class="stat-card__label">Students</span>
+        <span class="stat-card__value">${s.students}</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-card__label">Teachers</span>
+        <span class="stat-card__value">${s.teachers}</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-card__label">Parents</span>
+        <span class="stat-card__value">${s.parents}</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-card__label">Admins</span>
+        <span class="stat-card__value">${s.admins}</span>
+      </div>
     `;
   }
 
-  function filterUsers() {
+  function getFilteredUsers() {
     const search = document.getElementById('search-input').value.toLowerCase();
-    const role   = document.getElementById('role-filter').value;
-    const tbody  = document.getElementById('users-table-body');
-    let html = '';
-    let visible = 0;
+    const role = document.getElementById('role-filter').value;
 
-    MOCK_USERS.forEach(u => {
+    return MOCK_USERS.filter(u => {
       const matchSearch = !search || u.name.toLowerCase().includes(search) || u.email.toLowerCase().includes(search);
-      const matchRole   = !role   || u.role === role;
-      if (!matchSearch || !matchRole) return;
-      visible++;
+      const matchRole = !role || u.role === role;
+      return matchSearch && matchRole;
+    });
+  }
+
+  function renderUsers() {
+    const start = (currentPage - 1) * pageSize;
+    const end = Math.min(start + pageSize, filteredUsers.length);
+    const pageUsers = filteredUsers.slice(start, end);
+
+    const tbody = document.getElementById('users-table-body');
+    const noResults = document.getElementById('no-results');
+
+    if (filteredUsers.length === 0) {
+      tbody.innerHTML = '';
+      noResults.style.display = 'block';
+      document.getElementById('tableFooter').style.display = 'none';
+      return;
+    }
+
+    noResults.style.display = 'none';
+    document.getElementById('tableFooter').style.display = 'flex';
+
+    let html = '';
+    pageUsers.forEach(u => {
       html += `
         <tr>
-          <td class="cell-user">
-            <div class="avatar avatar--${u.role.toLowerCase()}">${initials(u.name)}</div>
-            <div class="user-info">
-              <span class="user-info__name">${u.name}</span>
-              <span class="user-info__email">${u.email}</span>
+          <td>
+            <div class="cell-user">
+              <div class="avatar avatar--${u.role.toLowerCase()}">${initials(u.name)}</div>
+              <div class="user-info">
+                <span class="user-info__name">${u.name}</span>
+                <span class="user-info__email">${u.email}</span>
+              </div>
             </div>
           </td>
           <td><span class="badge badge--${u.role.toLowerCase()}">${u.role}</span></td>
-          <td class="cell-muted">${u.group}</td>
+          <td class="cell-muted" style="color: #64748b;">${u.group}</td>
           <td><span class="badge badge--status-${u.status.toLowerCase()}">${u.status}</span></td>
           <td>
             <div class="action-btns">
-              <button class="btn btn--icon" title="View profile" onclick="alert('Profile: ${u.name}')"><i class="fas fa-eye"></i></button>
-              <button class="btn btn--icon" title="Edit"         onclick="alert('Edit: ${u.name}')"><i class="fas fa-pen"></i></button>
-              <button class="btn btn--icon" title="Delete"       onclick="alert('Delete: ${u.name}')"><i class="fas fa-trash"></i></button>
+              <button class="btn btn--icon" title="View profile" onclick="showNotification('Profile: ${u.name}', 'info')"><i class="fas fa-eye"></i></button>
+              <button class="btn btn--icon" title="Edit" onclick="showNotification('Edit: ${u.name}', 'info')"><i class="fas fa-pen"></i></button>
+              <button class="btn btn--icon" title="Delete" onclick="showNotification('Delete: ${u.name}', 'warning')"><i class="fas fa-trash"></i></button>
             </div>
           </td>
         </tr>`;
     });
 
     tbody.innerHTML = html;
-    document.getElementById('no-results').style.display = visible === 0 ? 'block' : 'none';
-    document.getElementById('results-count').textContent = `Showing ${visible} of ${MOCK_USERS.length} users`;
+    updatePaginationInfo();
+    renderPaginationButtons();
   }
 
-  buildStats();
-  filterUsers();
+  function updatePaginationInfo() {
+    const start = filteredUsers.length === 0 ? 0 : (currentPage - 1) * pageSize + 1;
+    const end = Math.min(start + pageSize - 1, filteredUsers.length);
+    const total = filteredUsers.length;
+
+    document.getElementById('startEntry').textContent = total === 0 ? 0 : start;
+    document.getElementById('endEntry').textContent = end;
+    document.getElementById('totalEntries').textContent = total;
+  }
+
+  function renderPaginationButtons() {
+    const totalPages = Math.ceil(filteredUsers.length / pageSize);
+    const container = document.getElementById('paginationControls');
+
+    if (totalPages <= 1) {
+      container.innerHTML = '';
+      return;
+    }
+
+    let html = '';
+
+    // Previous button
+    html += `<button class="pagination-btn" onclick="goToPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>
+      <i class="fas fa-chevron-left"></i>
+    </button>`;
+
+    // Page numbers
+    let startPage = Math.max(1, currentPage - 2);
+    let endPage = Math.min(totalPages, currentPage + 2);
+
+    if (startPage > 1) {
+      html += `<button class="pagination-btn" onclick="goToPage(1)">1</button>`;
+      if (startPage > 2) {
+        html += `<span class="pagination-ellipsis">...</span>`;
+      }
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+      html += `<button class="pagination-btn ${i === currentPage ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`;
+    }
+
+    if (endPage < totalPages) {
+      if (endPage < totalPages - 1) {
+        html += `<span class="pagination-ellipsis">...</span>`;
+      }
+      html += `<button class="pagination-btn" onclick="goToPage(${totalPages})">${totalPages}</button>`;
+    }
+
+    // Next button
+    html += `<button class="pagination-btn" onclick="goToPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>
+      <i class="fas fa-chevron-right"></i>
+    </button>`;
+
+    container.innerHTML = html;
+  }
+
+  function goToPage(page) {
+    const totalPages = Math.ceil(filteredUsers.length / pageSize);
+    if (page < 1 || page > totalPages || page === currentPage) return;
+    currentPage = page;
+    renderUsers();
+  }
+
+  function changePageSize() {
+    pageSize = parseInt(document.getElementById('pageSizeSelect').value);
+    currentPage = 1;
+    renderUsers();
+  }
+
+  function applyFiltersAndPagination() {
+    filteredUsers = getFilteredUsers();
+    currentPage = 1;
+    renderUsers();
+  }
+
+  // ==================== INITIALIZATION ====================
+  document.addEventListener('DOMContentLoaded', function() {
+    if (!checkAuth()) return;
+
+    // Logout
+    document.getElementById('logoutBtnNav').addEventListener('click', function(e) {
+      e.preventDefault();
+      logout();
+    });
+
+    // Handle placeholder links (href="#") - show blank page
+    document.querySelectorAll('.nav-item a[href="#"]').forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const page = this.closest('.nav-item').getAttribute('data-page');
+        window.location.href = `index.html?page=${page}`;
+      });
+    });
+
+    // Highlight active sidebar item
+    document.querySelectorAll('.nav-item').forEach(item => {
+      if (item.dataset.page === 'users') {
+        item.classList.add('active');
+      }
+    });
+
+    buildStats();
+    filteredUsers = getFilteredUsers();
+    renderUsers();
+  });
+
+  // Handle browser back/forward
+  window.addEventListener('pageshow', function(event) {
+    if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+      checkAuth();
+    }
+  });
 </script>
 
 </body>
